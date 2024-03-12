@@ -1,14 +1,20 @@
 .navbar{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1em 2em;
-    background: #fff;
+  display: flex;
+  justify-content: flex-start;
+  position: fixed; 
+  align-items: center;
+   top: 0;
+   left: 0;
+   width: 100%;
+   background-color: white; /* gonna change this to black when we work on the home page*/
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   z-index: 1000;
 }
 
 /** Navbar styling **/
-.navbar .nav-links{
+ .navbar .nav-links{
     list-style: none;
+    margin: 0;
     display: flex;
     gap: 20px; /* Creates space between links */
 
@@ -16,9 +22,9 @@
 
 .navbar .nav-links li a {
     text-decoration: none;
-    color: #333; /* Dark grey color for text */
+    color: black; /* Dark grey color for text */
     text-transform: uppercase;
-    padding: 0.5em 1em;
+    padding:1em;
     font-family: 'Open Sans', sans-serif; /* Example font */
   }
 
@@ -35,11 +41,4 @@
   }
 
   /* Navigation bar responsiveness */
-  @media (max-width: 768px) {
-    .navbar .nav-links {
-      display: none; /* Or convert to a hamburger menu */
-    }
-    .navbar {
-      flex-direction: column;
-    }
-  }
+  
