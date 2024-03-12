@@ -14,13 +14,13 @@ function NavBar(){
     return(
         <nav className="navbar">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-                MyApp
+                Home
             </Link>
             <div className="menu-icon" onClick={handleClick}>
                 <i className={clicked ? 'fas fa-times' :  'fas fa-bars'}></i>
             </div>
             <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
-                <li><Link to="/" className="nav-links" onClick={closeMobileMenu}>Home</Link></li>
+                {/*<li><Link to="/" className="nav-links" onClick={closeMobileMenu}>Home</Link></li>*/}
                 <li><Link to="/about"className="nav-links" onClick={closeMobileMenu} >About</Link></li>
                 {/*this is where other potential navigation items will be present*/}
             </ul>
