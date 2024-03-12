@@ -16,7 +16,7 @@ function NavBar(){
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
                 MyApp
             </Link>
-            <div className="menu-icon" onClick-={handleClick}>
+            <div className="menu-icon" onClick={handleClick}>
                 <i className={clicked ? 'fas fa-times' :  'fas fa-bars'}></i>
             </div>
             <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
