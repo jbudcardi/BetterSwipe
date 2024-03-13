@@ -13,7 +13,7 @@ function NavBar(){
    const closeMobileMenu = () => setClicked(false);  //closes the menu when clicking
     return(
         <nav className="navbar">
-            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                 Home
             </Link>
             <div className="menu-icon" onClick={handleClick}>
@@ -22,6 +22,7 @@ function NavBar(){
             <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
                 {/*<li><Link to="/" className="nav-links" onClick={closeMobileMenu}>Home</Link></li>*/}
                 <li><Link to="/about"className="nav-links" onClick={closeMobileMenu} >About</Link></li>
+                <li><Link to="/about"className="nav-links" onClick={closeMobileMenu}>DashBoard</Link></li>
                 {/*this is where other potential navigation items will be present*/}
             </ul>
         
