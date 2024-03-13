@@ -14,15 +14,17 @@
 /** Navbar styling **/
  .navbar .nav-links{
     list-style: none;
+   padding-left: 0;
     margin: 0;
     display: flex;
-    gap: 20px; /* Creates space between links */
+    gap: 15px; /* Creates space between links */
 
 }
 
 .navbar .nav-links li a {
     text-decoration: none;
     color: black; /* Dark grey color for text */
+    transition: color 0.3s ease;
     text-transform: uppercase;
     padding:1em;
     font-family: 'Open Sans', sans-serif; /* Example font */
