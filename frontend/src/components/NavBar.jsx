@@ -22,7 +22,7 @@ function NavBar(){
             <ul className={clicked ? 'nav-menu active' : 'nav-menu'}>
                 {/*<li><Link to="/" className="nav-links" onClick={closeMobileMenu}>Home</Link></li>*/}
                 <li><Link to="/about"className="nav-links" onClick={closeMobileMenu} >About</Link></li>
-                <li><Link to="/about"className="nav-links" onClick={closeMobileMenu}>DashBoard</Link></li>
+                <li><Link to="/dashboard"className="nav-links dashboard-link" onClick={closeMobileMenu}>DashBoard</Link></li>
                 {/*this is where other potential navigation items will be present*/}
             </ul>
         

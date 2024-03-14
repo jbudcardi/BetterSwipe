@@ -15,11 +15,17 @@
  .navbar .nav-links{
     list-style: none;
    padding-left: 0;
+   padding: auto;
     margin: 0;
     display: flex;
     gap: 15px; /* Creates space between links */
 
 }
+
+.navbar .nav-links .dashboard-link{
+  margin-left: auto;
+}
+
 
 .navbar .nav-links li a {
     text-decoration: none;
@@ -40,6 +46,12 @@
 .navbar-logo {
     font-family: 'Playfair Display', serif; /* Example font */
     color: #333;
+  }
+
+  .nav-menu{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
   }
 
   /* Navigation bar responsiveness */
