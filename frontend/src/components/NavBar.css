@@ -4,16 +4,17 @@ ul{
   padding: 0;
 }
 .navbar{
-  display: flex;
-  justify-content: space-between;
-  position: fixed; 
-  align-items: center;
+ display: flex;
+justify-content: space-between;
+ align-items: center;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
    padding: 0 15px;
    height: 60px;
-  top: 0;
-   left: 0;
-   width: 100%;
+ 
    background-color: white; /* gonna change this to black when we work on the home page*/
    
    z-index: 1000;
