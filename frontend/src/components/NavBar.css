@@ -11,8 +11,9 @@ position: fixed;
 top: 0;
 left: 0;
 width: 100%;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   padding: 0 15px;
+background: linear-gradient(90deg, purple, blue);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   padding: 1em 0;
    height: 60px;
  
    background-color: white; /* gonna change this to black when we work on the home page*/
