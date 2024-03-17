@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import DashBoard from './pages/DashBoard';
 import LoginPage from './pages/Login';
+import LandingPage from './components/LandingPage';
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -17,7 +18,7 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/login" element={<LoginPage />} />
