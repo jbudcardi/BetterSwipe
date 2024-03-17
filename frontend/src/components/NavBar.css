@@ -22,18 +22,15 @@ background: linear-gradient(90deg, purple, blue);
    z-index: 1000;
 }
 
-.navbar-logo{
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
+
 /*For the Navigation bar logo*/
 .navbar-logo img {
-  height: 80px; /* Adjust this value to fit your navbar's height */
+  height: 85px; /* Adjust this value to fit your navbar's height */
   width: auto; /* This maintains the aspect ratio of the image */
   vertical-align: middle;
   border-radius: 50%;
   object-fit: cover;
+  text-decoration: none;
    
 }
 /** Navbar styling **/
@@ -62,7 +59,8 @@ background: linear-gradient(90deg, purple, blue);
 /* NavBar font family*/
 .navbar-logo {
  position: absolute;
- left: 1em;
+ left: 80em;
+ transform: translateY(-50%);
  font-size: 1.5em;
  text-decoration: none;  
 font-family: 'Playfair Display', serif; /* Example font */
@@ -71,6 +69,8 @@ font-family: 'Playfair Display', serif; /* Example font */
 
   .nav-menu{
     display: flex;
+    list-style: none;
+    margin-left: auto;
     flex-wrap: nowrap;
     gap: 15px;
   }
@@ -106,7 +106,7 @@ font-family: 'Playfair Display', serif; /* Example font */
 @media (max-width: 768px) {
   .navbar-logo {
     left: 50%;
-    transform: translateX(-50%); /* Center logo on smaller screens */
+    transform: translateX(-180%); /* Center logo on smaller screens */
   }
 
 
