@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link} from 'react-router-dom';
+import axios from 'axios';
+import './SignUpPage.css';
 
 
 function SignUpPage(){
@@ -22,17 +24,23 @@ function SignUpPage(){
 
     //Handle form submission
 
-    const handleSubmit = (e) => {
+    const handleSubmit =  async(e) => {
         e.preventDefault(); //Prevent default form submission behavior
-        console.log(userInput); //For now, just log input to the console
         //This is where we will send the user input to the backend server (using the Django python framework)
+        try{
+            const response = await axios.post('http://localhost:8000/accounts/signup', userInput);
+            console.log("SignUp successfull: ", response.data);
+            //This will handle post-signup actions here like redirect to login page
+        } catch(error){
+            console.error('SignUp error:', error.response ? error.response.data : error);
+        }
     };
 
     return(
         <div className="signup-container">
             <h2>Sign up</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                {/* <div>
                     <label htmlFor="username">Username</label>
                     <input
                     type="text"
@@ -40,16 +48,27 @@ function SignUpPage(){
                     name="username"
                     value={userInput.username}
                     onChange={handleChange} />
-                </div>
+                </div> */}
                 <div>
                     <label htmlFor="email">Email</label>
+                    <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={userInput.email}
+                    onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="password">Password </label>
                     <input
                     type="password"
                     id="password"
                     name="password"
+                    placeholder="Password"
                     value={userInput.password}
-                    onChange={handleChange}
-                    />
+                    onChange={handleChange}/>
                 </div>
                 <button type="submit">Sign Up</button>
             </form>
