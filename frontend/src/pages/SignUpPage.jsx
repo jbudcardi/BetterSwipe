@@ -28,8 +28,9 @@ function SignUpPage(){
         e.preventDefault(); //Prevent default form submission behavior
         //This is where we will send the user input to the backend server (using the Django python framework)
         try{
-            const response = await axios.post('http://localhost:8000/accounts/signup', userInput);
+            const response = await axios.post('http://localhost:8000/algorithms/signup', userInput);
             console.log("SignUp successfull: ", response.data);
+            //this will redirect to login page
             //This will handle post-signup actions here like redirect to login page
         } catch(error){
             console.error('SignUp error:', error.response ? error.response.data : error);

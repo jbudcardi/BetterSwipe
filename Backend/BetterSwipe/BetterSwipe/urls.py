@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from algorithms import views #import our app's views
 
 urlpatterns = [
     path('algorithms/', include('algorithms.urls')),
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'), # server the index view at the root URL
 ]
