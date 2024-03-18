@@ -26,6 +26,12 @@ SECRET_KEY = 'django-insecure-)14%1$n6)to2%5wjnrmb!h(ldvl*$9x9i0jye2^m8hd#k)$wx8
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+CORSE_ALLOWED_ORIGINS ={
+    'http://localhost:5173', #will be changed when host of website is configured
+    'http://127.0.0.1:8000',
+}
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -38,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -125,5 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Creating a CORS_ORIGIN_WHITELIST
 CORS_ORIGIN_WHITELIST ={
-    'localhost:3000/'
+    'localhost:5173/' # this will be replaced with the actual URL in which the front end portion of the project will be hosted
 }
