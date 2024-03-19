@@ -11,6 +11,8 @@ import DashBoard from './pages/DashBoard';
 import LoginPage from './pages/Login';
 import LandingPage from './components/LandingPage';
 import SignUpPage from './pages/SignUpPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
