@@ -4,13 +4,15 @@ import { Link} from 'react-router-dom';
 import SignUpPage from '../pages/SignUpPage';
 import {Button, Container, Row, Col } from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
-import './LandingPage.css'
+import './LandingPage.css';
+import backgroundImage from '../images/betterSwipe.png';
+
 
 //this will be where the hero page will go
 
 function LandingPage(){
     return(
-        <Container fluid className="landing-page">
+        <Container fluid className="landing-page" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             {/*<NavBar />*/} {/* Location of the NavBar component*/}
             <Row className="hero-section justify-content-center align-items-center text-center">
                 <Col xs={12} md={8}>

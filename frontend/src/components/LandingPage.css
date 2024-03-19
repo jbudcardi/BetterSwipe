@@ -1,12 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+
 .landing-page{
+    
+    min-height: 100vh;
     background: #f8f9fa;
     color:#333;
-    min-height: 100vh;
     padding-top: 56px;
-    /*background-image: url(path to hero image);
+    /* Update the background image path below */
+    background-image: url('/images/betterSwipe.png');
     background-size: cover;
-    background-position: center;*/
+    background-position: center;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -19,6 +35,7 @@
 }
 
 .hero-section {
+    color: white;
     position: relative;
     display: flex;
     flex-direction: column;

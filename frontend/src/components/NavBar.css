@@ -1,115 +1,57 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
-ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.navbar{
- display: flex;
-justify-content: space-between;
- align-items: center;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-background: linear-gradient(90deg, purple, blue);
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   padding: 1em 0;
-   height: 60px;
- 
-   
-   z-index: 1000;
+/* General styles for the navbar */
+.navbar {
+  background: linear-gradient(90deg, purple, blue); /* Your preferred gradient */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-
-/*For the Navigation bar logo*/
-.navbar-logo img {
-  height: 85px; /* Adjust this value to fit your navbar's height */
-  width: auto; /* This maintains the aspect ratio of the image */
-  vertical-align: middle;
+/* Ensures the navbar brand logo fits well */
+.navbar-brand img {
+  height: 50px; /* Adjust based on your preference */
   border-radius: 50%;
   object-fit: cover;
-  text-decoration: none;
-   
-}
-/** Navbar styling **/
- .navbar .nav-links{
-    list-style: none;
-   padding-left: 0;
-   padding: auto;
-    margin: 0;
-    display: flex;
-    gap: 15px; /* Creates space between links */
-
 }
 
-.navbar .nav-links .dashboard-link{
-  margin-left: auto;
+/* Specific styling for nav links */
+.nav-link {
+  color: white !important; /* Maintains the white color for text */
+  transition: color 0.3s ease-in-out;
 }
 
-
-
-  /* Hover and Active States*/
-  .navbar .nav-links li a:hover,
-.navbar .nav-links li a:active {
-  color: #000; /* Slightly darker color on hover/active */
+.nav-link:hover, .nav-link:focus {
+  color: #adb5bd !important; /* A lighter shade for hover effects */
 }
 
-/* NavBar font family*/
-.navbar-logo {
- position: absolute;
- left: 80em;
- transform: translateY(-50%);
- font-size: 1.5em;
- text-decoration: none;  
-font-family: 'Playfair Display', serif; /* Example font */
-   
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-brand img {
+    height: 40px; /* Slightly smaller on mobile devices */
   }
-
-  .nav-menu{
-    display: flex;
-    list-style: none;
-    margin-left: auto;
-    flex-wrap: nowrap;
-    gap: 15px;
+  
+  /* Adjust the nav link padding on smaller screens for better accessibility */
+  .nav-link {
+    padding: 0.5rem !important;
   }
+}
 
+/* Dashboard link specific styling */
+.dashboard-link {
+  margin-left: auto; /* Keeps the dashboard link to the right */
+}
 
-  /* Navigation bar responsiveness */
-.navbar .action-button{
+/* Adjust the action button styling as needed */
+.action-button {
   background-color: #000;
   color: white;
   padding: 10px 15px;
   border-radius: 4px;
   text-transform: uppercase;
 }
-.navbar .nav-links li a:hover,
-.navbar .nav-links li a:active{
-  color:white;
-  background-color: rgb(160, 221, 188);
-  transition: background-color 0.3s, color 0.3s;
 
-}
-/*Nav bar individual links styles */
-.navbar .nav-links a{
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  text-transform: uppercase;
-  text-decoration: none;
+/* Hover and active state for action buttons */
+.action-button:hover, .action-button:active {
+  background-color: #0056b3; /* Darker shade for interaction */
   color: white;
-  padding: 10px;
-  transition: color 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  .navbar-logo {
-    left: 50%;
-    transform: translateX(-180%); /* Center logo on smaller screens */
-  }
-
-
-  
-  /* Additional responsive styles */
 }
