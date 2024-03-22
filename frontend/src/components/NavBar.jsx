@@ -6,8 +6,9 @@ import { Navbar, Nav, Container} from 'react-bootstrap';
 
 //We are creating the functional Component Navigation bar
 //This is for the purpose of navigating to different components on our Single-Page- Application
-
+const isAuthenticated = true; // This will be used in future development when we have user authentication implemented 
 function NavBar(){
+  const[isAuthenticated, setIsAuthenticated] = useState(false);
     return (
         <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
           <Container>
@@ -20,6 +21,8 @@ function NavBar(){
               <Nav className="me-auto">
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
                 <Nav.Link as={Link} to="/about">About</Nav.Link>
+                {/* Conditional render of the dasshboard due to authenticaiton status of the user */}
+                
                 <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                 <Nav.Link as={Link} to="/login">Login</Nav.Link>
               </Nav>
