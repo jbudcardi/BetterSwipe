@@ -31,3 +31,5 @@ const CreditCard = ({cardType, cardNumber, cardHolder, expiryDate, monthlyReward
 
     );
 }
+
+export default CreditCard;
