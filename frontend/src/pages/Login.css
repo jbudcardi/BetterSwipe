@@ -1,72 +1,76 @@
+/* Login.css */
 
-.login-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f2f5;
 
-}
-
-form{
-    background:white;
-    padding:2em;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-}
-
-form h2{
-    text-align: center;
-    margin-bottom: 1em;
-}
-
-/* Input styling*/
-input[type="email"],
-input[type="password"]{
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button[type="submit"]{
-    width: 100px;
-    background-color: #007bff;
-    color: white;
-    padding:10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button[type="submit"]:hover{
-    background-color: #0056b3;
-}
-
-/*forgot password styling*/
-/*forgot styling will be added here*/
-.forgot-password,
-.register-link{
-    display: block;
-    text-align: center;
-    margin: 20px 0;
-    color: #007bff; /* subject to change */
-    text-decoration: none;
-}
-
-/* again, forgot password styling will be implemented here*/
-.forgot-password:hover,
-.register-link:hover {
-    text-decoration: underline;
-}
-
-/* Will add additional styles for "or continue with" section just in case if we want to add anything */
-
-/* Style adjustments for small screens*/
-@media(max-width:768px){
-    form{
-        padding: 1.5em;
+/* Ensure the full viewport height and set the background color */
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #6C5CE7; /* Your chosen background color */
+  }
+  
+  /* Since Bootstrap is handling the centering, you don't need to set display: flex here */
+  /* Just make sure the body has the padding-top to push content below a fixed navbar */
+  body {
+    padding-top: 80px; /* Adjust this value to match the height of your fixed navbar */
+  }
+  
+  /* Styles for the card */
+  .card {
+    width: 60%;
+    max-width: 400px; /* Adjust this width as per your design requirements */
+    margin: auto; /* Centers the card in the available column space */
+    border: none;
+    border-radius: 0.25rem; /* Slightly rounded corners for the card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow for some depth */
+  }
+  
+  /* Styles for the form and its elements */
+  .card-body {
+    padding: 2rem; /* Provides spacing inside the card */
+  }
+  
+  .form-heading {
+    margin-bottom: 2rem; /* Space below the form heading */
+    font-size: 1.5rem; /* Large, readable text */
+    text-align: center; /* Center align the heading text */
+  }
+  
+  .form-control {
+    border-radius: 0.25rem; /* Consistent rounded edges for inputs */
+    margin-bottom: 1rem; /* Space between form elements */
+  }
+  
+  /* Style for the primary button */
+  .btn-primary {
+    width: 15%; /* Full width button */
+    border-radius: 0.25rem; /* Consistent rounded edges for the button */
+    padding: 0.75rem; /* Comfortable padding for the button */
+    font-size: 1rem; /* Readable text size */
+    margin-bottom: 1rem;
+    min-width: 150px; /* Space below the button */
+  }
+  
+  /* Adjust the hover state for the button for a better user experience */
+  .btn-primary:hover {
+    background-color: #5A4CAD; /* A slightly darker shade on hover */
+  }
+  
+  /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
+  .nav-link, .nav-link:hover {
+    text-decoration: none; /* Removes underline */
+    color: #FFFFFF; /* Sets the color to white */
+  }
+  
+  /* This style applies to the text and links at the bottom of the form */
+  .form-footer-text {
+    text-align: center; /* Center align the text */
+    margin-top: 1rem; /* Space from the last form element */
+  }
+  
+  /* Responsive adjustments if needed for smaller screens */
+  @media (max-width: 768px) {
+    .card-body {
+      padding: 1rem; /* Less padding on smaller screens */
     }
-}
+  }
+  
