@@ -1,11 +1,12 @@
 /* Login.css */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 /* Ensure the full viewport height and set the background color */
 html, body {
     height: 100%;
     margin: 0;
-    background-color: #6C5CE7; /* Your chosen background color */
+    background-color: #6C5CE7; /* chosen background color */
+    box-sizing: border-box;
   }
   
   /* Since Bootstrap is handling the centering, you don't need to set display: flex here */
@@ -17,17 +18,13 @@ html, body {
   /* Styles for the card */
   .card {
     width: 60%;
-    max-width: 400px; /* Adjust this width as per your design requirements */
+    max-width: auto; /* Adjust this width as per your design requirements */
     margin: auto; /* Centers the card in the available column space */
     border: none;
     border-radius: 0.25rem; /* Slightly rounded corners for the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* A subtle shadow for some depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* A subtle shadow for some depth */
   }
   
-  /* Styles for the form and its elements */
-  .card-body {
-    padding: 2rem; /* Provides spacing inside the card */
-  }
   
   .form-heading {
     margin-bottom: 2rem; /* Space below the form heading */
@@ -36,6 +33,8 @@ html, body {
   }
   
   .form-control {
+    width: 100%;
+    min-width:280px;
     border-radius: 0.25rem; /* Consistent rounded edges for inputs */
     margin-bottom: 1rem; /* Space between form elements */
   }
@@ -64,8 +63,61 @@ html, body {
   /* This style applies to the text and links at the bottom of the form */
   .form-footer-text {
     text-align: center; /* Center align the text */
-    margin-top: 1rem; /* Space from the last form element */
+    margin-top: 1rem;
+    margin-bottom: 1rem; /* Adding bottom margin*/
   }
+
+
+  /* Ensuring that the 'Register for free' link is centered and appears as a block */
+.card-body .form-footer-text a {
+  display: block;
+}
+
+/* this is where i will be testing new styles*/
+/* Style for the 'Forgot Password?' link */
+.card-body .mt-2 {
+  display: block; /* Ensure the link is displayed as a block for correct spacing */
+  color: #5A4CAD;; /* Change as per your theme color */
+  text-decoration: underline; /* If you want it underlined */
+}
+
+/* Targeting the 'Forgot Password?' link within the card body specifically */
+.card-body .nav-link.mt-2 {
+  display: block;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+/* Style for the footer text, ensuring it's centered */
+.card-body .text-center {
+  margin-top: 1rem; /* Adjust as necessary */
+  margin-bottom: 1rem;
+  color: #5A4CAD; /* Adjust color to fit your design */
+}
+
+/* Style for the 'Register for free' link within the footer text */
+.card-body .text-center a {
+  color: #5A4CAD;; /* Ensure this is visible on your card's background */
+  text-decoration: none; /* Typically no underline for links */
+}
+
+.card-body .text-center a:hover {
+  text-decoration: underline; /* Underline on hover for better user interaction */
+}
+
+.card.shadow {
+  /* Apply a shadow that matches your UI concept */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Remove default border, if any, or set it as per your design */
+  border: none;
+  /* Set a background color that matches your UI concept, if different from default */
+  background-color: #ffffff;
+  /* Adjust padding as per your design requirements */
+  padding: 2rem;
+  /* You may want rounded corners if that fits your design */
+  border-radius: 0.5rem;
+}
+
   
   /* Responsive adjustments if needed for smaller screens */
   @media (max-width: 768px) {
