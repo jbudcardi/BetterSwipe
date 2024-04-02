@@ -17,10 +17,8 @@ html, body {
   
   /* Styles for the card */
   .card {
-    width: 60%;
-    max-width: auto; /* Adjust this width as per your design requirements */
-    margin: auto; /* Centers the card in the available column space */
-    border: none;
+    width: 100%;
+    max-width: 500px; /* Adjust this width as per your design requirements */
     border-radius: 0.25rem; /* Slightly rounded corners for the card */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* A subtle shadow for some depth */
   }
