@@ -2,23 +2,29 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 /* Ensure the full viewport height and set the background color */
-html, body {
-    height: 100%;
-    margin: 0;
-    background-color: #6C5CE7; /* chosen background color */
-    box-sizing: border-box;
-  }
+html{
+  box-sizing: border-box;
+  height: 100px;
+  width: 100px;
+}
+
+*,*::before, *after{
+  box-sizing: inherit;
+}
   
   /* Since Bootstrap is handling the centering, you don't need to set display: flex here */
   /* Just make sure the body has the padding-top to push content below a fixed navbar */
   body {
-    padding-top: 80px; /* Adjust this value to match the height of your fixed navbar */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
   }
   
   /* Styles for the card */
   .card {
     width: 100%;
-    max-width: 500px; /* Adjust this width as per your design requirements */
+    max-width: 700px; /* Adjust this width as per your design requirements */
     border-radius: 0.25rem; /* Slightly rounded corners for the card */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* A subtle shadow for some depth */
   }
@@ -39,7 +45,7 @@ html, body {
   
   /* Style for the primary button */
   .btn-primary {
-    width: 15%; /* Full width button */
+    width: auto; /* Full width button */
     border-radius: 0.25rem; /* Consistent rounded edges for the button */
     padding: 0.75rem; /* Comfortable padding for the button */
     font-size: 1rem; /* Readable text size */
@@ -55,20 +61,23 @@ html, body {
   /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
   .nav-link, .nav-link:hover {
     text-decoration: none; /* Removes underline */
-    color: #FFFFFF; /* Sets the color to white */
+    color: #5A4CAD; /* Sets the color to white */
   }
   
   /* This style applies to the text and links at the bottom of the form */
   .form-footer-text {
     text-align: center; /* Center align the text */
-    margin-top: 1rem;
-    margin-bottom: 1rem; /* Adding bottom margin*/
+    margin-top: 2rem;
+    margin-bottom: 2rem; /* Adding bottom margin*/
+    font-size: 1rem;
   }
 
 
   /* Ensuring that the 'Register for free' link is centered and appears as a block */
-.card-body .form-footer-text a {
-  display: block;
+ .form-footer-text a {
+ color: #5A4CAD;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 /* this is where i will be testing new styles*/
@@ -90,6 +99,7 @@ html, body {
 .card-body .text-center {
   margin-top: 1rem; /* Adjust as necessary */
   margin-bottom: 1rem;
+  max-width: auto;
   color: #5A4CAD; /* Adjust color to fit your design */
 }
 
@@ -107,11 +117,11 @@ html, body {
   /* Apply a shadow that matches your UI concept */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Remove default border, if any, or set it as per your design */
-  border: none;
+  border: auto;
   /* Set a background color that matches your UI concept, if different from default */
   background-color: #ffffff;
   /* Adjust padding as per your design requirements */
-  padding: 2rem;
+  padding: 250px;
   /* You may want rounded corners if that fits your design */
   border-radius: 0.5rem;
 }
