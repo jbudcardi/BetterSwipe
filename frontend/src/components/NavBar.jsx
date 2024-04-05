@@ -3,6 +3,7 @@ import { Link} from 'react-router-dom';
 import './NavBar.css';
 import logo from '../pages/BetterSwipe Logo.jpg';
 import { Navbar, Nav, Container} from 'react-bootstrap';
+import Logout from "./LogOut";
 
 //We are creating the functional Component Navigation bar
 //This is for the purpose of navigating to different components on our Single-Page- Application
@@ -24,7 +25,7 @@ function NavBar(){
                 {/* Conditional render of the dasshboard due to authenticaiton status of the user */}
                 
                 <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

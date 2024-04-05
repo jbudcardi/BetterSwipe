@@ -4,8 +4,8 @@
 /* Ensure the full viewport height and set the background color */
 html{
   box-sizing: border-box;
-  height: 100px;
-  width: 100px;
+  height: 100%;
+  width: 100%;
 }
 
 *,*::before, *after{
@@ -20,6 +20,17 @@ html{
     height: 100%;
     width: 100%;
   }
+
+  .min-vh-100 {
+    min-height: 100vh;
+  }
+
+  .mb-4,
+.mb-3,
+.mb-2 {
+  margin-bottom: 1rem !important;
+}
+  
   
   /* Styles for the card */
   .card {
@@ -39,9 +50,20 @@ html{
   .form-control {
     width: 100%;
     min-width:280px;
-    border-radius: 0.25rem; /* Consistent rounded edges for inputs */
+    border-radius: 0 !important; /* Consistent rounded edges for inputs */
     margin-bottom: 1rem; /* Space between form elements */
   }
+  .form-control:focus {
+    box-shadow: none !important;
+  }
+
+  .d-grid.gap-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+
   
   /* Style for the primary button */
   .btn-primary {
@@ -55,7 +77,8 @@ html{
   
   /* Adjust the hover state for the button for a better user experience */
   .btn-primary:hover {
-    background-color: #5A4CAD; /* A slightly darker shade on hover */
+    background-color: #5A4CAD;
+    border-color: #0062cc; /* A slightly darker shade on hover */
   }
   
   /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
@@ -97,6 +120,7 @@ html{
 
 /* Style for the footer text, ensuring it's centered */
 .card-body .text-center {
+  text-align:center;
   margin-top: 1rem; /* Adjust as necessary */
   margin-bottom: 1rem;
   max-width: auto;
@@ -114,23 +138,32 @@ html{
 }
 
 .card.shadow {
-  /* Apply a shadow that matches your UI concept */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Remove default border, if any, or set it as per your design */
-  border: auto;
-  /* Set a background color that matches your UI concept, if different from default */
+  border: none;
   background-color: #ffffff;
-  /* Adjust padding as per your design requirements */
-  padding: 250px;
-  /* You may want rounded corners if that fits your design */
+  padding: 1rem; /* Adjust padding to match the mobile version */
   border-radius: 0.5rem;
+  max-width: 400px; /* Suitable for desktop but can adjust as needed */
+  width: 100%;
+  margin: auto; /* This will center your card horizontally */
+  
+}
+
+
+
+.login-heading{
+ 
+  writing-mode: horizontal-tb;
+  transform: none;
+  
 }
 
   
   /* Responsive adjustments if needed for smaller screens */
   @media (max-width: 768px) {
-    .card-body {
-      padding: 1rem; /* Less padding on smaller screens */
+    .card.body {
+      padding: 1rem;
+      max-width: 100%; /* Less padding on smaller screens */
     }
   }
   
