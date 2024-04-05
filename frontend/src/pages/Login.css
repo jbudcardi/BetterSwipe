@@ -2,78 +2,63 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 /* Ensure the full viewport height and set the background color */
-html{
-  box-sizing: border-box;
+html, body{
   height: 100%;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  
 }
 
-*,*::before, *after{
-  box-sizing: inherit;
-}
+
   
   /* Since Bootstrap is handling the centering, you don't need to set display: flex here */
   /* Just make sure the body has the padding-top to push content below a fixed navbar */
   body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    font-family: 'Open Sans', sans-serif; /* will adjust this to push the content below the fixed navbar */
   }
 
-  .min-vh-100 {
-    min-height: 100vh;
+  .login-page-container{
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding-top: 56px;
   }
 
-  .mb-4,
-.mb-3,
-.mb-2 {
-  margin-bottom: 1rem !important;
-}
+  .main-content{
+    padding-top: 80px;
+  }
+
   
   
   /* Styles for the card */
   .card {
-    width: 100%;
-    max-width: 700px; /* Adjust this width as per your design requirements */
-    border-radius: 0.25rem; /* Slightly rounded corners for the card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* A subtle shadow for some depth */
+   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+   border: none;
+   background-color: #ffffff;
+   padding: 1rem;
+   border-radius: 0.5rem;
+   width: 100%;
+   max-width: 400px;
+   margin: auto;
   }
   
+
   
-  .form-heading {
-    margin-bottom: 2rem; /* Space below the form heading */
-    font-size: 1.5rem; /* Large, readable text */
-    text-align: center; /* Center align the heading text */
-  }
-  
-  .form-control {
-    width: 100%;
-    min-width:280px;
-    border-radius: 0 !important; /* Consistent rounded edges for inputs */
-    margin-bottom: 1rem; /* Space between form elements */
+  .form-control .btn-primary {
+    height: calc(2.25rem + 2px);
   }
   .form-control:focus {
     box-shadow: none !important;
   }
 
-  .d-grid.gap-2 {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  
+
 
   
-  /* Style for the primary button */
-  .btn-primary {
-    width: auto; /* Full width button */
-    border-radius: 0.25rem; /* Consistent rounded edges for the button */
-    padding: 0.75rem; /* Comfortable padding for the button */
-    font-size: 1rem; /* Readable text size */
-    margin-bottom: 1rem;
-    min-width: 150px; /* Space below the button */
-  }
+ 
   
   /* Adjust the hover state for the button for a better user experience */
   .btn-primary:hover {
