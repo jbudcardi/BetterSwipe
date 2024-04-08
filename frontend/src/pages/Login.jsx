@@ -18,7 +18,7 @@ function LoginPage(){
     return(
         <Container fluid className="login-page-container d-flex justify-content-center align-items-center">
         <Row className="justify-content-center">
-            <Col xs={12} md={6} lg={4}>
+            <Col xs={12} md={12} lg={12} className="login-card-container">
                 <Card className="shadow">
                     <Card.Body>
                         <Form onSubmit={handleSubmit}>
