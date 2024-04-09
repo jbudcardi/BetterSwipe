@@ -52,7 +52,7 @@ function LoginPage(){
                         <Nav.Link href="#" className="mt-2" aria-label="Forgot Password">Forgot Password?</Nav.Link>
                         <hr />
                         <div className="text-center">
-                            <p>Don't have an account yet? <Nav.Link href="/register" aria-label="Register for free">Register for free</Nav.Link></p>
+                            <p>Don't have an account yet? <Nav.Link href="/register" aria-label="register-link">Register for free</Nav.Link></p>
                         </div>
                     </Card.Body>
                 </Card>
