@@ -7,7 +7,7 @@
   --primary-medium: #502BAF;
   --primary-light: #6c1fc7;
   --secondary-blue: #103775;
-  --background-light: #2A2990;
+  --background-light: #AD00FF;
   --text-light: #FFFFFF;
   --text-dark: #5A4CAD;
   
@@ -17,7 +17,7 @@ html, body{
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--background-light);
+  background-color: var(--background-light) !important;
   font-family: 'Open Sans', sans-serif;
   
 }
@@ -89,6 +89,16 @@ html, body{
     border-color: var(--primary-medium);
 
   }
+
+   /*.btn-secondary{
+    background-color: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+  }
+
+  .btn-secondary{
+    background-color: darken(var(--secondary-blue), 10%);
+    border-color: darken(var(--secondary-blue), 10%);
+  }*/
 
 
 
