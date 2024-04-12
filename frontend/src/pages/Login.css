@@ -42,14 +42,14 @@ html, body{
     
   }
 
-  .main-content{
+    .main-content{
     padding-top: 80px;
   }
 
   
   
   /* Styles for the card */
-  .card {
+   .card {
    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
    border: none;
    background-color: var(--background-light);
@@ -61,14 +61,14 @@ html, body{
   }
   
 
-  .form-heading{
+    .form-heading{
     margin-bottom: 2rem;
     font-size: 1.5rem;
     text-align: center;
   }
    
   
-  .form-control{
+ .form-control{
     width: 100%;
     min-width: 280px;
     border-radius: 0;
@@ -79,14 +79,14 @@ html, body{
     box-shadow: none;
   }
 
-  .btn-primary{
+   .btn-primary{
     width: auto;
     border-radius: 0.25rem;
     padding: 0.75rem;
     font-size: 1rem;
     margin-bottom: 1rem;
     min-width: 150px;
-    background-color: var(--primary-medium);
+    background-color: var(--primary-medium) !important;
     border-color: var(--primary-medium);
 
   }
@@ -107,9 +107,19 @@ html, body{
  
   
   /* Adjust the hover state for the button for a better user experience */
-  .btn-primary:hover {
+  body .btn-primary:hover {
     background-color: var(--primary-medium);
     border-color: var(--primary-medium);/* A slightly darker shade on hover */
+  }
+
+  body .nav-link{
+    text-decoration: none;
+    color: var(--text-dark);
+  }
+
+ body  .nav-link-custom:hover{
+    color: #b3b7ff;
+    text-decoration: underline;
   }
   
   /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
@@ -117,7 +127,7 @@ html, body{
 
   
   /* This style applies to the text and links at the bottom of the form */
-  .form-footer-text {
+  body .form-footer-text {
     text-align: center; /* Center align the text */
     margin-top: 2rem;
     margin-bottom: 2rem; /* Adding bottom margin*/
@@ -128,7 +138,7 @@ html, body{
 
 
   /* Ensuring that the 'Register for free' link is centered and appears as a block */
- .form-footer-text a {
+ body .form-footer-text a {
  color: var(--text-dark);
   font-weight: bold;
   text-decoration: none;
@@ -142,20 +152,15 @@ html, body{
   text-decoration: underline; /* If you want it underlined */
 }
 
-/* Targeting the 'Forgot Password?' link within the card body specifically */
-.card-body .nav-link.mt-2 {
+.card-body .nav-link.mt-2,
+.card-body .nav-link.mt-3{
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom:  1rem;
   background-color: white;
   color: #5A4CAD !important;
 }
 
-.card-body .nav-link.mt-3{
-  display: block;
-  margin-bottom: 1rem;
-  background-color: white;
-  color: #5A4CAD !important;
-}
+
 
 /* Style for the footer text, ensuring it's centered */
 .card-body .text-center {
@@ -168,7 +173,7 @@ html, body{
 
 /* Style for the 'Register for free' link within the footer text */
 .card-body .text-center a {
-  color: #5A4CAD;; /* Ensure this is visible on your card's background */
+  color: #5A4CAD; /* Ensure this is visible on your card's background */
   text-decoration: none; /* Typically no underline for links */
 }
 
@@ -176,10 +181,7 @@ html, body{
   color: black;
   text-decoration: underline; /* Underline on hover for better user interaction */
 }
-.mt-2{
 
-  color: #5A4CAD;
-}
 
 .card.shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
