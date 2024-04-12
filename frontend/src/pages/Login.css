@@ -125,6 +125,8 @@ html, body{
     font-size: 1rem;
   }
 
+  
+
 
   /* Ensuring that the 'Register for free' link is centered and appears as a block */
  .form-footer-text a {
@@ -143,6 +145,13 @@ html, body{
 
 /* Targeting the 'Forgot Password?' link within the card body specifically */
 .card-body .nav-link.mt-2 {
+  display: block;
+  margin-bottom: 1rem;
+  background-color: white;
+  color: #5A4CAD !important;
+}
+
+.card-body .nav-link.mt-3{
   display: block;
   margin-bottom: 1rem;
   background-color: white;
