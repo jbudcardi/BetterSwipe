@@ -13,6 +13,7 @@
   
 }
 
+
 html, body{
   height: 100%;
   margin: 0;
@@ -112,10 +113,8 @@ html, body{
   }
   
   /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
-  .nav-link, .nav-link:hover {
-    text-decoration: none; /* Removes underline */
-    color: var(--text-dark);
-  }
+  
+
   
   /* This style applies to the text and links at the bottom of the form */
   .form-footer-text {

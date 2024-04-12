@@ -49,10 +49,10 @@ function LoginPage(){
                                 </Button>
                             </div>
                         </Form>
-                        <Nav.Link href="#" className="mt-2" aria-label="Forgot Password">Forgot Password?</Nav.Link>
+                        <Nav.Link href="#" className="mt-2 nav-link-custom" aria-label="Forgot Password">Forgot Password?</Nav.Link>
                         <hr />
                         <div className="text-center">
-                            <p>Don't have an account yet? <Nav.Link href="/sign-up"  className="mt-3" aria-label="register-link">Register for free</Nav.Link></p>
+                            <p>Don't have an account yet? <Nav.Link href="/sign-up"  className="mt-3 nav-link-custom" aria-label="register-link">Register for free</Nav.Link></p>
                         </div>
                     </Card.Body>
                 </Card>
