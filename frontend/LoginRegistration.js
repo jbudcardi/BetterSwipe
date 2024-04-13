@@ -1,51 +1,104 @@
-import re
-import hashlib
-import sqlite3
+import { useState } from 'react';
+import sha256 from 'sha256';
 
-def create_connection():
-    conn = sqlite3.connect('users.db')
-    return conn
+const users = [];
 
-def create_table(conn):
-    cursor = conn.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS users
-                     (id INTEGER PRIMARY KEY, email TEXT UNIQUE, password TEXT)''')
+const createUser = (email, password) => {
+  const newUser = { id: users.length + 1, email, password: sha256(password) };
+  users.push(newUser);
+  return newUser;
+};
 
-def validate_email(email):
-    if re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        return True
-    return False
+const createConnection = () => {
+  return users;
+};
 
-def validate_password(password):
-    if len(password) < 10:
-        return False
-    if not re.search(r'\d', password):
-        return False
-    if not re.search(r'[A-Z]', password, re.MULTILINE):
-        return False
-    if not re.search(r'[a-z]', password, re.MULTILINE):
-        return False
-    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password, re.MULTILINE):
-        return False
-    return True
+const createTable = (conn) => {
+  // No action needed, as we're using an in-memory array
+};
 
-def register(email, password):
-    conn = create_connection()
-    cursor = conn.cursor()
-    if validate_email(email) and validate_password(password):
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", (email, hashed_password))
-        conn.commit()
-        return True
-    return False
+const validateEmail = (email) => {
+  const regex = /^[^@]+@[^@]+\.[^@]+$/;
+  return regex.test(email);
+};
 
-def login(email, password):
-    conn = create_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
-    user = cursor.fetchone()
-    if user:
-        hashed_password = hashlib.sha256(password.encode()).hexdigest()
-        if user[2] == hashed_password:
-            return True
-    return False
+const validatePassword = (password) => {
+  const regex = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).{10,}$/;
+  return regex.test(password);
+};
+
+const register = (email, password) => {
+  if (validateEmail(email) && validatePassword(password)) {
+    const newUser = createUser(email, password);
+    return newUser;
+  }
+  return null;
+};
+
+const login = (email, password) => {
+  const conn = createConnection();
+  const user = conn.find((user) => user.email === email);
+  if (user) {
+    if (user.password === sha256(password)) {
+      return user;
+    }
+  }
+  return null;
+};
+
+const useAuth = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSignInActive, setIsSignInActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [attempts, setAttempts] = useState(0);
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setIsSignInActive(event.target.value.length > 0 && password.length > 0);
+    setErrorMessage('');
+    setAttempts(0);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+    setIsSignInActive(email.length > 0 && event.target.value.length > 0);
+    setErrorMessage('');
+    setAttempts(0);
+  };
+
+  const registerUser = () => {
+    register(email, password);
+    setEmail('');
+    setPassword('');
+  };
+
+  const signInUser = () => {
+    const user = login(email, password);
+    if (user) {
+      setEmail('');
+      setPassword('');
+      setIsSignInActive(false);
+    } else {
+      setAttempts((prevAttempts) => prevAttempts + 1);
+      if (attempts === 1) {
+        setErrorMessage('Incorrect input on Email Address and/or Password. The last attempt before your account will be locked out.');
+      } else if (attempts === 2) {
+        setErrorMessage('Incorrect input on Email Address and/or Password. Your account is temporarily locked out.');
+        // Add code here to lock the user's account
+      }
+    }
+  };
+
+  return {
+    email,
+    password,
+    isSignInActive,
+    errorMessage,
+    attempts,
+    handleEmailChange,
+    handlePasswordChange,
+    registerUser,
+    signInUser,
+  };
+};

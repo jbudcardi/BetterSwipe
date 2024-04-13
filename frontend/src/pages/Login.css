@@ -1,72 +1,243 @@
+/* Login.css */
 
-.login-container{
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+/* Ensure the full viewport height and set the background color */
+:root{
+  --primary-dark: #2A2990;
+  --primary-medium: #502BAF;
+  --primary-light: #6c1fc7;
+  --secondary-blue: #103775;
+  --background-light: #AD00FF;
+  --text-light: #FFFFFF;
+  --text-dark: #5A4CAD;
+  
+}
+
+
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-light) !important;
+  font-family: 'Open Sans', sans-serif;
+  
+}
+
+
+  
+  /* Since Bootstrap is handling the centering, you don't need to set display: flex here */
+  /* Just make sure the body has the padding-top to push content below a fixed navbar */
+  body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 40px;
+    font-family: 'Open Sans', sans-serif; /* will adjust this to push the content below the fixed navbar */
+  }
+
+  .login-page-container{
     height: 100vh;
-    background-color: #f0f2f5;
+    align-items: center;
+    justify-content: center;
+    
+  }
 
-}
+    .main-content{
+    padding-top: 80px;
+  }
 
-form{
-    background:white;
-    padding:2em;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-}
+  
+  
+  /* Styles for the card */
+   .card {
+   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+   border: none;
+   background-color: var(--background-light);
+   padding: 1rem;
+   border-radius: 0.5rem;
+   width: 100%;
+   max-width: 400px;
+   margin: auto;
+  }
+  
 
-form h2{
+    .form-heading{
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
     text-align: center;
-    margin-bottom: 1em;
-}
-
-/* Input styling*/
-input[type="email"],
-input[type="password"]{
+  }
+   
+  
+ .form-control{
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    min-width: 280px;
+    border-radius: 0;
+    margin-bottom: 1rem;
+   }
+ 
+  .form-control:focus {
+    box-shadow: none;
+  }
 
-button[type="submit"]{
-    width: 100px;
-    background-color: #007bff;
-    color: white;
-    padding:10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+   .btn-primary{
+    width: auto;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    min-width: 150px;
+    background-color: var(--primary-medium) !important;
+    border-color: var(--primary-medium);
 
-button[type="submit"]:hover{
-    background-color: #0056b3;
-}
+  }
 
-/*forgot password styling*/
-/*forgot styling will be added here*/
-.forgot-password,
-.register-link{
-    display: block;
-    text-align: center;
-    margin: 20px 0;
-    color: #007bff; /* subject to change */
+   /*.btn-secondary{
+    background-color: var(--secondary-blue);
+    border-color: var(--secondary-blue);
+  }
+
+  .btn-secondary{
+    background-color: darken(var(--secondary-blue), 10%);
+    border-color: darken(var(--secondary-blue), 10%);
+  }*/
+
+
+
+  
+ 
+  
+  /* Adjust the hover state for the button for a better user experience */
+  body .btn-primary:hover {
+    background-color: var(--primary-medium);
+    border-color: var(--primary-medium);/* A slightly darker shade on hover */
+  }
+
+  body .nav-link{
     text-decoration: none;
-}
+    color: var(--text-dark);
+  }
 
-/* again, forgot password styling will be implemented here*/
-.forgot-password:hover,
-.register-link:hover {
+ body  .nav-link-custom:hover{
+    color: #b3b7ff;
     text-decoration: underline;
+  }
+  
+  /* Additional styles for links, such as "Forgot Password?" and "Register for free" */
+  
+
+  
+  /* This style applies to the text and links at the bottom of the form */
+  body .form-footer-text {
+    text-align: center; /* Center align the text */
+    margin-top: 2rem;
+    margin-bottom: 2rem; /* Adding bottom margin*/
+    font-size: 1rem;
+  }
+
+  
+
+
+  /* Ensuring that the 'Register for free' link is centered and appears as a block */
+ body .form-footer-text a {
+ color: var(--text-dark);
+  font-weight: bold;
+  text-decoration: none;
 }
 
-/* Will add additional styles for "or continue with" section just in case if we want to add anything */
+/* this is where i will be testing new styles*/
+/* Style for the 'Forgot Password?' link */
+.card-body .mt-2 {
+  display: block; /* Ensure the link is displayed as a block for correct spacing */
+  color: var(--text-dark);
+  text-decoration: underline; /* If you want it underlined */
+}
 
-/* Style adjustments for small screens*/
-@media(max-width:768px){
-    form{
-        padding: 1.5em;
+.card-body .nav-link.mt-2,
+.card-body .nav-link.mt-3{
+  display: block;
+  margin-bottom:  1rem;
+  background-color: white;
+  color: #5A4CAD !important;
+}
+
+
+
+/* Style for the footer text, ensuring it's centered */
+.card-body .text-center {
+  text-align:center;
+  margin-top: 1rem; /* Adjust as necessary */
+  margin-bottom: 1rem;
+  max-width: auto;
+  color: var(--text-dark); /* Adjust color to fit your design */
+}
+
+/* Style for the 'Register for free' link within the footer text */
+.card-body .text-center a {
+  color: #5A4CAD; /* Ensure this is visible on your card's background */
+  text-decoration: none; /* Typically no underline for links */
+}
+
+.card-body .text-center a:hover {
+  color: black;
+  text-decoration: underline; /* Underline on hover for better user interaction */
+}
+
+
+.card.shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  background-color: #ffffff;
+  padding: 1rem; /* Adjust padding to match the mobile version */
+  border-radius: 0.5rem;
+  max-width: 400px; /* Suitable for desktop but can adjust as needed */
+  width: 100%;
+  margin: auto; /* This will center your card horizontally */
+  
+}
+
+
+
+.login-heading{
+ 
+  writing-mode: horizontal-tb;
+  transform: none;
+  
+}
+
+.card-body .nav-link, .card-body .nav-link:hover{
+ text-decoration: none;
+  color: #5A4CAD;
+}
+
+  
+  /* Responsive adjustments if needed for smaller screens */
+  @media (max-width: 768px) {
+    .card.body {
+      padding: 1rem;
+      max-width: 100%; /* Less padding on smaller screens */
     }
-}
+  }
+
+ /* Responsive  desiign for larger screens*/
+  @media(min-width: 992px){
+    .login-card{
+      max-width: 500px;
+    }
+
+    .login-page-container{
+      padding: 2rem;
+    }
+  }
+
+  @media(min-width: 1200px){
+    .login-card-container{
+      max-width: 600px;
+      margin: auto;
+    }
+  }
+
+  .login-card{
+    margin: auto;
+    width: 100%;
+  }
+  
