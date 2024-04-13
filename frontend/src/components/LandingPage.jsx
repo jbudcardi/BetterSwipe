@@ -17,7 +17,8 @@ function LandingPage(){
             <Row className="hero-section justify-content-center align-items-center text-center">
                 <Col xs={12} md={8}>
                 <h1>Swipe Smarter, earn better {/* This slogan is subject to change*/}</h1>
-                <p>You can say goodbye to the complexities of choosing the right credit card.</p>
+                <p>You can say goodbye to the complexities of choosing the right credit card.
+                </p>
                 <div className="hero-cta-buttons">
                     <LinkContainer to="/login">
                     <Button variant="primary" className="me-2">Login</Button>
