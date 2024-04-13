@@ -17,11 +17,16 @@ class CardList(models.Model):
         return self.card_name
 
 class UserList(models.Model):
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique= True)
     last_name = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
+    email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
+
+    #We are hashing the password for security purposes to avoid storing plain text passwords
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(UserList, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username
