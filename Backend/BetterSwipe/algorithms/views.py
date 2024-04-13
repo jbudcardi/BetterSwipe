@@ -36,4 +36,7 @@ def user_login(request):
                 return redirect('index')  # Redirects to the home page
     else:
         form = AuthenticationForm()
-    return render(request, 'registration/login.html', {'form': form})
+        
+def user_logout(request):
+    logout(request)
+    return redirect('user_login') #This will change depending on if we have a URL named 'user_login for  the login view
