@@ -1,0 +1,34 @@
+/* About.css */
+
+.about-container {
+    padding: 40px 15px; /* Adds padding around the content */
+    background-color: #f8f9fa; /* Light grey background for slight contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.about-header {
+    color: #343a40; /* Dark gray color for headings */
+    margin-bottom: 20px; /* Space below headings */
+}
+
+.about-text {
+    color: #666; /* Lighter text for the body */
+    line-height: 1.6; /* Increased line-height for readability */
+    margin-bottom: 20px; /* Space below paragraphs */
+}
+
+.about-list {
+    padding-left: 20px; /* Space for bullet points */
+    list-style-type: disc; /* Disc style bullet points */
+}
+
+.about-contact-item {
+    margin-bottom: 10px; /* Space between contact items */
+}
+
+@media (min-width: 768px) {
+    .about-container {
+        padding: 60px 50px; /* Larger padding on larger screens */
+    }
+}

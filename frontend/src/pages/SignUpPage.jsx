@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { Link} from 'react-router-dom';
 
 
@@ -6,9 +7,12 @@ function SignUpPage(){
 
     // State to store input values
     const [userInput, setUserInput] = useState({
-        username: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
         email: '',
         password: '',
+        confirmPassword: '',
     });
 
     //Handle input changes
@@ -29,31 +33,84 @@ function SignUpPage(){
     };
 
     return(
-        <div className="signup-container">
-            <h2>Sign up</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="username">Username</label>
+        <Container className="signup-container">
+            <Col xs={12} md={12} lg={12} className="signup-container">
+           <Card className="shadow">
+            <Card.Body>
+            <Form onSubmit={handleSubmit}>
+                 <h2 className='text-center mb-4'>Sign up</h2>
+                <Form.Group className="mb-3">
+                    <label htmlFor="firstName">First Name</label>
                     <input
                     type="text"
-                    id="username"
-                    name="username"
-                    value={userInput.username}
+                    placeholder="First Name"
+                    id="firstName"
+                    name="firstName"
+                    value={userInput.firstName}
                     onChange={handleChange} />
-                </div>
-                <div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                    type="lastName"
+                    placeholder='Last Name'
+                    id="lastName"
+                    name="lastName"
+                    value={userInput.lastName}
+                    onChange={handleChange}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <label htmlFor="phoneNumber">Phone Number</label>
+                    <input
+                    type="phoneNumber"
+                    placeholder='Phone'
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={userInput.phoneNumber}
+                    onChange={handleChange}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3">
                     <label htmlFor="email">Email</label>
                     <input
+                    type="email"
+                    placeholder='Email'
+                    id="email"
+                    name="email"
+                    value={userInput.email}
+                    onChange={handleChange}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <label htmlFor="password">Password</label>
+                    <input
                     type="password"
+                    placeholder='**********'
                     id="password"
                     name="password"
                     value={userInput.password}
                     onChange={handleChange}
                     />
-                </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                    type="confirmPassword"
+                    placeholder='********** '
+                    id="password"
+                    name="confirmPassword"
+                    value={userInput.password}
+                    onChange={handleChange}
+                    />
+                </Form.Group>
                 <button type="submit">Sign Up</button>
-            </form>
-            </div>
+                 <Link to ='/login' className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'>Already have an account? Sign in here </Link>
+                </Form>
+                 </Card.Body>
+                </Card>
+            </Col>
+        </Container>
 
     );
 }

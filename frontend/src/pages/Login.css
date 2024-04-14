@@ -19,8 +19,8 @@ html, body{
   margin: 0;
   padding: 0;
   background-color: var(--background-light);
+  background-color: var(--background-light) ;
   font-family: 'Open Sans', sans-serif;
-  
 }
 
 
