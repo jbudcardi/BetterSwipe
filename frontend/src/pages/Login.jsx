@@ -1,19 +1,54 @@
 import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom'; //Importing useNavigate to help us navigate to the dashboard when the user is logged in/authenticated
 import { Container, Row, Col, Card, Form, Button, Nav } from 'react-bootstrap';
 import './Login.css';
 //Will import axios here for backend communication
+import axios from 'axios';
 
 function LoginPage(){
    //create and email and password constant variable
-    const [email, setEmail] = useState('');
+   const navigate = useNavigate();
+   const [email, setEmail] = useState('');
     const[password, setPassword] = useState('');
+
+    // State variables for loading and error handling
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     //Handle the submit of the submit button
     const handleSubmit = e => {
         e.preventDefault();
+        setLoading(true);
+        setError('');
+        
+        //Make a post request to /api/users/login with the user's email and password
+        if(!email || !password){
+            alert('Both email and password are required');
+            return;
+        }
+
+        //the link will be adjusted to where this application will be held
+        axios.post('http://localhost:8000/api/login/', { 
+            username: email,
+            password: password
+        })
+        .then(response => {
+           
+            setLoading(false);
+            console.log('Login successful:', response.data);
+            //Redirecting to the dashboard
+            navigate('/dashboard');
+        })
+
+        .catch(error => {
+            setLoading(false);
+            setError('Failed to login. Check your credentials .')
+            console.error('Login failed:', error);
+
+        });
 
         //Authentication Login will be Implemented here
-    }
+    };
 
     return(
         <Container fluid className="login-page-container d-flex justify-content-center align-items-center">
