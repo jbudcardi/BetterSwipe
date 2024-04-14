@@ -105,7 +105,7 @@ function SignUpPage(){
                     />
                 </Form.Group>
                 <button type="submit">Sign Up</button>
-                 <button>Already have an account? Sign in here </button>
+                 <Link to ='/login' className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'>Already have an account? Sign in here </Link>
                 </Form>
                  </Card.Body>
                 </Card>
