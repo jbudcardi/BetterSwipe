@@ -26,6 +26,7 @@ function NavBar(){
                 
                 <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                 <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+	    	<Nav.Link as={Link} to="/test">Test</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>

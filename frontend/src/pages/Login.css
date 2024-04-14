@@ -18,7 +18,7 @@ html, body{
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: var(--background-light) !important;
+  background-color: var(--background-light);
   font-family: 'Open Sans', sans-serif;
   
 }

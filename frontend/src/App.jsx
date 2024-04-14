@@ -13,7 +13,7 @@ import LandingPage from './components/LandingPage';
 import SignUpPage from './pages/SignUpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logout from './components/LogOut';
-
+import test from './test';
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
+	<Route path="/test" element={<test />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>
