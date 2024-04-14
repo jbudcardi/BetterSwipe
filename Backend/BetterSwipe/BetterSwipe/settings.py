@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'algorithms',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,7 +60,13 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True #will be changed to False later
+"""
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',  #This will be changed later on where the react web app will be hosted
+]
+"""
+
 
 ROOT_URLCONF = 'BetterSwipe.urls'
 
