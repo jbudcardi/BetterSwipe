@@ -28,7 +28,7 @@ function LoginPage(){
         }
 
         //the link will be adjusted to where this application will be held
-        axios.post('http://localhost:8000/api/login/', { 
+        axios.post('http://localhost:5173/api/login/', { 
             username: email,
             password: password
         })
