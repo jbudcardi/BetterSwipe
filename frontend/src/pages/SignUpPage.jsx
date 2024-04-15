@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { Link} from 'react-router-dom';
-
+import './SignUpPage.css'
 
 function SignUpPage(){
 

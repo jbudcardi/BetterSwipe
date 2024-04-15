@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+/* Ensure the full viewport height and set the background color */
+:root{
+  --primary-dark: #2A2990;
+  --primary-medium: #502BAF;
+  --primary-light: #6c1fc7;
+  --secondary-blue: #103775;
+  --background-light: #AD00FF;
+  --text-light: #FFFFFF;
+  --text-dark: #5A4CAD;
+  
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    font-family: 'Open Sans', sans-serif; /* will adjust this to push the content below the fixed navbar */
+  }
+
+  .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.signup-container{
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
