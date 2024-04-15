@@ -50,7 +50,7 @@ class CardRecommendations(models.Model):
     date_of_rec = models.DateField()
 
 class OwnedCards(models.Model):
-    card_name = models.ForeignKey(CardList, on_delete=models.CASCADE, primary_key=True)
+    card_name = models.OneToOneField(CardList, on_delete=models.CASCADE, primary_key=True)
     user = models.ForeignKey(UserList, on_delete=models.CASCADE)
     travel_reward = models.IntegerField()
     dining_reward = models.IntegerField()

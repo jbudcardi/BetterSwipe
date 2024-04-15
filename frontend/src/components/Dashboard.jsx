@@ -52,10 +52,19 @@ const Dashboard = ({ userId }) => {
             .catch(error => console.error('Error fetching data: ', error));
     }, [userId]);
 
+    const options = {
+        scales: {
+            y: { // Corrected scale configuration
+              beginAtZero: true,
+            },
+          },
+          responsive: true,
+    }
+
     return (
         <div style={{ width: '600px', height: '400px', margin: '50px auto' }}>
             <h2>Monthly Spending Summary</h2>
-            <Bar data={spendingData} options={{ scales: { yAxes: [{ ticks: { beginAtZero: true } }] }, responsive: true }} />
+            <Bar data={spendingData} options={options} />
         </div>
     );
 };
