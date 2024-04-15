@@ -1,19 +1,46 @@
 import React, {useState} from 'react';
 import { Container, Row, Col, Card, Form, Button, Nav } from 'react-bootstrap';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import validateLogin from './validateLogin'; 
+import axios from 'axios';
 //Will import axios here for backend communication
 
 function LoginPage(){
    //create and email and password constant variable
-    const [email, setEmail] = useState('');
-    const[password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const [inputs, setInputs] = useState({
+        email: '',
+        password: ''
+    });
+    const [errors, setErrors] = useState({});
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setInputs(prev => ({ ...prev, [name]: value }));
+    };
     //Handle the submit of the submit button
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        const validationErrors = validateLogin(inputs);
+        setErrors(validationErrors);
 
-        //Authentication Login will be Implemented here
-    }
+        if (Object.keys(validationErrors).length === 0) {
+            // No validation errors, proceed with login
+            axios.post('http://localhost:8000/api/login/', {
+                username: inputs.email,
+                password: inputs.password
+            })
+            .then(response => {
+                // Login successful
+                navigate('/dashboard'); // Redirect to the dashboard
+            })
+            .catch(error => {
+                // Handle login error (e.g., incorrect credentials)
+                setErrors({ form: 'Failed to login. Check your credentials.' });
+            });
+        }
+    };
 
     return(
         <Container fluid className="login-page-container d-flex justify-content-center align-items-center">
