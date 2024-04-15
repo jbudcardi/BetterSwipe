@@ -7,7 +7,7 @@ import './App.css'
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import DashBoard from './pages/DashBoard';
+import Dashboard from './components/Dashboard';
 import LoginPage from './pages/Login';
 import LandingPage from './components/LandingPage';
 import SignUpPage from './pages/SignUpPage';
@@ -25,7 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
 	<Route path="/test" element={<test />} />
