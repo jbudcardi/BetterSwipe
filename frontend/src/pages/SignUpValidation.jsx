@@ -12,12 +12,13 @@ function Validation(values){
         error.firstName = " "
     }
 
-    if (values.lastName === " "){
+    if (values.lastName === ""){
         error.lastName = "Last Name should not be empty"
     }else{
         error.lastName = " "
     }
 
+        //Phone Number validation 
     if (values.phoneNumber === ""){
         error.phoneNumber = "Phone Number should not be empty"
     } else if(!phoneNumber_pattern.test(values.phoneNumber)){
@@ -35,21 +36,21 @@ function Validation(values){
     }
 
         //password validation 
-    if(values.password === " "){
-        error.password = "Password didnt match"
+    if(values.password === ""){
+        error.password = "Password can not be empty"
     }else if(!password_pattern.test(values.password)){
         error.password = "Password should 10 characters that consist of: \n 2 uppercase letters \n one special case letter \n two number digit \n three lowercase letters \n  "
     } else {
-        error.password = ""
+        error.password = " "
     }
 
-    if(values.confirmPassword === " "){
-        error.password = "Password didn't match"
+    if(values.confirmPassword === ""){
+        error.confirmPassword = "Password didn't match"
     }
     else if(!password_pattern.test(values.password)){
-        error.password = "Password didn't match"
+        error.confirmPassword = "Password didn't match"
     } else {
-        error.password = ""
+        error.confirmPassword = " "
     }
     return error;
 
