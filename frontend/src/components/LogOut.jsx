@@ -8,8 +8,15 @@ const Logout = ({ onLogout}) => {
         //Call the logout function passed as a prop
         onLogout();
         //Redirect to the login page or home page after logging out
-        navigate('/');
-    }, [onLogout, navigate]);
+        handleLogout();
+    }, []);
+
+    const handleLogout = () => {
+        if (onLogout) {
+            onLogout();
+        }
+        navigate('/'); // Redirect to the home page after logging out
+    };
     //Render nothing or a simple message while the redirect is happening
     return(
         <div>
