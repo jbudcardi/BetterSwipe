@@ -34,11 +34,14 @@ class Expenses(models.Model):
 
 class SpendingSummary(models.Model):
     user = models.ForeignKey(UserList, on_delete=models.CASCADE)
-    month = models.IntegerField()
+    dates = models.IntegerField()
     travel_amount = models.IntegerField()
     dining_amount = models.IntegerField()
-    grocery_amount = models.IntegerField()
-    gas_amount = models.IntegerField()
+    retail_amount = models.IntegerField()
+    telecom_amount = models.IntegerField()
+    charity_amount = models.IntegerField()
+    services_amount = models.IntegerField()
+    auto_amount = models.IntegerField()
     entertainment_amount = models.IntegerField()
     other_amount = models.IntegerField()
 
