@@ -17,7 +17,7 @@ function LoginPage(){
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setInputs(prev => ({ ...prev, [name]: value }));
+        setInputs(prevInputs => ({ ...prevInputs, [name]: value }));
     };
     //Handle the submit of the submit button
     const handleSubmit = (e) => {
@@ -55,9 +55,11 @@ function LoginPage(){
                                 <Form.Control
                                     type="email"
                                     placeholder="Enter email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    name="email"
+                                    value={inputs.email}
+                                    onChange={handleInputChange}
                                 />
+                                {errors.email && <p className='text-danger'>{errors.email}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -65,9 +67,11 @@ function LoginPage(){
                                 <Form.Control
                                     type="password"
                                     placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    name="password"
+                                    value={inputs.password}
+                                    onChange={handleInputChange}
                                 />
+                                {errors.email && <p className='text-danger'>{errors.email}</p>}
                             </Form.Group>
 
                             <div className="d-grid gap-2">
