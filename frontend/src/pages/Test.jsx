@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Nav } from 'react-bootstrap';
 import axios from 'axios';
 import { Link} from 'react-router-dom';
-import './pages/Login.css';
+import './Login.css';
 
-function test() {
+function Test() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -34,4 +34,4 @@ function test() {
   );
 }
 
-export default test;
+export default Test;

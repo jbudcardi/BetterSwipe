@@ -7,13 +7,14 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
 from django.contrib.auth import authenticate, login
+from rest_framework.views import APIView
+
 
 @api_view(['GET'])
-def test(request):
+def register(request):
     return Response({'message': "Welcome to BetterSwipe!"})
 
 #this is where the registration will go
-
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -23,14 +24,14 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('index')  # Redirects to the home page
+                return redirect('index')  # Ensure you have a URL named 'index'
     else:
         form = AuthenticationForm()
-        
+    return render(request, 'login.html', {'form': form})  # Adjust the template name as necessary
+
 def user_logout(request):
     logout(request)
-    return redirect('user_login') #This will change depending on if we have a URL named 'user_login for  the login view
-
+    return redirect('user_login')
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
@@ -42,4 +43,4 @@ class LoginAPIView(APIView):
         if user:
             token, _=Token.objects.get_or_create(user=user)
             return Response({'token': token.key}, status=status.HTTP_200_OK)
-        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUES)
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
