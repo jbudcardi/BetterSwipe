@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from sshtunnel import SSHTunnelForwarder
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -76,6 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'BetterSwipe.wsgi.application'
 
+ssh_tunnel = SSHTunnelForwarder(
+    'cs411-blue.student.cs.odu.edu',
+    ssh_pkey="SSH PRIVATE KEY FILEPATH",
+    ssh_password="SSH PASSWORD",
+    ssh_username="cs_",
+    remote_bind_address=('172.17.0.1', 1433),
+)
+ssh_tunnel.start()
+print(ssh_tunnel.local_bind_port, "Hello")
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -84,7 +94,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+     'shhtunnel_db': {
+        'ENGINE': 'mssql',
+        'HOST': 'localhost',
+        'PORT': 22,
+        'NAME': "sql1",
+        'USER': "SA",
+        'PASSWORD': "cs411-odu",
+     }
 }
 
 
