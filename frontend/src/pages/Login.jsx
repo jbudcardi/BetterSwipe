@@ -37,7 +37,7 @@ function LoginPage(){
             })
             .catch(error => {
                 // Handle login error (e.g., incorrect credentials)
-                setErrors({ form: 'Failed to login. Check your credentials.' });
+                setErrors({ ...errors, form: 'Failed to login. Check your credentials.' });
             });
         }
     };

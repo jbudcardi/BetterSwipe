@@ -35,6 +35,14 @@ def user_logout(request):
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
+
+    def get(self, request):
+        # You can include any logic here that needs to be processed during a GET request
+        # Example: return a simple message or specific data
+        return Response({
+            'message': 'GET request received. But this endpoint is primarily for POST requests.'
+        }, status=status.HTTP_200_OK)
+
     
     def post(self, request):
         username = request.data.get('username')
