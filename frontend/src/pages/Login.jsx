@@ -27,7 +27,7 @@ function LoginPage(){
 
         if (Object.keys(validationErrors).length === 0) {
             // No validation errors, proceed with login
-            axios.post('http://localhost:8000/api/login/', {
+            axios.post('http://localhost:8000/algorithms/api/login/', {
                 username: inputs.email,
                 password: inputs.password
             })
