@@ -12,6 +12,9 @@ from .models import CardList, SpendingSummary
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 
+@api_view(['GET'])
+def test(request):
+    return Response({'message': "API Test successful!"})
 
 @api_view(['GET'])
 def register(request):
