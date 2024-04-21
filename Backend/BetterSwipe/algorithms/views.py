@@ -8,9 +8,12 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
-from .models import CardList, SpendingSummary
+from .models import UserList, Expenses, CardList, SpendingSummary
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
+import numpy as py
+import pandas as pd
+import matplotlib.pyplot as plt
 
 @api_view(['GET'])
 def test(request):
@@ -19,6 +22,36 @@ def test(request):
 @api_view(['GET'])
 def register(request):
     return Response({'message': "Welcome to BetterSwipe!"})
+
+#Pandas upload method
+def upload_transactions(request):
+    try:
+        csv_file = request.FILES['file']
+        user_id = request.data['userId']
+        user - UserList.objects.get(pk=user_id)
+        df = pd.read_csv(csv_file)
+
+        #Get total
+        total_amount = df['amount'].sum()
+
+        #Group and sum by categories
+        category_df = df,groupby(['category'], sort=True)['amount'].sum()
+        
+        #Just for categorized csv, might need to make one traversing whole original CSV
+        for i in category_df.index:
+            df_category = df['category'][i]
+            df_amount = df['amount'][i]
+
+            Expenses.objects.create(
+                    user = user,
+                    amount = df_amount
+                    spending_category = df_category
+                    )
+        
+        return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e), status=400)
+
 
 #this is where the registration will go
 def user_login(request):
