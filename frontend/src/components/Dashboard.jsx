@@ -65,6 +65,7 @@ const Dashboard = ({ userId }) => {
         <div style={{ width: '600px', height: '400px', margin: '50px auto' }}>
             <h2>Monthly Spending Summary</h2>
             <Bar data={spendingData} options={options} />
+            <button>Upload Statments</button>
         </div>
     );
 };
