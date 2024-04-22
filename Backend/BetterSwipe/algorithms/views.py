@@ -38,20 +38,21 @@ def upload_transactions(request):
         category_df = df,groupby(['category'], sort=True)['amount'].sum()
         
         #Just for categorized csv, might need to make one traversing whole original CSV
-        for i in category_df.index:
+        for i in df.index:
+            df_date = df['date'][i]
             df_category = df['category'][i]
             df_amount = df['amount'][i]
 
             Expenses.objects.create(
                     user = user,
-                    amount = df_amount
+                    transaction_date = date,
+                    amount = df_amount,
                     spending_category = df_category
                     )
         
-        return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'
+        return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e), status=400)
-
 
 #this is where the registration will go
 def user_login(request):
