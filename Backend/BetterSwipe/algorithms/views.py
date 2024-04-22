@@ -52,7 +52,7 @@ def upload_transactions(request):
         
         return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e), status=400)
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
 #this is where the registration will go
 def user_login(request):
