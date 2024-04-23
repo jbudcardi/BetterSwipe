@@ -29,7 +29,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/Upload" element={<UploadPage />} />
+        <Route path="/UploadPage" element={<UploadPage />} />
 	<Route path="/test" element={<Test />} />
         {/* Add more routes as needed */}
       </Routes>
