@@ -10,7 +10,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
 from .models import UserList, Expenses, CardList, SpendingSummary
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login # type: ignore
 from rest_framework.views import APIView
 
 from django.db import models
