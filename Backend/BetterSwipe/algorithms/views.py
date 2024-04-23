@@ -9,14 +9,19 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
-from .models import CardList, SpendingSummary
+from .models import UserList, Expenses, CardList, SpendingSummary
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
+ loginFunctionality
 from django.db import models
 from .models import UserList
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 
+import numpy as py
+import pandas as pd
+import matplotlib.pyplot as plt
+main
 
 @api_view(['GET'])
 def test(request):
@@ -98,6 +103,47 @@ def logout_view(request):
     logout(request)  # Clear the session
     return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
 
+
+#Pandas upload method
+@api_view(["POST"])
+def upload_transactions(request):
+    try:
+        csv_file = request.FILES['file']
+        user_id = request.data['userId']
+        user = UserList.objects.get(pk=user_id)
+        df = pd.read_csv(csv_file)
+
+        #Get total
+        total_amount = df['amount'].sum()
+
+        #Group and sum by categories
+        category_df = df,groupby(['category'], sort=True)['amount'].sum()
+        
+        #Just for categorized csv, might need to make one traversing whole original CSV
+        for i in df.index:
+            df_date = df['date'][i]
+            df_category = df['category'][i]
+            df_amount = df['amount'][i]
+
+            Expenses.objects.create(
+                    user = user,
+                    transaction_date = date,
+                    amount = df_amount,
+                    spending_category = df_category
+                    )
+        
+        return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+#Function to return amounts by category
+def amount_by_category(request):
+     #Aggregate the costs grouped by category
+     amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum('amount'))
+    
+     #Convert the queryset into a dictionary for JSON serialization
+     result = {entry['spending_category']: entry['total_cost'] for entry in cost_by_category}
+     return JsonResponse(result)
 
 #this is where the registration will go
 

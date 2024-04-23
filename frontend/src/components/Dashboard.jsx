@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = ({ userId }) => {
+    //fuction to useNavigate to the uploadPage
+    const navigate = useNavigate();
+
     const [spendingData, setSpendingData] = useState({
         labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
         datasets: [{
@@ -60,11 +64,14 @@ const Dashboard = ({ userId }) => {
           },
           responsive: true,
     }
-
+    
     return (
         <div style={{ width: '600px', height: '400px', margin: '50px auto' }}>
             <h2>Monthly Spending Summary</h2>
             <Bar data={spendingData} options={options} />
+            <div>
+            <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
+            </div>
         </div>
     );
 };

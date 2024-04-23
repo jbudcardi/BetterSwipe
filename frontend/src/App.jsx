@@ -16,6 +16,7 @@ import SignUpPage from './pages/SignUpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logout from './components/LogOut';
 import Test from './pages/Test';
+import UploadPage from './pages/UploadPage';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<Logout />} /> 
         <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/UploadPage" element={<UploadPage />} />
 	<Route path="/test" element={<Test />} />
         {/* Add more routes as needed */}
       </Routes>
