@@ -24,6 +24,7 @@ def register(request):
     return Response({'message': "Welcome to BetterSwipe!"})
 
 #Pandas upload method
+@api_view(["POST"])
 def upload_transactions(request):
     try:
         csv_file = request.FILES['file']
