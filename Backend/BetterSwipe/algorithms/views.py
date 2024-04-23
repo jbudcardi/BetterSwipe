@@ -40,7 +40,67 @@ def register(request):
         return Response({'message': "Saved: "+first_name+" "+last_name})
     return Response({'message': "Default return"})
 
+@api_view(['GET', 'POST'])
+def login(request):
+    if request.method == 'POST':
+        data = request.data
+        # username = data["username"]
+        email = data["email"]
+        password = data["password"]
+        user = UserList.objects.get(email=email,password=password)
+        return Response({'message': "Retrieved: ID ="+ str(user.id) + ", User: " + str(user)})
+    return Response({'message': "This is meant for POST requests."})
+
+#Login Functionality location:
+@api_view(['POST'])
+def logout(request):
+    try:
+        # Assuming that you are storing the user's ID in the session or token that can be accessed via the request
+        email = request.data.get('email')
+        if email:
+            user = UserList.objects.get(email=email)
+            # Here you would invalidate the session or token. Since it's not clear how you manage sessions/tokens, I'll assume you need to delete or deactivate them manually.
+            # If using Django's session, you might want to call `logout(request)` to remove the session.
+            # However, since it seems you're not using Django's auth system, you might just do something custom here.
+            # Example: Remove a custom token from a database or cache (this part is hypothetical)
+            # token = CustomTokenModel.objects.get(user=user)
+            # token.delete()
+
+            # Proper response after logout
+            return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Email not provided'}, status=status.HTTP_400_BAD_REQUEST)
+    except UserList.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def login_view(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    user = authenticate(request, username=email, password=password)
+    if user is not None:
+        login(request, user)  # Establish a session
+        token, _ = Token.objects.get_or_create(user=user)  # Create or get existing token
+        return Response({'token': token.key}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def logout_view(request):
+    try:
+        # Assuming the token is sent in the header and automatically handled by DRF.
+        request.user.auth_token.delete()
+    except AttributeError:
+        # Handle the case where the token is not found or already deleted
+        pass
+    logout(request)  # Clear the session
+    return Response({'message': 'Logged out successfully'}, status=status.HTTP_200_OK)
+
+
 #this is where the registration will go
+
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -59,6 +119,8 @@ def user_logout(request):
     logout(request)
     return redirect('user_login')
 
+
+
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -75,10 +137,15 @@ class LoginAPIView(APIView):
         password = request.data.get('password')
         user = authenticate(username=email, password=password)
         if user:
-            login(request, user)  # Log in the user
-            token, created=Token.objects.get_or_create(user=user)
-            return Response({'token': token.key, 'redirect':'/dashboard'}, status=status.HTTP_200_OK)
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+         
+        #if user:
+            #login(request, user)  # Log in the user
+            #token, created=Token.objects.get_or_create(user=user)
+            #return Response({'token': token.key, 'redirect':'/dashboard'}, status=status.HTTP_200_OK)
+        #return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

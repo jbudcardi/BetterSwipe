@@ -4,11 +4,13 @@ import './Login.css';
 import { useNavigate } from 'react-router-dom';
 import validateLogin from './validateLogin'; 
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext'; // Import useAuth hook
 //Will import axios here for backend communication
 
 function LoginPage(){
    //create and email and password constant variable
     const navigate = useNavigate();
+    const { login } = useAuth(); // Get the login function from AuthContext
     const [inputs, setInputs] = useState({
         email: '',
         password: ''
@@ -31,7 +33,7 @@ function LoginPage(){
             setLoginError(''); // Clear any existing login error messages
     
             // No validation errors, proceed with login
-            axios.post('http://localhost:8000/algorithms/api/login/', {
+            axios.post('http://localhost:8000/algorithms/login/', {
                 email: inputs.email, // Send email instead of username
                 password: inputs.password
             }, {
@@ -40,9 +42,11 @@ function LoginPage(){
                 }
             })
             .then(response => {
-                // Login successful
-                localStorage.setItem('token', response.data.token);  // Store token in local storage
-  navigate(response.data.redirect);  // Navigate to dashboard or returned redirect URL
+                
+                login(response.data.token);
+                //console.log(response);
+                navigate('/dashboard');
+                // Navigate to dashboard or returned redirect URL
             })
             .catch(error => {
                 const errorMessage = error.response && error.response.data && error.response.data.error
