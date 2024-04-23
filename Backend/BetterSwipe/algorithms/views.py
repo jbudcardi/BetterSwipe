@@ -12,7 +12,7 @@ from .serializers import UserSerializer
 from .models import UserList, Expenses, CardList, SpendingSummary
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
- loginFunctionality
+
 from django.db import models
 from .models import UserList
 from django.contrib.auth import get_user_model
@@ -21,7 +21,7 @@ from rest_framework.authtoken.models import Token
 import numpy as py
 import pandas as pd
 import matplotlib.pyplot as plt
-main
+
 
 @api_view(['GET'])
 def test(request):
