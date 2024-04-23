@@ -29,7 +29,7 @@ def upload_transactions(request):
     try:
         csv_file = request.FILES['file']
         user_id = request.data['userId']
-        user - UserList.objects.get(pk=user_id)
+        user = UserList.objects.get(pk=user_id)
         df = pd.read_csv(csv_file)
 
         #Get total
@@ -54,6 +54,15 @@ def upload_transactions(request):
         return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+#Function to return amounts by category
+def amount_by_category(request):
+     #Aggregate the costs grouped by category
+     amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum('amount'))
+    
+     #Convert the queryset into a dictionary for JSON serialization
+     result = {entry['spending_category']: entry['total_cost'] for entry in cost_by_category}
+     return JsonResponse(result)
 
 #this is where the registration will go
 def user_login(request):
