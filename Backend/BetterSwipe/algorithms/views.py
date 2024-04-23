@@ -19,9 +19,33 @@ import matplotlib.pyplot as plt
 def test(request):
     return Response({'message': "API Test successful!"})
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def register(request):
-    return Response({'message': "Welcome to BetterSwipe!"})
+    if request.method == 'POST':
+        # username, last_name, first_name, email, password
+        data = request.data
+        username = data["username"]
+        last_name = data["last_name"]
+        first_name = data["first_name"]
+        email = data["email"]
+        password = data["password"]
+        user = UserList(username=username,last_name=last_name,first_name=first_name,
+                        email=email,password=password)
+        user.save()
+        return Response({'message': "Saved: "+first_name+" "+last_name})
+    return Response({'message': "This is meant for POST requests."})
+
+@api_view(['GET', 'POST'])
+def login(request):
+    if request.method == 'POST':
+        data = request.data
+        # username = data["username"]
+        email = data["email"]
+        password = data["password"]
+        user = UserList.objects.get(email=email,password=password)
+        return Response({'message': "Retrieved: ID ="+ str(user.id) + ", User: " + str(user)})
+    return Response({'message': "This is meant for POST requests."})
+
 
 #Pandas upload method
 @api_view(["POST"])

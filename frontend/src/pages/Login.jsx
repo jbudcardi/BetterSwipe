@@ -17,6 +17,7 @@ function LoginPage(){
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
         setInputs(prevInputs => ({ ...prevInputs, [name]: value }));
     };
     //Handle the submit of the submit button
@@ -27,12 +28,13 @@ function LoginPage(){
 
         if (Object.keys(validationErrors).length === 0) {
             // No validation errors, proceed with login
-            axios.post('http://localhost:8000/algorithms/api/login/', {
-                username: inputs.email,
+            axios.post('http://localhost:8000/algorithms/login/', {
+                email: inputs.email,
                 password: inputs.password
             })
             .then(response => {
                 // Login successful
+                console.log(response);
                 navigate('/dashboard'); // Redirect to the dashboard
             })
             .catch(error => {

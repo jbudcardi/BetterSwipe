@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Card } from 'react-bootstrap';
 import { Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './SignUpPage.css';
 import Validation from './SignUpValidation';
+import axios from 'axios';
 
 
 function SignUpPage(){
+    const navigate = useNavigate();
 
     // State to store input values
     const [userInput, setUserInput] = useState({
@@ -18,15 +21,50 @@ function SignUpPage(){
     });
     const[errors, setErrors] = useState({})
     const handleInput = (e) => {
-        setUserInput(prev => ({...prev, [e.target.name]: [e.target.value]}))
+        setUserInput(prev => ({...prev, [e.target.name]: e.target.value}))
     }
 
+    /*
     //Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault(); //Prevent default form submission behavior
         setErrors(Validation(userInput)); //For now, just log input to the console
         //This is where we will send the user input to the backend server (using the Django python framework)
     };
+    */
+
+    //Handle the submit of the submit button
+    const handleSubmit = (e) => {
+        // e.preventDefault();
+        // const validationErrors = validateLogin(inputs);
+        // setErrors(validationErrors);
+
+        e.preventDefault(); //Prevent default form submission behavior
+        const validationErrors = Validation(userInput);
+        console.log(validationErrors);
+        // setErrors(Validation(userInput)); //For now, just log input to the console
+
+        if (Object.keys(validationErrors).length === 0) {
+            // No validation errors, proceed with login
+            axios.post('http://localhost:8000/algorithms/register/', {
+                username: userInput.firstName, // no username input yet
+                last_name: userInput.lastName,
+                first_name: userInput.firstName,
+                email: userInput.email,
+                password: userInput.password
+            })
+            .then(response => {
+                // Login successful
+                console.log(response);
+                navigate('/dashboard'); // Redirect to the dashboard
+            })
+            .catch(error => {
+                // Handle login error (e.g., incorrect credentials)
+                setErrors({ ...errors, form: 'Failed to register.' });
+            });
+        }
+    };
+
 
     return(
         <Container className="signup-container">
