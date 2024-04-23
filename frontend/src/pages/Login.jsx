@@ -14,33 +14,45 @@ function LoginPage(){
         password: ''
     });
     const [errors, setErrors] = useState({});
+    const [loginError, setLoginError] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setInputs(prevInputs => ({ ...prevInputs, [name]: value }));
+        setLoginError(''); // Clear login error on input change
     };
     //Handle the submit of the submit button
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateLogin(inputs);
         setErrors(validationErrors);
-
+    
         if (Object.keys(validationErrors).length === 0) {
+            setLoginError(''); // Clear any existing login error messages
+    
             // No validation errors, proceed with login
             axios.post('http://localhost:8000/algorithms/api/login/', {
-                username: inputs.email,
+                email: inputs.email, // Send email instead of username
                 password: inputs.password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json' // Ensure the content type is set to JSON
+                }
             })
             .then(response => {
                 // Login successful
-                navigate('/dashboard'); // Redirect to the dashboard
+                localStorage.setItem('token', response.data.token);  // Store token in local storage
+  navigate(response.data.redirect);  // Navigate to dashboard or returned redirect URL
             })
             .catch(error => {
-                // Handle login error (e.g., incorrect credentials)
-                setErrors({ ...errors, form: 'Failed to login. Check your credentials.' });
+                const errorMessage = error.response && error.response.data && error.response.data.error
+                    ? error.response.data.error
+                    : 'Failed to login. Check your credentials.';
+                setLoginError(errorMessage); // Set the login error message
             });
         }
     };
+    
 
     return(
         <Container fluid className="login-page-container d-flex justify-content-center align-items-center">
@@ -59,7 +71,7 @@ function LoginPage(){
                                     value={inputs.email}
                                     onChange={handleInputChange}
                                 />
-                                {errors.email && <p className='text-danger'>{errors.email}</p>}
+                                {loginError && <p className='text-danger'>{loginError}</p>}
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -71,7 +83,7 @@ function LoginPage(){
                                     value={inputs.password}
                                     onChange={handleInputChange}
                                 />
-                                {errors.email && <p className='text-danger'>{errors.email}</p>}
+                                {loginError && <p className='text-danger'>{loginError}</p>}
                             </Form.Group>
 
                             <div className="d-grid gap-2">

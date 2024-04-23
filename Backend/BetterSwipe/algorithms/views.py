@@ -1,3 +1,4 @@
+import email
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import logout
@@ -11,26 +12,45 @@ from .serializers import UserSerializer
 from .models import CardList, SpendingSummary
 from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
+from django.db import models
+from .models import UserList
+from django.contrib.auth import get_user_model
+from rest_framework.authtoken.models import Token
+
 
 @api_view(['GET'])
 def test(request):
     return Response({'message': "API Test successful!"})
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def register(request):
-    return Response({'message': "Welcome to BetterSwipe!"})
+    if request.method == 'GET':
+        return Response({'message': "Get request received"})
+    elif request.method == 'POST':
+        # username, last_name, first_name, email, password
+        data = request.data
+        username = data["username"]
+        last_name = data["last_name"]
+        first_name = data["first_name"]
+        email = data["email"]
+        password = data["password"]
+        user = UserList(username=username,last_name=last_name,first_name=first_name,
+                        email=email,password=password)
+        user.save()
+        return Response({'message': "Saved: "+first_name+" "+last_name})
+    return Response({'message': "Default return"})
 
 #this is where the registration will go
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
             if user:
                 login(request, user)
-                return redirect('index')  # Ensure you have a URL named 'index'
+                return redirect('index')  # Ensure we have a URL named 'index'
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})  # Adjust the template name as necessary
@@ -51,12 +71,13 @@ class LoginAPIView(APIView):
 
     
     def post(self, request):
-        username = request.data.get('username')
+        email = request.data.get('email')
         password = request.data.get('password')
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         if user:
-            token, _=Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
+            login(request, user)  # Log in the user
+            token, created=Token.objects.get_or_create(user=user)
+            return Response({'token': token.key, 'redirect':'/dashboard'}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 
