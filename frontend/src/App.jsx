@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext'; //might delete this if it causes any problems
+
 import './App.css'
 import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
@@ -21,6 +23,7 @@ function App() {
   //const [count, setCount] = useState(0)
 
   return (
+    <AuthProvider>
     <Router>
       <NavBar />
       <Routes>
@@ -28,12 +31,14 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<Logout />} /> 
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/UploadPage" element={<UploadPage />} />
 	<Route path="/test" element={<Test />} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>
+    </AuthProvider>
   );
 }
 

@@ -46,7 +46,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',  # Handles JSON responses
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Enables the browsable API
+    ]
 }
+
+AUTHENTICATION_BACKENDS = [
+    'algorithms.backends.EmailAuthBackend',  # Replace
+    'django.contrib.auth.backends.ModelBackend', # This is optional, keep it if you still want username authentication
+]
 
 
 MIDDLEWARE = [
