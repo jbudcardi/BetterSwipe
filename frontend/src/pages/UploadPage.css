@@ -20,7 +20,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 65vh;
+    margin: 100px auto;
 }
 
 .row{
@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6 {
   position: center;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-right: -15px;
+  margin-right: 15px;
   margin-left: -15px;
 }
 
