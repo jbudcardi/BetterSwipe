@@ -60,7 +60,7 @@ const Dashboard = ({ userId }) => {
           },
           responsive: true,
     }
-
+    
     return (
         <div style={{ width: '600px', height: '400px', margin: '50px auto' }}>
             <h2>Monthly Spending Summary</h2>
