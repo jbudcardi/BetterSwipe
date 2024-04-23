@@ -1,10 +1,40 @@
 import React, {useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios'
 import "./UploadPage.css"
-import Dashboard from "../components/Dashboard";
+
 
 
 function UploadPage() {
+    const [filename, setFilename] = useState('')
+
+    //paste the api address in ' '
+   // let api =''
+
+    /**created a function to save the file being uploaded */
+    const saveFile = () =>{
+        console.log('Button Clicked')
+
+        /*TO CAPTURE THE USER BROWERED FILE */
+        let formData = new FormData();
+        formData.append("pdf", filename)
+
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'multpart/form-data'
+            }
+        }
+
+        console.log(formData)
+        axios.post(api + '/files/', formData, axiosConfig).then(
+            response => {
+                console.log(response)
+            }
+        ).catch(error =>{
+            console.log(error)
+        })
+
+    }
     return(
        <div className="upload-container">
         
@@ -17,7 +47,7 @@ function UploadPage() {
         <input type="file" onChange={e => setFilename(e.target.files[0])} className="form-control" />
         </div>
 
-        <button type="button" onClick={Dashboard} className="btn btn-primary float-left mt-2">Submit</button>
+        <button type="button" onClick={saveFile} className="btn btn-primary float-left mt-2">Submit</button>
         <br/>
         <br/>
         <br/>
