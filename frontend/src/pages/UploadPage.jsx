@@ -9,7 +9,7 @@ function UploadPage() {
     const [filename, setFilename] = useState('')
 
     //paste the api address in ' '
-   // let api =''
+   // let api ='http://127.0.0.1:8000/api'
 
     /**created a function to save the file being uploaded */
     const saveFile = () =>{
