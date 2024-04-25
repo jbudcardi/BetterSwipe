@@ -17,7 +17,7 @@ function UploadPage() {
 
         /*TO CAPTURE THE USER BROWERED FILE */
         let formData = new FormData();
-        formData.append("pdf", filename)
+        formData.append("csv", filename)
 
         let axiosConfig = {
             headers: {
