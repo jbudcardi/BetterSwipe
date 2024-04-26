@@ -197,30 +197,66 @@ class LoginAPIView(APIView):
 
 @api_view(["POST"])
 def add_rewards_cc_cards(request):
-    cards = [
-        CardList(card_name="PremierPass Expedia", issuer="Citi", annual_fee=0, travel_reward = 2.4),
-        CardList(card_name="PremierPass Expedia Elite", issuer="Citi", annual_fee=75, shopping_reward=1.6,travel_reward=2.4,gas_reward=1.6,grocery_reward=1.6),
-        CardList(card_name="Chase Freedom Flex®", issuer="Chase", annual_fee=0, shopping_reward=5, dining_reward=3, travel_reward=3),
-        CardList(card_name="Chase Freedom Unlimited®", issuer="Chase", annual_fee=0, travel_reward=7.5, dining_reward=4.5, shopping_reward=4.5),
-        CardList(card_name="Umpqua Bank Visa® Everyday Rewards+", issuer="Umpqua Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Twin River Bank Visa® Everyday Rewards+", issuer="Twin River Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Trustco Bank Visa® Everyday Rewards+", issuer="Trustco Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Towne Bank Visa® Everyday Rewards+", issuer="Towne Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Texas Visa® Everyday Rewards+", issuer="Bank of Texas", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Oklahoma Visa® Everyday Rewards+", issuer="Bank of Oklahoma", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Albuquerque Visa® Everyday Rewards+", issuer="Bank of Albuquerque", annual_fee=0, dining_reward=4, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="BankNewport Visa® Everyday Rewards+", issuer="BankNewport", annual_fee=0, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Spectra Credit Union Visa® Business Cash Preferred", issuer="Spectra Credit Union", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="SouthState Bank Visa® Business Cash Preferred", issuer="SouthState Bank", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Southside Bank Visa® Business Cash Preferred", issuer="Southside Bank", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Solidarity Community FCU Visa® Business Cash Preferred", issuer="Solidarity Community FCU", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Centricity Credit Union Visa® Max Cash Preferred", issuer="Centricity Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Centris Federal Credit Union Visa® Max Cash Preferred", issuer="Centris Federal Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Chevron Federal Credit Union Visa® Max Cash Preferred", issuer="Chevron Federal Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Choice Bank Visa® Max Cash Preferred", issuer="Choice Bank", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        ]
-    for card in cards:
+    card_ids = ['citi-premierpassexpedia', 
+                'citi-premierpassexpediaelite',
+                'chase-freedomflex',
+                'chase-freedomunlimited',
+                'umquabank-everyday',
+                'twinriverbank-everyday',
+                'trustcobank-everyday',
+                'townebank-everyday',
+                'bankoftexas-everyday',
+                'bankofoklahoma-everyday',
+                'bankofabq-everyday',
+                'banknewport-everyday',
+                'spectracu-biz-cashpreffered',
+                'southstate-biz-cashpreffered',
+                'southsidebank-biz-cashpreffered',
+                'solidarityfcu-biz-cashpreffered',
+                'centricitycu-maxcashpreferred',
+                'centrisfcu-maxcashpreferred',
+                'chevronfcu-maxcashpreferred',
+                'choicebank-maxcashpreferred',
+                ]
+    for card_id in card_ids:
+        card_details = getCardDetails(card_id)[0]
+        issuer = card_details['cardIssuer']
+        annual_fee = card_details['annualFee']
+
+        # gets percentage of how much was spent back
+        percentage_return = card_details['baseSpendAmount'] * card_details['baseSpendEarnCashValue']
+
+        travel_reward = 0
+        dining_reward = 0
+        grocery_reward = 0
+        shopping_reward = 0
+        gas_reward = 0
+        entertainment_reward = 0
+        other_reward = 0
+
+        categories = card_details['spendBonusCategory']
+
+        for category in categories:
+            multiplier = category['earnMultiplier']
+            reward_amount = multiplier * percentage_return
+            match category['spendBonusCategoryGroup']:
+                case 'Travel'        : travel_reward        += reward_amount
+                case 'Dining'        : dining_reward        += reward_amount
+                case 'Auto'          : gas_reward           += reward_amount
+                case 'Entertainment' : entertainment_reward += reward_amount
+                case 'Shopping'      : shopping_reward      += reward_amount
+                case _               : other_reward         += reward_amount
+            
+            if category['spendBonusSubcategoryGroup'] == 'Grocery':
+                shopping_reward -= reward_amount
+                grocery_reward = reward_amount
+
+        card = CardList(card_name=card_id, issuer=issuer, annual_fee=annual_fee,
+                        travel_reward=travel_reward, dining_reward=dining_reward,grocery_reward=grocery_reward,
+                        shopping_reward=shopping_reward, gas_reward=gas_reward,
+                        entertainment_reward=entertainment_reward, other_reward=other_reward)
         card.save()
+    
     return Response({'message': 'Load complete'})
 
 
