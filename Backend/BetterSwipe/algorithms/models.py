@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 # Create your models here.
 class CardList(models.Model):
@@ -48,7 +49,7 @@ class CardRecommendations(models.Model):
     card_name_1 = models.ForeignKey(CardList, on_delete=models.CASCADE, related_name='card_name_1')
     card_name_2 = models.ForeignKey(CardList, on_delete=models.CASCADE, related_name='card_name_2')
     card_name_3 = models.ForeignKey(CardList, on_delete=models.CASCADE, related_name='card_name_3')
-    date_of_rec = models.DateField()
+    date_of_rec = models.DateField(default=now)
 
 class OwnedCards(models.Model):
     card_name = models.OneToOneField(CardList, on_delete=models.CASCADE, primary_key=True)
