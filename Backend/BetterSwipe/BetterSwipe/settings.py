@@ -80,8 +80,8 @@ WSGI_APPLICATION = 'BetterSwipe.wsgi.application'
 ssh_tunnel = SSHTunnelForwarder(
     'cs411-blue.student.cs.odu.edu',
     ssh_pkey="SSH PRIVATE KEY FILEPATH",
-    ssh_password="SSH PASSWORD",
-    ssh_username="cs_ ",
+    ssh_password="BetterSw!p3",
+    ssh_username="cs_bpaul006",
     remote_bind_address=('172.17.0.1', 1433),
 )
 ssh_tunnel.start()
