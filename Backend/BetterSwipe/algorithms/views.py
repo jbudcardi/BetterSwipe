@@ -28,24 +28,20 @@ import matplotlib.pyplot as plt
 def test(request):
     return Response({'message': "API Test successful!"})
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def register(request):
-    if request.method == 'GET':
-        return Response({'message': "Get request received"})
-    elif request.method == 'POST':
-        # username, last_name, first_name, email, password
-        data = request.data
-        username = data["username"]
-        last_name = data["last_name"]
-        first_name = data["first_name"]
-        email = data["email"]
-        password = data["password"]
-        user = UserList(username=username,last_name=last_name,first_name=first_name,
-                        email=email,password=password)
-        user.save()
-        return Response({'message': "Saved: "+first_name+" "+last_name})
-    return Response({'message': "Default return"})
+    if request.method != 'POST':
+        return Response({"error": "POST request required."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        if UserList.objects.filter(email=serializer.validated_data['email']).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer.save()
+        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET', 'POST'])
 def login(request):
     if request.method == 'POST':
@@ -165,6 +161,24 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+
+
+class SignUpAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+
+            if UserList.objects.filter(email=email).exists():
+                return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 

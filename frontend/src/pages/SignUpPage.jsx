@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Card } from 'react-bootstrap';
-import { Link} from 'react-router-dom';
+import { useNavigate,Link} from 'react-router-dom';
 import './SignUpPage.css';
 import Validation from './SignUpValidation';
+import axios from 'axios';
 
 
 function SignUpPage(){
@@ -11,22 +12,39 @@ function SignUpPage(){
     const [userInput, setUserInput] = useState({
         firstName: '',
         lastName: '',
-        phoneNumber: '',
+        //phoneNumber: '',
         email: '',
         password: '',
         confirmPassword: '',
     });
-    const[errors, setErrors] = useState({})
-    const handleInput = (e) => {
-        setUserInput(prev => ({...prev, [e.target.name]: [e.target.value]}))
-    }
+    const[errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
-    //Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault(); //Prevent default form submission behavior
-        setErrors(Validation(userInput)); //For now, just log input to the console
-        //This is where we will send the user input to the backend server (using the Django python framework)
+    const handleInput = (e) => {
+        const {name, value} = e.target; //destructing for easier access
+        setUserInput(prev => ({...prev, [name]: value}));
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newErrors = Validation(userInput);
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            axios.post('http://localhost:8000/algorithms/signup/', userInput, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                navigate('/dashboard'); // Or '/login' if you prefer they log in manually first
+            }).catch(error => {
+                const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
+                setErrors(prevErrors => ({ ...prevErrors, form: errorMessage }));
+            });
+        }
+    };
+
+   
 
     return(
         <Container className="signup-container">
@@ -60,7 +78,7 @@ function SignUpPage(){
                     {errors.lastName && <span className='text-danger'>{errors.lastName}</span>}
                   
                 </Form.Group>
-                <Form.Group className="mb-3">
+                {/*<Form.Group className="mb-3">
                     <label htmlFor="phoneNumber">Phone Number</label>
                     <input
                     type="phoneNumber"
@@ -70,7 +88,7 @@ function SignUpPage(){
                     value={userInput.phoneNumber}
                     onChange={handleInput} className='form-control round-0'/>
                     {errors.phoneNumber && <span className='text-danger'>{errors.phoneNumber}</span>}
-                </Form.Group>
+    </Form.Group>*/}
 
                 <Form.Group className="mb-3">
                     <label htmlFor="email">Email</label>
@@ -116,5 +134,6 @@ function SignUpPage(){
             </Col>
         </Container>
     );
+
 }
 export default SignUpPage;
