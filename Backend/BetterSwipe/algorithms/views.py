@@ -27,30 +27,26 @@ import matplotlib.pyplot as plt
 def test(request):
     return Response({'message': "API Test successful!"})
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def register(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        last_name = request.data.get('lastName')
-        first_name = request.data.get('firstName')
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        # Check if user already exists
-        if UserList.objects.filter(email=email).exists():
+    try:
+        if UserList.objects.filter(email=request.data.get('email')).exists():
             return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Hash the password before saving
+       # hashed_password = make_password(request.data.get('password'))
 
-        # Create new user
         user = UserList(
-            username=username,
-            last_name=last_name,
-            first_name=first_name,
-            email=email,
-            password=password  # Encrypt the password nlater
+            username=request.data.get('username'),
+            last_name=request.data.get('lastName'),
+            first_name=request.data.get('firstName'),
+            email=request.data.get('email'),
+            #password=hashed_password
         )
         user.save()
-
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET', 'POST'])
 def login(request):

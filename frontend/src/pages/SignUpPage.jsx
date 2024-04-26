@@ -12,12 +12,13 @@ function SignUpPage(){
     const [userInput, setUserInput] = useState({
         firstName: '',
         lastName: '',
-        phoneNumber: '',
+        //phoneNumber: '',
         email: '',
         password: '',
         confirmPassword: '',
     });
     const[errors, setErrors] = useState({});
+    const navigate = useNavigate();
     const handleInput = (e) => {
         const {name, value} = e.target; //destructing for easier access
         setUserInput(prev => ({...prev, [name]: value}));
@@ -46,20 +47,18 @@ function SignUpPage(){
             // Ensure backend handles password confirmation logic or handle it here
         };
         // Send a POST request to the server with the userInput data
-        axios.post(apiEndpoint, userInput)
-            .then((response) => {
-                // Handle success
-                console.log('Registration successful:', response.data);
-                // Here, you might want to redirect the user to the login page
-                navigate('/test'); // Navigate to the test page for now
-                // or a success page
-            })
-            .catch((error) => {
-                // Handle errors
-                console.error('Registration error:', error.response.data);
-                // You could set form errors based on the response if you have error handling set up in your backend
-                setErrors({ ...errors, form: 'Registration failed. Please try again.' });
-            });
+        axios.post(apiEndpoint, userData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            console.log('Registration successful:', response.data);
+            navigate('/test');
+        }).catch(error => {
+            console.error('Registration error:', error.response?.data);
+            setErrors(prevErrors => ({ ...prevErrors, form: 'Registration failed. Please try again.' }));
+        });
+        
     }
         //This is where we will send the user input to the backend server (using the Django python framework)
     };
@@ -96,7 +95,7 @@ function SignUpPage(){
                     {errors.lastName && <span className='text-danger'>{errors.lastName}</span>}
                   
                 </Form.Group>
-                <Form.Group className="mb-3">
+                {/*<Form.Group className="mb-3">
                     <label htmlFor="phoneNumber">Phone Number</label>
                     <input
                     type="phoneNumber"
@@ -106,7 +105,7 @@ function SignUpPage(){
                     value={userInput.phoneNumber}
                     onChange={handleInput} className='form-control round-0'/>
                     {errors.phoneNumber && <span className='text-danger'>{errors.phoneNumber}</span>}
-                </Form.Group>
+    </Form.Group>*/}
 
                 <Form.Group className="mb-3">
                     <label htmlFor="email">Email</label>
