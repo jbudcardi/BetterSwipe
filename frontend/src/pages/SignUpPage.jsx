@@ -19,49 +19,32 @@ function SignUpPage(){
     });
     const[errors, setErrors] = useState({});
     const navigate = useNavigate();
+
     const handleInput = (e) => {
         const {name, value} = e.target; //destructing for easier access
         setUserInput(prev => ({...prev, [name]: value}));
-    }
+    };
 
-    //Handle form submission
     const handleSubmit = (e) => {
-        e.preventDefault(); //Prevent default form submission behavior
+        e.preventDefault();
         const newErrors = Validation(userInput);
-        setErrors(newErrors); //For now, just log input to the console
-        // Check if there are any errors
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            axios.post('http://localhost:8000/algorithms/signup/', userInput, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                navigate('/dashboard'); // Or '/login' if you prefer they log in manually first
+            }).catch(error => {
+                const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
+                setErrors(prevErrors => ({ ...prevErrors, form: errorMessage }));
+            });
+        }
+    };
 
    
-        // Check if there are no errors
-    if (Object.keys(newErrors).length === 0) {
-        // Define the API endpoint
-        const apiEndpoint = 'http://localhost:8000/algorithms/register/'; //This will change based on the path of the api endpoint
-        
-        // Ensuring that we are sending the correct data format to the backend
-        const userData = {
-            username: userInput.email, // Assuming username is the email
-            firstName: userInput.firstName,
-            lastName: userInput.lastName,
-            email: userInput.email,
-            password: userInput.password,
-            // Ensure backend handles password confirmation logic or handle it here
-        };
-        // Send a POST request to the server with the userInput data
-        axios.post(apiEndpoint, userData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            console.log('Registration successful:', response.data);
-            navigate('/test');
-        }).catch(error => {
-            console.error('Registration error:', error.response?.data);
-            setErrors(prevErrors => ({ ...prevErrors, form: 'Registration failed. Please try again.' }));
-        });
-        
-    }
-        //This is where we will send the user input to the backend server (using the Django python framework)
-    };
 
     return(
         <Container className="signup-container">
@@ -151,5 +134,6 @@ function SignUpPage(){
             </Col>
         </Container>
     );
+
 }
 export default SignUpPage;

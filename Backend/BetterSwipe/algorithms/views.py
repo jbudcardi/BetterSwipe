@@ -29,25 +29,18 @@ def test(request):
 
 @api_view(['POST'])
 def register(request):
-    try:
-        if UserList.objects.filter(email=request.data.get('email')).exists():
+    if request.method != 'POST':
+        return Response({"error": "POST request required."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        if UserList.objects.filter(email=serializer.validated_data['email']).exists():
             return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Hash the password before saving
-       # hashed_password = make_password(request.data.get('password'))
-
-        user = UserList(
-            username=request.data.get('username'),
-            last_name=request.data.get('lastName'),
-            first_name=request.data.get('firstName'),
-            email=request.data.get('email'),
-            #password=hashed_password
-        )
-        user.save()
+        serializer.save()
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET', 'POST'])
 def login(request):
     if request.method == 'POST':
@@ -167,6 +160,22 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+
+
+class SignUpAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+
+            if UserList.objects.filter(email=email).exists():
+                return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
