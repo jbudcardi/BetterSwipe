@@ -16,5 +16,5 @@ urlpatterns = [
 
         path('loadcards/', views.add_rewards_cc_cards, name='load_cards'),
         path('findtopcards/', views.findTopCards, name='find_top_cards'),
-
+        path('userstopcards/', views.usersTopCards, name='users_top_cards'),
         ]

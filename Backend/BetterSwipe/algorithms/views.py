@@ -264,10 +264,10 @@ def add_rewards_cc_cards(request):
 @api_view(["POST"])
 def findTopCards(request):
     # user
-    user_id = request.data['userId']
-    # user = UserList.objects.get(pk=user_id)
-    user = UserList.objects.get(username=user_id)
-    
+    user_id = int(request.data['userId'])
+    user = UserList.objects.get(pk=user_id)
+    # user = UserList.objects.get(pk=1)
+    # user = UserList.objects.get(username=user_id)
     
     expenses = SpendingSummary.objects.get(user=user) #order by latest date?
     cards = CardList.objects.all()
@@ -300,7 +300,37 @@ def findTopCards(request):
                   max_scores.pop()
               print(max_scores)
               break
-        recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
-                            card_name_2=card_names[1],card_name_3=card_names[2])
-        recommendations.save()
+    recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
+                        card_name_2=card_names[1],card_name_3=card_names[2])
+    recommendations.save()
     return Response({'message': 'Found top cards' + str(card_names)})
+
+@api_view(["POST"])
+def usersTopCards(request):
+    user_id = int(request.data['userId'])
+    user = UserList.objects.get(pk=user_id)
+    recommendations = CardRecommendations.objects.filter(user=user).latest('date_of_rec')
+    Card1 = recommendations.card_name_1
+    Card2 = recommendations.card_name_2
+    Card3 = recommendations.card_name_3
+
+    cards = [Card1, Card2, Card3]
+    card_details = [getCardDetails(card.card_name)[0] for card in cards]
+    return Response({
+        'Cards': [{
+            'ImageURL' : getCardImage(cards[i].card_name),
+            'Name' : card_details[i]['cardName'],
+            'Issuer' : card_details[i]['cardIssuer'],
+            'Website' : card_details[i]['cardUrl'],
+            'CreditScore' : card_details[i]['creditRange'],
+            'AnnualFee' : card_details[i]['annualFee'],
+            'RewardType' : card_details[i]['baseSpendEarnCurrency'],
+            'TravelReward' : cards[i].travel_reward,
+            'DiningReward' : cards[i].dining_reward,
+            'GroceryReward' : cards[i].grocery_reward,
+            'ShoppingReward' : cards[i].shopping_reward,
+            'GasReward' : cards[i].gas_reward,
+            'EntertainmentReward' : cards[i].entertainment_reward,
+            'OtherReward' : cards[i].other_reward,
+            }for i in range(len(cards))]
+        })
