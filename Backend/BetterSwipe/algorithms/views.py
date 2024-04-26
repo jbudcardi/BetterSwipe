@@ -29,21 +29,28 @@ def test(request):
 
 @api_view(['GET', 'POST'])
 def register(request):
-    if request.method == 'GET':
-        return Response({'message': "Get request received"})
-    elif request.method == 'POST':
-        # username, last_name, first_name, email, password
-        data = request.data
-        username = data["username"]
-        last_name = data["last_name"]
-        first_name = data["first_name"]
-        email = data["email"]
-        password = data["password"]
-        user = UserList(username=username,last_name=last_name,first_name=first_name,
-                        email=email,password=password)
+    if request.method == 'POST':
+        username = request.data.get('username')
+        last_name = request.data.get('lastName')
+        first_name = request.data.get('firstName')
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        # Check if user already exists
+        if UserList.objects.filter(email=email).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create new user
+        user = UserList(
+            username=username,
+            last_name=last_name,
+            first_name=first_name,
+            email=email,
+            password=password  # Encrypt the password nlater
+        )
         user.save()
-        return Response({'message': "Saved: "+first_name+" "+last_name})
-    return Response({'message': "Default return"})
+
+        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
 @api_view(['GET', 'POST'])
 def login(request):
@@ -164,6 +171,8 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+
+
 
 
 

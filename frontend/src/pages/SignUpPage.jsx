@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Card } from 'react-bootstrap';
-import { Link} from 'react-router-dom';
+import { useNavigate,Link} from 'react-router-dom';
 import './SignUpPage.css';
 import Validation from './SignUpValidation';
+import axios from 'axios';
 
 
 function SignUpPage(){
@@ -16,15 +17,50 @@ function SignUpPage(){
         password: '',
         confirmPassword: '',
     });
-    const[errors, setErrors] = useState({})
+    const[errors, setErrors] = useState({});
     const handleInput = (e) => {
-        setUserInput(prev => ({...prev, [e.target.name]: [e.target.value]}))
+        const {name, value} = e.target; //destructing for easier access
+        setUserInput(prev => ({...prev, [name]: value}));
     }
 
     //Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault(); //Prevent default form submission behavior
-        setErrors(Validation(userInput)); //For now, just log input to the console
+        const newErrors = Validation(userInput);
+        setErrors(newErrors); //For now, just log input to the console
+        // Check if there are any errors
+
+   
+        // Check if there are no errors
+    if (Object.keys(newErrors).length === 0) {
+        // Define the API endpoint
+        const apiEndpoint = 'http://localhost:8000/algorithms/register/'; //This will change based on the path of the api endpoint
+        
+        // Ensuring that we are sending the correct data format to the backend
+        const userData = {
+            username: userInput.email, // Assuming username is the email
+            firstName: userInput.firstName,
+            lastName: userInput.lastName,
+            email: userInput.email,
+            password: userInput.password,
+            // Ensure backend handles password confirmation logic or handle it here
+        };
+        // Send a POST request to the server with the userInput data
+        axios.post(apiEndpoint, userInput)
+            .then((response) => {
+                // Handle success
+                console.log('Registration successful:', response.data);
+                // Here, you might want to redirect the user to the login page
+                navigate('/test'); // Navigate to the test page for now
+                // or a success page
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error('Registration error:', error.response.data);
+                // You could set form errors based on the response if you have error handling set up in your backend
+                setErrors({ ...errors, form: 'Registration failed. Please try again.' });
+            });
+    }
         //This is where we will send the user input to the backend server (using the Django python framework)
     };
 
