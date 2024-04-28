@@ -12,6 +12,7 @@ from .serializers import UserSerializer
 from .models import UserList, Expenses, CardList, SpendingSummary, CardRecommendations
 from django.contrib.auth import authenticate, login # type: ignore
 from rest_framework.views import APIView
+from .rewardscc import getCardDetails, getCardImage, getCardsInCategory, getCategoryList
 
 from django.db import models
 from .models import UserList
@@ -27,24 +28,20 @@ import matplotlib.pyplot as plt
 def test(request):
     return Response({'message': "API Test successful!"})
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def register(request):
-    if request.method == 'GET':
-        return Response({'message': "Get request received"})
-    elif request.method == 'POST':
-        # username, last_name, first_name, email, password
-        data = request.data
-        username = data["username"]
-        last_name = data["last_name"]
-        first_name = data["first_name"]
-        email = data["email"]
-        password = data["password"]
-        user = UserList(username=username,last_name=last_name,first_name=first_name,
-                        email=email,password=password)
-        user.save()
-        return Response({'message': "Saved: "+first_name+" "+last_name})
-    return Response({'message': "Default return"})
+    if request.method != 'POST':
+        return Response({"error": "POST request required."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        if UserList.objects.filter(email=serializer.validated_data['email']).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer.save()
+        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET', 'POST'])
 def login(request):
     if request.method == 'POST':
@@ -166,6 +163,24 @@ def user_logout(request):
     return redirect('user_login')
 
 
+class SignUpAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data['email']
+
+            if UserList.objects.filter(email=email).exists():
+                return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
@@ -196,30 +211,66 @@ class LoginAPIView(APIView):
 
 @api_view(["POST"])
 def add_rewards_cc_cards(request):
-    cards = [
-        CardList(card_name="PremierPass Expedia", issuer="Citi", annual_fee=0, travel_reward = 2.4),
-        CardList(card_name="PremierPass Expedia Elite", issuer="Citi", annual_fee=75, shopping_reward=1.6,travel_reward=2.4,gas_reward=1.6,grocery_reward=1.6),
-        CardList(card_name="Chase Freedom Flex®", issuer="Chase", annual_fee=0, shopping_reward=5, dining_reward=3, travel_reward=3),
-        CardList(card_name="Chase Freedom Unlimited®", issuer="Chase", annual_fee=0, travel_reward=7.5, dining_reward=4.5, shopping_reward=4.5),
-        CardList(card_name="Umpqua Bank Visa® Everyday Rewards+", issuer="Umpqua Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Twin River Bank Visa® Everyday Rewards+", issuer="Twin River Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Trustco Bank Visa® Everyday Rewards+", issuer="Trustco Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Towne Bank Visa® Everyday Rewards+", issuer="Towne Bank", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Texas Visa® Everyday Rewards+", issuer="Bank of Texas", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Oklahoma Visa® Everyday Rewards+", issuer="Bank of Oklahoma", annual_fee=0, dining_reward=4, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Bank of Albuquerque Visa® Everyday Rewards+", issuer="Bank of Albuquerque", annual_fee=0, dining_reward=4, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="BankNewport Visa® Everyday Rewards+", issuer="BankNewport", annual_fee=0, gas_reward=2, grocery_reward=2, entertainment_reward=2),
-        CardList(card_name="Spectra Credit Union Visa® Business Cash Preferred", issuer="Spectra Credit Union", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="SouthState Bank Visa® Business Cash Preferred", issuer="SouthState Bank", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Southside Bank Visa® Business Cash Preferred", issuer="Southside Bank", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Solidarity Community FCU Visa® Business Cash Preferred", issuer="Solidarity Community FCU", annual_fee=0, dining_reward=3, gas_reward=3),
-        CardList(card_name="Centricity Credit Union Visa® Max Cash Preferred", issuer="Centricity Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Centris Federal Credit Union Visa® Max Cash Preferred", issuer="Centris Federal Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Chevron Federal Credit Union Visa® Max Cash Preferred", issuer="Chevron Federal Credit Union", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        CardList(card_name="Choice Bank Visa® Max Cash Preferred", issuer="Choice Bank", annual_fee=0, dining_reward=2, gas_reward=2, grocery_reward=2, travel_reward=2),
-        ]
-    for card in cards:
+    card_ids = ['citi-premierpassexpedia', 
+                'citi-premierpassexpediaelite',
+                'chase-freedomflex',
+                'chase-freedomunlimited',
+                'umquabank-everyday',
+                'twinriverbank-everyday',
+                'trustcobank-everyday',
+                'townebank-everyday',
+                'bankoftexas-everyday',
+                'bankofoklahoma-everyday',
+                'bankofabq-everyday',
+                'banknewport-everyday',
+                'spectracu-biz-cashpreffered',
+                'southstate-biz-cashpreffered',
+                'southsidebank-biz-cashpreffered',
+                'solidarityfcu-biz-cashpreffered',
+                'centricitycu-maxcashpreferred',
+                'centrisfcu-maxcashpreferred',
+                'chevronfcu-maxcashpreferred',
+                'choicebank-maxcashpreferred',
+                ]
+    for card_id in card_ids:
+        card_details = getCardDetails(card_id)[0]
+        issuer = card_details['cardIssuer']
+        annual_fee = card_details['annualFee']
+
+        # gets percentage of how much was spent back
+        percentage_return = card_details['baseSpendAmount'] * card_details['baseSpendEarnCashValue']
+
+        travel_reward = 0
+        dining_reward = 0
+        grocery_reward = 0
+        shopping_reward = 0
+        gas_reward = 0
+        entertainment_reward = 0
+        other_reward = 0
+
+        categories = card_details['spendBonusCategory']
+
+        for category in categories:
+            multiplier = category['earnMultiplier']
+            reward_amount = multiplier * percentage_return
+            match category['spendBonusCategoryGroup']:
+                case 'Travel'        : travel_reward        += reward_amount
+                case 'Dining'        : dining_reward        += reward_amount
+                case 'Auto'          : gas_reward           += reward_amount
+                case 'Entertainment' : entertainment_reward += reward_amount
+                case 'Shopping'      : shopping_reward      += reward_amount
+                case _               : other_reward         += reward_amount
+            
+            if category['spendBonusSubcategoryGroup'] == 'Grocery':
+                shopping_reward -= reward_amount
+                grocery_reward = reward_amount
+
+        card = CardList(card_name=card_id, issuer=issuer, annual_fee=annual_fee,
+                        travel_reward=travel_reward, dining_reward=dining_reward,grocery_reward=grocery_reward,
+                        shopping_reward=shopping_reward, gas_reward=gas_reward,
+                        entertainment_reward=entertainment_reward, other_reward=other_reward)
         card.save()
+    
     return Response({'message': 'Load complete'})
 
 
@@ -227,10 +278,10 @@ def add_rewards_cc_cards(request):
 @api_view(["POST"])
 def findTopCards(request):
     # user
-    user_id = request.data['userId']
-    # user = UserList.objects.get(pk=user_id)
-    user = UserList.objects.get(username=user_id)
-    
+    user_id = int(request.data['userId'])
+    user = UserList.objects.get(pk=user_id)
+    # user = UserList.objects.get(pk=1)
+    # user = UserList.objects.get(username=user_id)
     
     expenses = SpendingSummary.objects.get(user=user) #order by latest date?
     cards = CardList.objects.all()
@@ -263,7 +314,37 @@ def findTopCards(request):
                   max_scores.pop()
               print(max_scores)
               break
-        recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
-                            card_name_2=card_names[1],card_name_3=card_names[2])
-        recommendations.save()
+    recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
+                        card_name_2=card_names[1],card_name_3=card_names[2])
+    recommendations.save()
     return Response({'message': 'Found top cards' + str(card_names)})
+
+@api_view(["POST"])
+def usersTopCards(request):
+    user_id = int(request.data['userId'])
+    user = UserList.objects.get(pk=user_id)
+    recommendations = CardRecommendations.objects.filter(user=user).latest('date_of_rec')
+    Card1 = recommendations.card_name_1
+    Card2 = recommendations.card_name_2
+    Card3 = recommendations.card_name_3
+
+    cards = [Card1, Card2, Card3]
+    card_details = [getCardDetails(card.card_name)[0] for card in cards]
+    return Response({
+        'Cards': [{
+            'ImageURL' : getCardImage(cards[i].card_name),
+            'Name' : card_details[i]['cardName'],
+            'Issuer' : card_details[i]['cardIssuer'],
+            'Website' : card_details[i]['cardUrl'],
+            'CreditScore' : card_details[i]['creditRange'],
+            'AnnualFee' : card_details[i]['annualFee'],
+            'RewardType' : card_details[i]['baseSpendEarnCurrency'],
+            'TravelReward' : cards[i].travel_reward,
+            'DiningReward' : cards[i].dining_reward,
+            'GroceryReward' : cards[i].grocery_reward,
+            'ShoppingReward' : cards[i].shopping_reward,
+            'GasReward' : cards[i].gas_reward,
+            'EntertainmentReward' : cards[i].entertainment_reward,
+            'OtherReward' : cards[i].other_reward,
+            }for i in range(len(cards))]
+        })

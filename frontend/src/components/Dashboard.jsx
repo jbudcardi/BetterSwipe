@@ -3,6 +3,9 @@ import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import CardRecommendations from './CardRecommendations';  // Adjust the path as necessary based on the project structure
+import './Dashboard.css';
+
 
 const Dashboard = ({ userId }) => {
     //fuction to useNavigate to the uploadPage
@@ -72,6 +75,8 @@ const Dashboard = ({ userId }) => {
             <div>
             <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
             </div>
+            <CardRecommendations userId={userId} />
+
         </div>
     );
 };

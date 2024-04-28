@@ -1,0 +1,75 @@
+.recommendations-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    text-align: center;
+  }
+  
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+  }
+  
+  .card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Adjust width as necessary */
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-header {
+    background-color: #000; /* Placeholder color, change as needed */
+    color: #fff;
+    padding: 1rem;
+    position: relative;
+  }
+  
+  .card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  
+  .card-header img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-body {
+    padding: 1rem;
+    background: linear-gradient(to bottom right, #0000FF, #800080); /* use your gradient colors */
+    color: #fff; /* adjust text color as needed */
+  }
+  
+  .card-footer {
+    padding: 1rem;
+    background-color: #f8f8f8;
+  }
+  
+  .apply-btn {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #5cb85c; /* Use brand color for button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .apply-btn:hover {
+    background-color: #4cae4c;
+  }
+  
+  .card-footer p {
+    margin: 0;
+    font-size: 0.875rem;
+  }

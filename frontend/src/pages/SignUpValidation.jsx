@@ -36,13 +36,13 @@ function Validation(values){
     }
 
         //password validation 
-    if(values.password === ""){
+   /* if(values.password === ""){
         error.password = "Password can not be empty"
     }else if(!password_pattern.test(values.password)){
         error.password = "Password should 10 characters that consist of: \n 2 uppercase letters \n one special case letter \n two number digit \n three lowercase letters \n  "
     } else {
         error.password = " "
-    }
+    }*/
 
     if(values.confirmPassword === ""){
         error.confirmPassword = "Password didn't match"
