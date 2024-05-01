@@ -12,7 +12,8 @@ const Dashboard = ({ userId }) => {
     const navigate = useNavigate();
 
     const [spendingData, setSpendingData] = useState({
-        labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
+	type: 'doughnut',
+	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
         datasets: [{
             label: 'Monthly Spending',
             data: [],
