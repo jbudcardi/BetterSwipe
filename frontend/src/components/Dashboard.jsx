@@ -74,10 +74,13 @@ const Dashboard = ({ userId }) => {
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
             <h2>Monthly Spending Summary</h2>
             <Bar data={spendingData} options={options} />
-            <div>
+            <div className= 'UPbtn'>
             <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
             </div>
-            <CardRecommendations userId={userId} />
+            <div className= 'CCbtn'>
+                <button onClick={() => {navigate("/CompareCardPage")}}>Compare Cards</button>
+            </div>
+           <CardRecommendations userId={userId} />
 
         </div>
     );
