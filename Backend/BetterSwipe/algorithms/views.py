@@ -142,6 +142,43 @@ def amount_by_category(request):
      result = {entry['spending_category']: entry['total_cost'] for entry in cost_by_category}
      return JsonResponse(result)
 
+
+
+@api_view(["POST"])
+def get_expenditures(request):
+    try:
+        user_id = int(request.data['userId'])
+        user = UserList.objects.get(pk=user_id)
+        
+        # expenses = SpendingSummary.objects.get(user=user)
+        expenses = SpendingSummary.objects.filter(user=user).last()
+
+        expenses_by_category = {
+            'travel_amount'        : expenses.travel_amount, 
+            'dining_amount'        : expenses.dining_amount, 
+            'grocery_amount'       : expenses.grocery_amount, 
+            'gas_amount'           : expenses.gas_amount, 
+            'entertainment_amount' : expenses.entertainment_amount,
+            'other_amount'         : expenses.other_amount,
+        }
+
+        return Response(expenses_by_category)
+    
+    except Exception as e:
+        expenses_by_category = {
+            'travel_amount'        : 0, 
+            'dining_amount'        : 0, 
+            'grocery_amount'       : 0, 
+            'gas_amount'           : 0, 
+            'entertainment_amount' : 0,
+            'other_amount'         : 0,
+        }
+
+        return Response(expenses_by_category)
+
+
+
+
 #this is where the registration will go
 
 def user_login(request):
