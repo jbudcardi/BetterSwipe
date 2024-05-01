@@ -15,7 +15,7 @@
 canvas,
 .UPbtn,
 .MSS{
-    position:absolute; left:-340px; top:150px;
+    position:absolute; left:120px; top:230px;
 }
 
 .UPbtn{
@@ -23,16 +23,16 @@ canvas,
     margin-left: 200px;
 }
 .UPbtn button:hover {
-    background-color: #b641d0; /* light purple on hover */
+    background-color: #752188; /* light purple on hover */
   }
 
 .CCbtn{
-    position:absolute; right:-340px; top:475px;
+    position:absolute; right:400px; top:545px;
 }
 .CCbtn button:hover {
     background-color: #9c24aa; /* Darker purple on hover */
   }
-  
+
 .MSS {
     margin-top: -40px;
     margin-left: 100px;
@@ -42,5 +42,6 @@ canvas,
     text-align: center;
 }
 .CR{
-    position:absolute; right:-355px; top:400px; 
+    word-wrap: normal;
+    position:absolute; right:380px; top:520px; 
 }
