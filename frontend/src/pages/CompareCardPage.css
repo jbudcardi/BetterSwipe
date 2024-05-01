@@ -1,3 +1,35 @@
-div{
-    position: relative;
+
+
+.CTC{
+    margin-top: 100px;
+    text-align: center;
+}
+
+.Card1{
+    float: left;
+    background: Red;
+    width: 25%;
+    height: 280px;
+}
+
+.Card1 h2{
+    text-align: center;
+}
+
+.Card2{
+    float: left;
+    background: Green;
+    width: 50%;
+    height: 280px;
+}
+
+.Card2 h2{
+    text-align: center;
+}
+
+.Card3{
+    float: right;
+    background: blue;
+    width: 25%;
+    height: 280px;
 }
