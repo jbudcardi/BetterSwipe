@@ -6,10 +6,13 @@
 }
 
 .Card1{
+    display: table-cell;
+    border-style: solid;
     float: left;
     background: Red;
-    width: 25%;
+    width: 450px;
     height: 280px;
+    margin-left: -150px;
 }
 
 .Card1 h2{
@@ -17,10 +20,15 @@
 }
 
 .Card2{
+    display: table-cell;
+    border-style: solid;
     float: left;
     background: Green;
-    width: 50%;
+    width: 450px;
     height: 280px;
+    margin-left: 100px;
+
+    
 }
 
 .Card2 h2{
@@ -28,8 +36,32 @@
 }
 
 .Card3{
+    border-style: solid;
+    display: table-cell;
     float: right;
-    background: blue;
-    width: 25%;
+    background: rgba(0, 0, 255, 0.104);
+    width: 450px;
     height: 280px;
+    margin-left: 100px;
+}
+
+.Card3 h2{
+    text-align: center;
+}
+
+.Row{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 50px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+.btn-group button{
+    border: 1px solid green;
+    float: left;
 }
