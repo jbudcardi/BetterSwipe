@@ -37,8 +37,8 @@ const Dashboard = ({ userId }) => {
     });
 
     useEffect(() => {
-        // axios.get(`http://localhost:8000/api/spending-summary/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : 1 } )
+        // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
@@ -96,5 +96,5 @@ const Dashboard = ({ userId }) => {
        
     );
 };
-
+// <CardRecommendations userId={userId} />
 export default Dashboard;

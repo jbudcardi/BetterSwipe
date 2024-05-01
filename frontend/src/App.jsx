@@ -22,6 +22,7 @@ import CompareCardPage from './pages/CompareCardPage'
 
 function App() {
   //const [count, setCount] = useState(0)
+  const [userId, setUserId] = useState(0);
 
   return (
     <AuthProvider>
@@ -30,8 +31,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<Dashboard userId={userId} />} />
+        <Route path="/login" element={<LoginPage setId={setUserId} />} />
         <Route path="/logout" element={<Logout />} /> 
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/UploadPage" element={<UploadPage />} />

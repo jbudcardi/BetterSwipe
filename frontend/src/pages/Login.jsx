@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext'; // Import useAuth hook
 //Will import axios here for backend communication
 
-function LoginPage(){
+function LoginPage({ setId }){
    //create and email and password constant variable
     const navigate = useNavigate();
     const { login } = useAuth(); // Get the login function from AuthContext
@@ -43,8 +43,8 @@ function LoginPage(){
             })
             .then(response => {
                 
-                login(response.data.token);
-                //console.log(response);
+                //login(response.data.token);
+                setId(response.data['userId']);
                 navigate('/dashboard');
                 // Navigate to dashboard or returned redirect URL
             })
