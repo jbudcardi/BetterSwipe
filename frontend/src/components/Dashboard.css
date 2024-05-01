@@ -1,3 +1,4 @@
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
@@ -5,10 +6,41 @@
     justify-content: space-between;
 }
 
-.UPbtn{
-    
+.UPbtn,
+.CCbtn {
+  display: inline-block; /* Display the divs as inline-block elements */
+  margin-right: 10px; /* Add some spacing between the buttons */
 }
 
+canvas,
+.UPbtn,
+.MSS{
+    position:absolute; left:-340px; top:150px;
+}
+
+.UPbtn{
+    margin-top: 320px;
+    margin-left: 200px;
+}
+.UPbtn button:hover {
+    background-color: #b641d0; /* light purple on hover */
+  }
+
 .CCbtn{
-    vertical-align: middle;
+    position:absolute; right:-340px; top:475px;
+}
+.CCbtn button:hover {
+    background-color: #9c24aa; /* Darker purple on hover */
+  }
+  
+.MSS {
+    margin-top: -40px;
+    margin-left: 100px;
+}
+
+.DB{
+    text-align: center;
+}
+.CR{
+    position:absolute; right:-355px; top:400px; 
 }

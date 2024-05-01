@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CardRecommendations from './CardRecommendations';  // Adjust the path as necessary based on the project structure
-import './Dashboard.css';
+import "./Dashboard.css";
 
 
 const Dashboard = ({ userId }) => {
@@ -71,18 +71,29 @@ const Dashboard = ({ userId }) => {
     }
     
     return (
+     
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
-            <h2>Monthly Spending Summary</h2>
+            <h2 className='MSS'>Monthly Spending Summary</h2>
             <Bar data={spendingData} options={options} />
+
+            <h1 className='DB'> Main Dashboard</h1>
+
             <div className= 'UPbtn'>
             <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
             </div>
-            <div className= 'CCbtn'>
+
+            <div className='CR'>
+            <CardRecommendations userId={userId} />
+            </div>
+
+            <div className='CCbtn'>
                 <button onClick={() => {navigate("/CompareCardPage")}}>Compare Cards</button>
             </div>
-           <CardRecommendations userId={userId} />
+           
 
         </div>
+        
+       
     );
 };
 
