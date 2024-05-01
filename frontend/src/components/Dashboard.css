@@ -15,7 +15,7 @@
 canvas,
 .UPbtn,
 .MSS{
-    position:absolute; left:-275px; top:140px;
+    position:fixed; left:350px; top:240px;
 }
 
 .UPbtn{
@@ -27,7 +27,7 @@ canvas,
   }
 
 .CCbtn{
-    position:absolute; right:40px; top:460px;
+    position:fixed; right:450px; top:55%;
 }
 .CCbtn button:hover {
     background-color: #9c24aa; /* Darker purple on hover */
@@ -40,8 +40,9 @@ canvas,
 
 .DB{
     text-align: center;
+    position: fixed;
 }
 .CR{
     word-wrap: normal;
-    position:absolute; right:10px; top:430px; 
+    position:fixed; right:350px; top:200px; 
 }
