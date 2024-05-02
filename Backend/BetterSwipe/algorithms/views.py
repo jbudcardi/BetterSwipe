@@ -59,8 +59,9 @@ def logout(request):
     try:
         # Assuming that you are storing the user's ID in the session or token that can be accessed via the request
         email = request.data.get('email')
+        #password = request.data.get("password") #adding this for debugging purposes
         if email:
-            user = UserList.objects.get(email=email)
+            user = UserList.objects.get(email=email,) #putting password here for debugging purposes: password=password
             # Here you would invalidate the session or token. Since it's not clear how you manage sessions/tokens, I'll assume you need to delete or deactivate them manually.
             # If using Django's session, you might want to call `logout(request)` to remove the session.
             # However, since it seems you're not using Django's auth system, you might just do something custom here.
