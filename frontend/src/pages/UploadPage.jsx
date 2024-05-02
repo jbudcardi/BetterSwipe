@@ -6,10 +6,12 @@ import "./UploadPage.css"
 
 
 function UploadPage() {
-    const [filename, setFilename] = useState('')
+    const [filename, setFilename] = useState(null); //adding null in the useState parameter
+    const [status, setStatus] = useState('');
+
 
     //paste the api address in ' '
-    let api ='http://127.0.0.1:8000/api'
+    const api ='http://127.0.0.1:8000/api' //transforming from let to const for testing purposes
 
     /**created a function to save the file being uploaded */
     const saveFile = () =>{
