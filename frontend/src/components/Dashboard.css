@@ -1,6 +1,48 @@
+
 .dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+}
+
+.UPbtn,
+.CCbtn {
+  display: inline-block; /* Display the divs as inline-block elements */
+  margin-right: 10px; /* Add some spacing between the buttons */
+}
+
+canvas,
+.UPbtn,
+.MSS{
+    position:fixed; left:350px; top:240px;
+}
+
+.UPbtn{
+    margin-top: 320px;
+    margin-left: 200px;
+}
+.UPbtn button:hover {
+    background-color: #752188; /* light purple on hover */
+  }
+
+.CCbtn{
+    position:fixed; right:450px; top:55%;
+}
+.CCbtn button:hover {
+    background-color: #9c24aa; /* Darker purple on hover */
+  }
+
+.MSS {
+    margin-top: -40px;
+    margin-left: 100px;
+}
+
+.DB{
+    text-align: center;
+    position: fixed;
+}
+.CR{
+    word-wrap: normal;
+    position:fixed; right:350px; top:200px; 
 }

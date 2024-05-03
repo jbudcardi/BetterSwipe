@@ -15,7 +15,7 @@ const CardRecommendations = ({ userId }) => {
         setError(null);
 
         try {
-            const response = await axios.get(`/api/cards/recommendations/${userId}`); //may change based on the location of the API endpoint
+            const response = await axios.get(`http://localhost:8000/algorithms/userstopcards/${userId}/`); //may change based on the location of the API endpoint
             setCards(response.data); // Assuming the API returns an array of card objects
         } catch (err) {
             setError(`Failed to fetch recommendations: ${err.response?.data?.message || err.message}`);
@@ -46,16 +46,25 @@ const CardRecommendations = ({ userId }) => {
             <p>No recommendations available. Consider updating your spending data.</p>
         )}
         <div className="card-list">
-            {cards.map((card) => (
+            {cards['Cards'].map((card) => (
                 <div className="card" key={card.id}>
                     <div className="card-header">
-                        <h3>{card.name}</h3>
-                        <img src={card.imageURL} alt={`${card.name} Card`} />
+                        <h3>{card.Name}</h3>
+                        <img src={card.ImageURL} alt={`${card.Name} Card`} />
                     </div>
                     <div className="card-body">
-                        <p>Card holder name: {card.holderName}</p>
-                        <p>Expiry date: {card.expiry}</p>
-                        <p>Average Monthly Rewards: {card.avgMonthlyRewards}</p>
+                        <p>Issuer: {card.Issuer}</p>
+                        <p>Website: {card.Website}</p>
+                        <p>Credit Score: {card.CreditScore}</p>
+                        <p>Annual Fee: {card.AnnualFee}</p>
+                        <p>Reward Type: {card.RewardType}</p>
+                        <p>Travel: {card.TravelReward}</p>
+                        <p>Dining: {card.DiningReward}</p>
+                        <p>Grocery: {card.GroceryReward}</p>
+                        <p>Shopping: {card.ShoppingReward}</p>
+                        <p>Gas: {card.GasReward}</p>
+                        <p>Entertainment: {card.EntertainmentReward}</p>
+                        <p>Other: {card.OtherReward}</p>
                         {/* ...other card details... */}
                     </div>
                     <div className="card-footer">

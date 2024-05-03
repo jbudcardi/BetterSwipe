@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import CardRecommendations from './CardRecommendations';  // Adjust the path as necessary based on the project structure
-import './Dashboard.css';
+import "./Dashboard.css";
 
 
 const Dashboard = ({ userId }) => {
@@ -38,8 +38,8 @@ const Dashboard = ({ userId }) => {
     });
 
     useEffect(() => {
-        // axios.get(`http://localhost:8000/api/spending-summary/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : 1 } )
+        // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
@@ -72,16 +72,36 @@ const Dashboard = ({ userId }) => {
     }
     
     return (
+     
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
+<<<<<<< HEAD
             <h2>Monthly Spending Summary</h2>
             <Doughnut data={spendingData} options={options} />
             <div>
+=======
+            <h2 className='MSS'>Monthly Spending Summary</h2>
+            <Bar data={spendingData} options={options} />
+
+            <h1 className='DB'> Main Dashboard</h1>
+
+            <div className= 'UPbtn'>
+>>>>>>> c9a69a78280da195b61b59c16546e28bd6f19bda
             <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
             </div>
+
+            <div className='CR'>
             <CardRecommendations userId={userId} />
+            </div>
+
+            <div className='CCbtn'>
+                <button onClick={() => {navigate("/CompareCardPage")}}>Compare Cards</button>
+            </div>
+           
 
         </div>
+        
+       
     );
 };
-
+// <CardRecommendations userId={userId} />
 export default Dashboard;
