@@ -80,6 +80,7 @@ const Dashboard = ({ userId }) => {
      
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
             <h2 className='MSS'>Monthly Spending Summary</h2>
+
             <div className="month-selector">
                 <label htmlFor="month-select">Select a Month:</label>
                 <select
@@ -95,7 +96,10 @@ const Dashboard = ({ userId }) => {
                     ))}
                 </select>
             </div>
-            <Bar data={spendingData} options={options} />
+         
+
+            <Doughnut data={spendingData} options={options} />
+
 
             <h1 className='DB'> Main Dashboard</h1>
 
