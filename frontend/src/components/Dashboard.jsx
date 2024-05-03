@@ -74,18 +74,12 @@ const Dashboard = ({ userId }) => {
     return (
      
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
-<<<<<<< HEAD
-            <h2>Monthly Spending Summary</h2>
-            <Doughnut data={spendingData} options={options} />
-            <div>
-=======
             <h2 className='MSS'>Monthly Spending Summary</h2>
-            <Bar data={spendingData} options={options} />
+            <Doughnut data={spendingData} options={options} />
 
             <h1 className='DB'> Main Dashboard</h1>
 
             <div className= 'UPbtn'>
->>>>>>> c9a69a78280da195b61b59c16546e28bd6f19bda
             <button onClick={() => {navigate("/UploadPage")}}>Upload Statments</button>
             </div>
 

@@ -22,6 +22,7 @@ from rest_framework.authtoken.models import Token
 import numpy as py
 import pandas as pd
 import matplotlib.pyplot as plt
+import datetime
 
 
 @api_view(['GET'])
@@ -125,9 +126,11 @@ def upload_transactions(request, userId):
             df_category = df['category'][i]
             df_amount = df['amount'][i]
             
+            month, day, year = [int(j) for j in df_date.replace('/','-').split('-') if j.isdigit()]
+
             expense = Expenses(
                     user = user,
-                    # transaction_date = df_date,
+                    transaction_date = datetime.datetime(year, month, day),
                     amount = int(df_amount),
                     spending_category = df_category
                     )
