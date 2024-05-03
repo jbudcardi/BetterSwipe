@@ -331,7 +331,7 @@ def findTopCards(request, userId):
     # user = UserList.objects.get(pk=1)
     # user = UserList.objects.get(username=user_id)
     
-    expenses = SpendingSummary.objects.get(user=user) #order by latest date?
+    expenses = SpendingSummary.objects.filter(user=user).last() #order by latest date?
     cards = CardList.objects.all()
 
     max_scores = [0,0,0]
