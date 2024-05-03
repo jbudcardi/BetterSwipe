@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
 import CardRecommendations from './CardRecommendations';  // Adjust the path as necessary based on the project structure
 import "./Dashboard.css";
@@ -10,6 +11,7 @@ import "./Dashboard.css";
 const Dashboard = ({ userId }) => {
     //fuction to useNavigate to the uploadPage
     const navigate = useNavigate();
+    const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1); //Default to current month
 
     const [spendingData, setSpendingData] = useState({
 	type: 'doughnut',
@@ -39,7 +41,7 @@ const Dashboard = ({ userId }) => {
 
     useEffect(() => {
         // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId } )
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, month: selectedMonth } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
@@ -62,6 +64,9 @@ const Dashboard = ({ userId }) => {
             .catch(error => console.error('Error fetching data: ', error));
     }, [userId]);
 
+    const handleMonthChange = (event) =>{
+        setSelectedMonth(event.target.value);
+    }
     const options = {
         scales: {
             y: { // Corrected scale configuration
@@ -75,7 +80,26 @@ const Dashboard = ({ userId }) => {
      
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
             <h2 className='MSS'>Monthly Spending Summary</h2>
+
+            <div className="month-selector">
+                <label htmlFor="month-select">Select a Month:</label>
+                <select
+                    id="month-select"
+                    className="form-control"
+                    value={selectedMonth}
+                    onChange={handleMonthChange}
+                >
+                    {Array.from({ length: 12 }, (_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                            {new Date(0, i).toLocaleString('default', { month: 'long' })} - {i + 1}
+                        </option>
+                    ))}
+                </select>
+            </div>
+         
+
             <Doughnut data={spendingData} options={options} />
+
 
             <h1 className='DB'> Main Dashboard</h1>
 

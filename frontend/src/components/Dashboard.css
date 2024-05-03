@@ -46,3 +46,40 @@ canvas,
     word-wrap: normal;
     position:fixed; right:350px; top:200px; 
 }
+
+.month-selector {
+    position: absolute; /* Absolute to place specifically */
+    left: 20px; /* Align to the left side of the view */
+    top: 100px; /* Top of the page */
+    width: auto; /* Adjust width as per content */
+    align-items: flex-start; /* Align items to the start of the flex container */
+    
+}
+
+.month-selector label {
+    color: black; /* Match with your theme */
+    margin-bottom: 10px; /* Space between label and dropdown */
+}
+
+.month-selector select {
+    background-color: #7f5af0; /* Purple background */
+    color: rgb(246, 240, 240); /* White text for options */
+    padding: 6px 16px; /* More padding for better visual */
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid rgba(255, 255, 255, 1.5); /* Slightly visible border */
+    line-height: 1.5;
+    width: 100%; /* Full width of the container */
+    outline: none; /* Remove focus outline */
+    appearance: none; /* Remove default system appearance */
+    cursor: pointer; /* Cursor to pointer to indicate it's selectable */
+}
+
+.month-selector select:hover {
+    background-color: #e0dbff; /* Light purple color */
+  }
+  
+
+.month-selector select option {
+    background: white; /* White background for options */
+    color: black; /* Black text for readability */
+}
