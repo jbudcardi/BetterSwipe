@@ -1,75 +1,67 @@
-.recommendations-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    text-align: center;
-  }
+
+
+.CTC{
+  margin-top: 100px;
+  text-align: center;
+}
+
+.Card1{
+  display: table-cell;
+  border-style: solid;
+  float: left;
+  background: Red;
+  width: 450px;
+  height: 280px;
+  margin-left: -150px;
+}
+
+.Card1 h2{
+  text-align: center;
+}
+
+.Card2{
+  display: table-cell;
+  border-style: solid;
+  float: left;
+  background: Green;
+  width: 450px;
+  height: 280px;
+  margin-left: 100px;
+
   
-  .card-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-  }
-  
-  .card {
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Adjust width as necessary */
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card-header {
-    background-color: #000; /* Placeholder color, change as needed */
-    color: #fff;
-    padding: 1rem;
-    position: relative;
-  }
-  
-  .card-header h3 {
-    margin: 0;
-    font-size: 1.25rem;
-  }
-  
-  .card-header img {
-    width: 100%;
-    height: auto;
-  }
-  
-  .card-body {
-    padding: 1rem;
-    background: linear-gradient(to bottom right, #0000FF, #800080); /* use your gradient colors */
-    color: #fff; /* adjust text color as needed */
-  }
-  
-  .card-footer {
-    padding: 1rem;
-    background-color: #f8f8f8;
-  }
-  
-  .apply-btn {
-    display: block;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #5cb85c; /* Use brand color for button */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .apply-btn:hover {
-    background-color: #4cae4c;
-  }
-  
-  .card-footer p {
-    margin: 0;
-    font-size: 0.875rem;
-  }
+}
+
+.Card2 h2{
+  text-align: center;
+}
+
+.Card3{
+  border-style: solid;
+  display: table-cell;
+  float: right;
+  background: rgba(0, 0, 255, 0.104);
+  width: 450px;
+  height: 280px;
+  margin-left: 100px;
+}
+
+.Card3 h2{
+  text-align: center;
+}
+
+.Row{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 50px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+
+.btn-group button{
+  border: 1px solid green;
+  float: left;
+}

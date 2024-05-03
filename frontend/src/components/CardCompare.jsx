@@ -1,6 +1,5 @@
-import React from "react";
-import CreditCard from './CreditCard';
 import React, {useEffect, useState} from "react";
+import CreditCard from './CreditCard';
 import './CardCompare.css';
 
 function CardCompare(){

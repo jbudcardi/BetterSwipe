@@ -112,7 +112,7 @@ const Dashboard = ({ userId }) => {
             </div>
 
             <div className='CCbtn'>
-                <button onClick={() => {navigate("/CompareCardPage")}}>Compare Cards</button>
+                <button onClick={() => {navigate("/CardCompare")}}>Compare Cards</button>
             </div>
            
 
