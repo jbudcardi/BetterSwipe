@@ -68,12 +68,26 @@ const Dashboard = ({ userId }) => {
         setSelectedMonth(event.target.value);
     }
     const options = {
-        scales: {
+	    responsive: true,
+	    legend: {
+		position: 'bottom',
+	    },
+	    plugins: {
+		    labels: {
+			    render: 'percentage',
+			    fontColor: ['black'],
+			    precision: 1
+		    }
+	    },
+
+        /*
+	    scales: {
             y: { // Corrected scale configuration
               beginAtZero: true,
             },
           },
-          responsive: true,
+	*/
+
     }
     
     return (
@@ -100,7 +114,6 @@ const Dashboard = ({ userId }) => {
 
             <Doughnut data={spendingData} options={options} />
 
-
             <h1 className='DB'> Main Dashboard</h1>
 
             <div className= 'UPbtn'>
@@ -121,5 +134,4 @@ const Dashboard = ({ userId }) => {
        
     );
 };
-// <CardRecommendations userId={userId} />
 export default Dashboard;
