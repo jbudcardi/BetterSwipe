@@ -43,7 +43,7 @@ function LoginPage({ setId }){
             })
             .then(response => {
                 
-                //login(response.data.token);
+                login(response.data.token);
                 setId(response.data['userId']);
                 navigate('/dashboard');
                 // Navigate to dashboard or returned redirect URL

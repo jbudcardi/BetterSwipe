@@ -30,7 +30,7 @@ class UserList(models.Model):
 
 class Expenses(models.Model):
     user = models.ForeignKey(UserList, on_delete=models.CASCADE)
-    transaction_date = models.DateField()
+    transaction_date = models.DateField(default=now)
     amount = models.IntegerField()
     spending_category = models.CharField(max_length=255)
 

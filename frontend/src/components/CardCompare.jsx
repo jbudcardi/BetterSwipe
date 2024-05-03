@@ -1,28 +1,42 @@
-import React from "react";
-import CreditCard from './CreditCard';
 import React, {useEffect, useState} from "react";
+import CreditCard from './CreditCard';
 import './CardCompare.css';
 
-const CardCompare = () =>{
-    //this will later handle the calls to 
-   const [cardData, setCardData] = useState([]);
-   useEffect(() => {
-    // Placeholder for fetching data from the backend
-    fetch('/api/cards/top') // Example API endpoint
-        .then(response => response.json())
-        .then(data => setCardData(data))
-        .catch(error => console.error('Error fetching card data:', error));
-}, []);
+function CardCompare(){
+   
 
     return(
 
-        <div className="container mt-5">
-            <div className="row">
-            {cardData.map((card, index) => (<crediCard key={index} {...card} />))}
-            </div>
+        <div>
+        <h1 className="CTC"> Compare Top Cards</h1>
+    <div className="Row">
+        
+       <div className="Card1">
+        <h2>Top Card 1</h2>
+        <div className="btn-group">
+        <button>Terms & Conditions</button>
+        <button>Apply now</button>
         </div>
+    </div>
 
+    <div className="Card2">
+        <h2>Top Card 2</h2>
+        <div className="btn-group">
+        <button>Terms & Conditions</button>
+        <button>Apply now</button>
+        </div>
+    </div>
+
+    <div className="Card3">
+        <h2>Top Card 3</h2>
+        <div className="btn-group">
+        <button>Terms & Conditions</button>
+        <button>Apply now</button>
+        </div>
+    </div>
+    </div>
+</div>
     );
-};
+}
 
 export default CardCompare;
