@@ -21,4 +21,6 @@ urlpatterns = [
         path('userstopcards/<userId>/', views.usersTopCards, name='users_top_cards'),
 
         path('dashboard/', views.get_expenditures  , name='Dashboard'),
+
+        path('upload/<userId>/', views.upload_transactions,  name='upload_csv')
         ]

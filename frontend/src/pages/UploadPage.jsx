@@ -5,11 +5,11 @@ import "./UploadPage.css"
 
 
 
-function UploadPage() {
+function UploadPage({ userId }) {
     const [filename, setFilename] = useState('')
 
     //paste the api address in ' '
-    let api ='http://127.0.0.1:8000/api'
+    // let api ='http://localhost:8000/algorithms/upload/'
 
     /**created a function to save the file being uploaded */
     const saveFile = () =>{
@@ -26,7 +26,7 @@ function UploadPage() {
         }
 
         console.log(formData)
-        axios.post(api + '/files/', formData, axiosConfig).then(
+        axios.post(`http://localhost:8000/algorithms/upload/${userId}/`, formData, axiosConfig).then(
             response => {
                 console.log(response)
             }

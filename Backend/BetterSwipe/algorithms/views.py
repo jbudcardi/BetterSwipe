@@ -104,35 +104,38 @@ def logout_view(request):
 
 #Pandas upload method
 @api_view(["POST"])
-def upload_transactions(request):
+def upload_transactions(request, userId):
     try:
-        csv_file = request.FILES['file']
-        user_id = request.data['userId']
+        csv_file = request.FILES['csv']
+        # user_id = request.data['userId']
+        user_id = userId
+        
         user = UserList.objects.get(pk=user_id)
         df = pd.read_csv(csv_file)
-
+        
         #Get total
         total_amount = df['amount'].sum()
 
         #Group and sum by categories
-        category_df = df,groupby(['category'], sort=True)['amount'].sum()
+        category_df = df.groupby(['category'], sort=True)['amount'].sum()
         
         #Just for categorized csv, might need to make one traversing whole original CSV
         for i in df.index:
             df_date = df['date'][i]
             df_category = df['category'][i]
             df_amount = df['amount'][i]
-
-            Expenses.objects.create(
+            
+            expense = Expenses(
                     user = user,
-                    transaction_date = date,
-                    amount = df_amount,
+                    # transaction_date = df_date,
+                    amount = int(df_amount),
                     spending_category = df_category
                     )
+            expense.save()
         
-        return JsonResponse({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
+        return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+        return Response({'status': 'error', 'message': str(e)}, status=400)
 
 #Function to return amounts by category
 def amount_by_category(request):

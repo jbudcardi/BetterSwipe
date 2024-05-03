@@ -35,7 +35,7 @@ function App() {
         <Route path="/login" element={<LoginPage setId={setUserId} />} />
         <Route path="/logout" element={<Logout />} /> 
         <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/UploadPage" element={<UploadPage />} />
+        <Route path="/UploadPage" element={<UploadPage userId={userId} />} />
         <Route path="/CompareCardPage" element={<CompareCardPage />} />
 	<Route path="/test" element={<Test />} />
         {/* Add more routes as needed */}
