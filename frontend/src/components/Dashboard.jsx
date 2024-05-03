@@ -41,7 +41,7 @@ const Dashboard = ({ userId }) => {
 
     useEffect(() => {
         // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId } )
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, month: selectedMonth } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
