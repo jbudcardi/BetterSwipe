@@ -154,11 +154,14 @@ def amount_by_category(request):
 @api_view(["POST"])
 def get_expenditures(request):
     try:
-        user_id = int(request.data['userId'])
+        data = request.data
+        user_id = int(data['userId'])
         user = UserList.objects.get(pk=user_id)
+
+        month = int(data['month'])
         
         # expenses = SpendingSummary.objects.get(user=user)
-        expenses = SpendingSummary.objects.filter(user=user).last()
+        expenses = SpendingSummary.objects.filter(user=user, month=month).last()
 
         expenses_by_category = {
             'travel_amount'        : expenses.travel_amount, 

@@ -39,7 +39,7 @@ const Dashboard = ({ userId }) => {
         }]
     });
 
-    useEffect(() => {
+    var APIcall = () => {
         // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
         axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, month: selectedMonth } )
             .then(response => {
@@ -62,10 +62,14 @@ const Dashboard = ({ userId }) => {
                 }));
             })
             .catch(error => console.error('Error fetching data: ', error));
-    }, [userId]);
+    };
+
+
+    useEffect(APIcall, [userId]);
 
     const handleMonthChange = (event) =>{
         setSelectedMonth(event.target.value);
+        APIcall();
     }
     const options = {
 	    responsive: true,
