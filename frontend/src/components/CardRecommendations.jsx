@@ -46,8 +46,8 @@ const CardRecommendations = ({ userId }) => {
             <p>No recommendations available. Consider updating your spending data.</p>
         )}
         <div className="card-list">
-            {cards['Cards'].map((card) => (
-                <div className="card" key={card.id}>
+            {cards['Cards'].map((card, index) => (
+                <div className="card" key={card.id} card_index={index}>
                     <div className="card-header">
                         <h3>{card.Name}</h3>
                         <img src={card.ImageURL} alt={`${card.Name} Card`} />

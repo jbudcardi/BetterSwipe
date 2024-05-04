@@ -39,9 +39,9 @@ const Dashboard = ({ userId }) => {
         }]
     });
 
-    var APIcall = () => {
+    var APIcall = (month = selectedMonth) => {
         // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, month: selectedMonth } )
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, "month": month } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
@@ -69,7 +69,7 @@ const Dashboard = ({ userId }) => {
 
     const handleMonthChange = (event) =>{
         setSelectedMonth(event.target.value);
-        APIcall();
+        APIcall(event.target.value);
     }
     const options = {
 	    responsive: true,
