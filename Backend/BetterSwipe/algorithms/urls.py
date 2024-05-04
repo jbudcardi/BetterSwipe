@@ -22,5 +22,7 @@ urlpatterns = [
 
         path('dashboard/', views.get_expenditures  , name='Dashboard'),
 
-        path('upload/<userId>/', views.upload_transactions,  name='upload_csv')
+        path('upload/<userId>/', views.upload_transactions,  name='upload_csv'),
+        path('uploaded_files/<userId>/', views.list_uploaded_files, name='list_uploaded_files') #path for listing uploaded files
+
         ]

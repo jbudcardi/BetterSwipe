@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
-from .models import UserList, Expenses, CardList, SpendingSummary, CardRecommendations
+from .models import UploadedFile, UserList, Expenses, CardList, SpendingSummary, CardRecommendations
 from django.contrib.auth import authenticate, login # type: ignore
 from rest_framework.views import APIView
 from .rewardscc import getCardDetails, getCardImage, getCardsInCategory, getCategoryList
@@ -23,6 +23,7 @@ import numpy as py
 import pandas as pd
 import matplotlib.pyplot as plt
 import datetime
+from django.utils.timezone import now 
 
 
 @api_view(['GET'])
@@ -110,8 +111,19 @@ def upload_transactions(request, userId):
         csv_file = request.FILES['csv']
         # user_id = request.data['userId']
         user_id = userId
+        user = UserList.objects.get(pk=user_id)
+
         
         user = UserList.objects.get(pk=user_id)
+
+         # Store file information in the database
+        filename = csv_file.name
+        uploaded_file = UploadedFile(
+            user=user,
+            filename=filename,
+            upload_date=now()  # Current timestamp
+        )
+        uploaded_file.save()
         df = pd.read_csv(csv_file)
         
         #Get total
@@ -139,6 +151,18 @@ def upload_transactions(request, userId):
         return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
+
+
+@api_view(["GET"]) #function for listing uploaded files
+def list_uploaded_files(request, userId):
+    try:
+        user = UserList.objects.get(pk=userId)
+        files = UploadedFile.objects.filter(user=user).order_by('-upload_date')
+        file_data = [{"filename": file.filename, "upload_date": file.upload_date} for file in files]
+        return Response(file_data, status=200)
+    except Exception as e:
+        return Response({'status': 'error', 'message': str(e)}, status=400)
+
 
 #Function to return amounts by category
 def amount_by_category(request):

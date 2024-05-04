@@ -6,7 +6,9 @@ import "./UploadPage.css"
 
 
 function UploadPage({ userId }) {
-    const [filename, setFilename] = useState('')
+    const [filename, setFilename] = useState('');
+    const [files, setFiles] = useState([]);
+    const [status, setStatus] = useState('')
 
     //paste the api address in ' '
     // let api ='http://localhost:8000/algorithms/upload/'
@@ -21,18 +23,31 @@ function UploadPage({ userId }) {
 
         let axiosConfig = {
             headers: {
-                'Content-Type': 'multpart/form-data'
+                'Content-Type': 'multipart/form-data'
             }
         }
 
         console.log(formData)
         axios.post(`http://localhost:8000/algorithms/upload/${userId}/`, formData, axiosConfig).then(
             response => {
-                console.log(response)
+                console.log(response);
+                setStatus('File Uploaded Successfully');
+                fetchFiles();
             }
         ).catch(error =>{
             console.log(error)
         })
+
+    }
+
+    const fetchFiles = () => {
+        axios.get(`http://localhost:8000/algorithms/uploaded_files/${userId}/`)
+        .then(response => {
+            setFiles(response.data.files);  // Assuming the endpoint returns an object with a `files` array
+        })
+        .catch(error => {
+            console.error('Error fetching files:', error);
+        });
 
     }
     return(
@@ -65,6 +80,12 @@ function UploadPage({ userId }) {
                     </tr>
                 </thead>
                 <tbody>
+                {files.map((file, index) => (
+                                <tr key={index}>
+                                    <td>{file.name}</td>
+                                    <td><a href={file.url} target="_blank" rel="noopener noreferrer">Download</a></td>
+                                </tr>
+                            ))}
                     
                 </tbody>
             </table>
