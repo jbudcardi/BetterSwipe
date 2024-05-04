@@ -49,27 +49,8 @@ const CardRecommendations = ({ userId }) => {
             {cards['Cards'].map((card, index) => (
                 <div className="card" key={card.id} card_index={index}>
                     <div className="card-header">
-                        <h3>{card.Name}</h3>
+                        <h5>{card.Name}</h5>
                         <img src={card.ImageURL} alt={`${card.Name} Card`} />
-                    </div>
-                    <div className="card-body">
-                        <p>Issuer: {card.Issuer}</p>
-                        <p>Website: {card.Website}</p>
-                        <p>Credit Score: {card.CreditScore}</p>
-                        <p>Annual Fee: {card.AnnualFee}</p>
-                        <p>Reward Type: {card.RewardType}</p>
-                        <p>Travel: {card.TravelReward}</p>
-                        <p>Dining: {card.DiningReward}</p>
-                        <p>Grocery: {card.GroceryReward}</p>
-                        <p>Shopping: {card.ShoppingReward}</p>
-                        <p>Gas: {card.GasReward}</p>
-                        <p>Entertainment: {card.EntertainmentReward}</p>
-                        <p>Other: {card.OtherReward}</p>
-                        {/* ...other card details... */}
-                    </div>
-                    <div className="card-footer">
-                        <button className="apply-btn">Apply</button>
-                        <p>{card.terms}</p>
                     </div>
                 </div>
             ))}

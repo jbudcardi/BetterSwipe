@@ -9,9 +9,9 @@
   display: table-cell;
   border-style: solid;
   float: left;
-  background: Red;
-  width: 450px;
-  height: 280px;
+  background: limegreen;
+  width: 500px;
+  height: 850px;
   margin-left: -150px;
 }
 
@@ -23,9 +23,9 @@
   display: table-cell;
   border-style: solid;
   float: left;
-  background: Green;
+  background: greenyellow;
   width: 450px;
-  height: 280px;
+  height: 850px;
   margin-left: 100px;
 
   
@@ -39,9 +39,9 @@
   border-style: solid;
   display: table-cell;
   float: right;
-  background: rgba(0, 0, 255, 0.104);
+  background: yellow;
   width: 450px;
-  height: 280px;
+  height: 850px;
   margin-left: 100px;
 }
 
@@ -56,7 +56,7 @@
   border-spacing: 50px;
   display: flex;
   justify-content: space-between;
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 100px 0;
 }
