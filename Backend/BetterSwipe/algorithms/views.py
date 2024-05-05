@@ -137,13 +137,13 @@ def upload_transactions(request, userId):
                     )
             monthSummary = int(transaction_date.strftime("%m"))
             expense.save()
-      
-      #monthSummary = int(expense.trasnaction_date.strftime("%m"))
-      amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum("amount"))
-      #float variables to hold expense totals by category
-      sumGrocery, sumDining, sumTravel, sumGas, sumEntertainnment, sumOther = 0.0
 
-       for item in amount_by_category:
+        #monthSummary = int(expense.trasnaction_date.strftime("%m"))
+        amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum("amount"))
+        #float variables to hold expense totals by category
+        sumGrocery, sumDining, sumTravel, sumGas, sumEntertainnment, sumOther = 0.0
+
+        for item in amount_by_category:
            name = item['category']
            total_cost = item['total_cost']
 
@@ -160,8 +160,8 @@ def upload_transactions(request, userId):
            else:
                 sumOther += total_cost
        
-       #Assigning category sums to SpendingSummary model
-       summary = SpendingSummary(
+        #Assigning category sums to SpendingSummary model
+        summary = SpendingSummary(
                user = user,
                month = monthSummary,
                travel_amount = sumTravel,
@@ -171,14 +171,14 @@ def upload_transactions(request, userId):
                entertainment_amount = sumEntertainment,
                other_amount = sumOther
                )
-       summary.save()
+        summary.save()
 
         return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
 
 #Function to return amounts by category
-def amount_by_category(request):
+def totals_by_category(request):
      #Aggregate the costs grouped by category
      amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum('amount'))
     
