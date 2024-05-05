@@ -65,7 +65,7 @@ class OwnedCards(models.Model):
 class UploadedFile(models.Model):
     user = models.ForeignKey(UserList, on_delete=models.CASCADE)
     filename = models.CharField(max_length=255)
-    upload_date = models.DateTimeField(auto_now_add=True)
+    upload_date = models.DateTimeField(default=now)
 
     def __str__(self):
         return self.filename

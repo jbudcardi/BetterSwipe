@@ -1,14 +1,20 @@
 import React, {useState,useEffect} from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios'
-import "./UploadPage.css"
+import axios from 'axios';
+import "./UploadPage.css";
 
 
 
 function UploadPage({ userId }) {
     const [filename, setFilename] = useState('');
     const [files, setFiles] = useState([]);
-    const [status, setStatus] = useState('')
+    const [status, setStatus] = useState('');
+
+    useEffect(() => {
+        fetchFiles(); // Load files when the component mounts
+    }, []);
+
+
 
     //paste the api address in ' '
     // let api ='http://localhost:8000/algorithms/upload/'
@@ -21,14 +27,14 @@ function UploadPage({ userId }) {
         let formData = new FormData();
         formData.append("csv", filename)
 
-        let axiosConfig = {
+        /*let axiosConfig = {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }
+        }*/
 
         console.log(formData)
-        axios.post(`http://localhost:8000/algorithms/upload/${userId}/`, formData, axiosConfig).then(
+        axios.post(`http://localhost:8000/algorithms/upload/${userId}/`, formData /*axiosConfig*/).then(
             response => {
                 console.log(response);
                 setStatus('File Uploaded Successfully');
