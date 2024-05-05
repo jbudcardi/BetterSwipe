@@ -120,6 +120,7 @@ def upload_transactions(request, userId):
         #Group and sum by categories
         category_df = df.groupby(['category'], sort=True)['amount'].sum()
         
+        monthSummary = 0
         #Just for categorized csv, might need to make one traversing whole original CSV
         for i in df.index:
             df_date = df['date'][i]
@@ -131,11 +132,47 @@ def upload_transactions(request, userId):
             expense = Expenses(
                     user = user,
                     transaction_date = datetime.datetime(year, month, day),
-                    amount = int(df_amount),
+                    amount = float(df_amount),
                     spending_category = df_category
                     )
+            monthSummary = int(transaction_date.strftime("%m"))
             expense.save()
-        
+      
+      #monthSummary = int(expense.trasnaction_date.strftime("%m"))
+      amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum("amount"))
+      #float variables to hold expense totals by category
+      sumGrocery, sumDining, sumTravel, sumGas, sumEntertainnment, sumOther = 0.0
+
+       for item in amount_by_category:
+           name = item['category']
+           total_cost = item['total_cost']
+
+           if name == 'Grocery':
+                sumGrocery = total_cost
+           elif name == 'Dining':
+                sumDining = total_cost
+           elif name == 'Travel':
+                sumTravel = total_cost
+           elif name == 'Entertainment':
+                sumEntertainment = total_cost
+           elif name == 'Gas':
+                sumGas = total_cost
+           else:
+                sumOther += total_cost
+       
+       #Assigning category sums to SpendingSummary model
+       summary = SpendingSummary(
+               user = user,
+               month = monthSummary,
+               travel_amount = sumTravel,
+               dining_amount = sumDining,
+               grocery_amount = sumGrocery,
+               gas_amount = sumGas,
+               entertainment_amount = sumEntertainment,
+               other_amount = sumOther
+               )
+       summary.save()
+
         return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
