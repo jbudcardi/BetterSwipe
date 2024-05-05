@@ -125,7 +125,7 @@ const Dashboard = ({ userId }) => {
             </div>
 
             <div className='CR'>
-            <CardRecommendations userId={userId} />
+            <CardRecommendations userId={userId} month={selectedMonth} />
             </div>
 
             <div className='CCbtn'>

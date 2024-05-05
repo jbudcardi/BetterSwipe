@@ -322,50 +322,74 @@ def add_rewards_cc_cards(request):
 
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def findTopCards(request, userId):
-
     # user_id = int(request.data['userId'])
     user_id = userId
     user = UserList.objects.get(pk=user_id)
-    # user = UserList.objects.get(pk=1)
-    # user = UserList.objects.get(username=user_id)
+
+    # temp hack to prevent database bloat
+    try:
+        first_recommendation = CardRecommendations.objects.filter(user=user).first()
+        first_recommendation.delete()
+    except Exception as e:
+        "Unassigned string to trick python into doing nothing :)"
     
-    expenses = SpendingSummary.objects.filter(user=user).last() #order by latest date?
-    cards = CardList.objects.all()
+    try:
+        # user = UserList.objects.get(pk=1)
+        # user = UserList.objects.get(username=user_id)
+        print("Month requested = " + str(request.data['month']))        
+        month = int(request.data['month'])
 
-    max_scores = [0,0,0]
-    card_names = [cards[0], cards[0], cards[0]]
+        # expenses = SpendingSummary.objects.filter(user=user).last() #order by latest date?
+        expenses = SpendingSummary.objects.filter(user=user, month=month).last()
+        cards = CardList.objects.all()
 
-    expenses_by_category = {
-        'travel_amount'        : expenses.travel_amount, 
-        'dining_amount'        : expenses.dining_amount, 
-        'grocery_amount'       : expenses.grocery_amount, 
-        'gas_amount'           : expenses.gas_amount, 
-        'entertainment_amount' : expenses.entertainment_amount
-    }
+        max_scores = [0,0,0]
+        card_names = [cards[0], cards[0], cards[0]]
 
-    for card in cards:
-        score = card.travel_reward        * expenses_by_category['travel_amount'       ] \
-              + card.dining_reward        * expenses_by_category['dining_amount'       ] \
-              + card.grocery_reward       * expenses_by_category['grocery_amount'      ] \
-              + card.gas_reward           * expenses_by_category['gas_amount'          ] \
-              + card.entertainment_reward * expenses_by_category['entertainment_amount']
+        expenses_by_category = {
+            'travel_amount'        : expenses.travel_amount, 
+            'dining_amount'        : expenses.dining_amount, 
+            'grocery_amount'       : expenses.grocery_amount, 
+            'gas_amount'           : expenses.gas_amount, 
+            'entertainment_amount' : expenses.entertainment_amount
+        }
+
+        for card in cards:
+            score = card.travel_reward        * expenses_by_category['travel_amount'       ] \
+                + card.dining_reward        * expenses_by_category['dining_amount'       ] \
+                + card.grocery_reward       * expenses_by_category['grocery_amount'      ] \
+                + card.gas_reward           * expenses_by_category['gas_amount'          ] \
+                + card.entertainment_reward * expenses_by_category['entertainment_amount']
+            
+            for i in range(len(card_names)):
+                if (score > max_scores[i]):
+                    max_scores.insert(i, score)
+                    card_names.insert(i, card)
+
+                    if len(max_scores) > 3:
+                        card_names.pop()
+                        max_scores.pop()
+                    break
         
-        for i in range(len(card_names)):
-           if (score > max_scores[i]):
-              max_scores.insert(i, score)
-              card_names.insert(i, card)
+        recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
+                            card_name_2=card_names[1],card_name_3=card_names[2])
+        recommendations.save()
 
-              if len(max_scores) > 3:
-                  card_names.pop()
-                  max_scores.pop()
-              print(max_scores)
-              break
-    recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
-                        card_name_2=card_names[1],card_name_3=card_names[2])
-    recommendations.save()
-    return Response({'message': 'Found top cards' + str(card_names)})
+        cards = card_names
+        card_details = [getCardDetails(card.card_name)[0] for card in cards]
+        print("cards: " + str(cards))
+        return Response({
+            'Cards': [{
+                'ImageURL' : getCardImage(cards[i].card_name),
+                'Name' : card_details[i]['cardName'],
+                }for i in range(len(cards))]
+            })
+        #return Response({'message': 'Found top cards' + str(card_names)})
+    except Exception as e:
+        print("Error: " + str(e))
+        return Response({'Cards': []})
 
 @api_view(["GET"])
 def usersTopCards(request, userId):
@@ -373,7 +397,7 @@ def usersTopCards(request, userId):
         # user_id = int(request.data['userId'])
         user_id = userId
         user = UserList.objects.get(pk=user_id)
-        recommendations = CardRecommendations.objects.filter(user=user).latest('date_of_rec')
+        recommendations = CardRecommendations.objects.filter(user=user).last()
         Card1 = recommendations.card_name_1
         Card2 = recommendations.card_name_2
         Card3 = recommendations.card_name_3
@@ -399,6 +423,7 @@ def usersTopCards(request, userId):
                 }for i in range(len(cards))]
             })
     except Exception as e:
+        print("Exception: " + str(e))
         return Response({
             'Cards': []
             })
