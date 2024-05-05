@@ -1,27 +1,19 @@
-import React, {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const Logout = ({ onLogout}) => {
+const Logout = () => {
     const navigate = useNavigate();
+    const { logout } = useAuth();  // Directly use logout from AuthContext
 
     useEffect(() => {
-        //Call the logout function passed as a prop
-        onLogout();
-        //Redirect to the login page or home page after logging out
-        handleLogout();
-    }, []);
+        logout();  // Call the logout function from AuthContext
+        navigate('/');  // Redirect to home after logout
+    }, [logout, navigate]);  // Dependency array includes logout and navigate
 
-    const handleLogout = () => {
-        if (onLogout) {
-            onLogout();
-        }
-        navigate('/'); // Redirect to the home page after logging out
-    };
-    //Render nothing or a simple message while the redirect is happening
-    return(
-        <div>
-            <button onClick={handleLogout}>Log Out</button>
-        </div>
+    // Render nothing or a loading indicator/message
+    return (
+        <div>Logging out...</div>
     );
 };
 

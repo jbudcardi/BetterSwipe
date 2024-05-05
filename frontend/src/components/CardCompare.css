@@ -1,0 +1,67 @@
+
+
+.CTC{
+  margin-top: 100px;
+  text-align: center;
+}
+
+.Card1{
+  display: table-cell;
+  border-style: solid;
+  float: left;
+  background: limegreen;
+  width: 500px;
+  height: 850px;
+  margin-left: -150px;
+}
+
+.Card1 h2{
+  text-align: center;
+}
+
+.Card2{
+  display: table-cell;
+  border-style: solid;
+  float: left;
+  background: greenyellow;
+  width: 450px;
+  height: 850px;
+  margin-left: 100px;
+
+  
+}
+
+.Card2 h2{
+  text-align: center;
+}
+
+.Card3{
+  border-style: solid;
+  display: table-cell;
+  float: right;
+  background: yellow;
+  width: 450px;
+  height: 850px;
+  margin-left: 100px;
+}
+
+.Card3 h2{
+  text-align: center;
+}
+
+.Row{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 50px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 100px 0;
+}
+
+.btn-group button{
+  border: 1px solid green;
+  float: left;
+}

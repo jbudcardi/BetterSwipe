@@ -1,0 +1,85 @@
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.UPbtn,
+.CCbtn {
+  display: inline-block; /* Display the divs as inline-block elements */
+  margin-right: 10px; /* Add some spacing between the buttons */
+}
+
+canvas,
+.UPbtn,
+.MSS{
+    position:fixed; left:350px; top:240px;
+}
+
+.UPbtn{
+    margin-top: 320px;
+    margin-left: 200px;
+}
+.UPbtn button:hover {
+    background-color: #752188; /* light purple on hover */
+  }
+
+.CCbtn{
+    position:fixed; right:450px; top:55%;
+}
+.CCbtn button:hover {
+    background-color: #9c24aa; /* Darker purple on hover */
+  }
+
+.MSS {
+    margin-top: -40px;
+    margin-left: 100px;
+}
+
+.DB{
+    text-align: center;
+    position: fixed;
+}
+.CR{
+    word-wrap: normal;
+    position:fixed; right:50px; top:200px; 
+}
+
+.month-selector {
+    position: absolute; /* Absolute to place specifically */
+    left: 20px; /* Align to the left side of the view */
+    top: 100px; /* Top of the page */
+    width: auto; /* Adjust width as per content */
+    align-items: flex-start; /* Align items to the start of the flex container */
+    
+}
+
+.month-selector label {
+    color: black; /* Match with your theme */
+    margin-bottom: 10px; /* Space between label and dropdown */
+}
+
+.month-selector select {
+    background-color: #7f5af0; /* Purple background */
+    color: rgb(246, 240, 240); /* White text for options */
+    padding: 6px 16px; /* More padding for better visual */
+    border-radius: 8px; /* Rounded corners */
+    border: 2px solid rgba(255, 255, 255, 1.5); /* Slightly visible border */
+    line-height: 1.5;
+    width: 100%; /* Full width of the container */
+    outline: none; /* Remove focus outline */
+    appearance: none; /* Remove default system appearance */
+    cursor: pointer; /* Cursor to pointer to indicate it's selectable */
+}
+
+.month-selector select:hover {
+    background-color: #e0dbff; /* Light purple color */
+  }
+  
+
+.month-selector select option {
+    background: white; /* White background for options */
+    color: black; /* Black text for readability */
+}

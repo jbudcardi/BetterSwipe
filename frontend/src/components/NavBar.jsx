@@ -1,15 +1,27 @@
 import React, {useState} from "react";
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import logo from '../pages/BetterSwipe Logo.jpg';
 import { Navbar, Nav, Container} from 'react-bootstrap';
-import Logout from "./LogOut";
+import { useAuth } from '../context/AuthContext';
+
 
 //We are creating the functional Component Navigation bar
 //This is for the purpose of navigating to different components on our Single-Page- Application
-const isAuthenticated = true; // This will be used in future development when we have user authentication implemented 
+
 function NavBar(){
-  const[isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth(); // Assuming logout is your onLogout function
+
+  const handleLogout = () => {
+    logout(); // Perform logout action defined in AuthContext or parent component
+    navigate('/'); // Redirect to the home page after logging out
+  };
+
+  console.log('Authentication Status:', isAuthenticated); // Debugging
+
+
     return (
         <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
           <Container>
@@ -24,8 +36,16 @@ function NavBar(){
                 <Nav.Link as={Link} to="/about">About</Nav.Link>
                 {/* Conditional render of the dasshboard due to authenticaiton status of the user */}
                 
-                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                {isAuthenticated &&<Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>}
+                {isAuthenticated ? (
+                <Nav.Link as={Link} to="/logout" onClick={() => {handleLogout}}>Logout</Nav.Link>
+                ) : (
+                  <>
+                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                <Nav.Link as={Link} to="/sign-up">Sign Up</Nav.Link>
+              </>
+                )}
+              
 	    	<Nav.Link as={Link} to="/test">Test</Nav.Link>
               </Nav>
             </Navbar.Collapse>
