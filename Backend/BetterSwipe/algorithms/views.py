@@ -125,6 +125,8 @@ def upload_transactions(request, userId):
         category_df = df.groupby(['category'], sort=True)['amount'].sum()
         
         monthSummary = 0
+
+        month = 0
         #Just for categorized csv, might need to make one traversing whole original CSV
         for i in df.index:
             df_date = df['date'][i]
@@ -244,9 +246,9 @@ def upload_transactions(request, userId):
         
 
 
-
+        month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         findTopCards(userId) # calculate user's top cards when file uploaded
-        return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
+        return Response({'status': 'success', 'message': 'Transactions processed successfully', 'month': month_names[month] }, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
 
