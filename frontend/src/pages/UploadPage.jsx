@@ -6,8 +6,9 @@ import "./UploadPage.css"
 
 
 function UploadPage({ userId }) {
-    const [filename, setFilename] = useState('')
-    const [uploadedFiles, setUploadedFiles] = useState([])
+    const [filename, setFilename] = useState('');
+    const [uploadinfo, setUploadinfo] = useState({ name: '', month: ''});
+    const [fileHistory, setFileHistory] = useState([]);
     //paste the api address in ' '
     // let api ='http://localhost:8000/algorithms/upload/'
 
@@ -28,19 +29,21 @@ function UploadPage({ userId }) {
         console.log(formData)
         axios.post(`http://localhost:8000/algorithms/upload/${userId}/`, formData, axiosConfig).then(
             response => {
-                setUploadedFiles((prevData) => {
-                    prevData.push({ name: filename['name'],  month : response.data['month'] }); 
-                    return prevData
-                });
+                setUploadinfo({ name: filename['name'],  month : response.data['month'] }); 
+                
                 // console.log(filename['name']);
                 // console.log(response);
-                console.log(uploadedFiles);
+                console.log(uploadinfo);
             }
         ).catch(error =>{
             console.log(error)
         })
 
+        setFileHistory( (prev) => {prev.push(uploadinfo); return prev; } )
     }
+
+
+
     return(
        <div className="upload-container">
         
@@ -70,7 +73,7 @@ function UploadPage({ userId }) {
                         <th scope="col">Month</th>
                     </tr>
                     
-                    {Array.from(uploadedFiles, (x) => (
+                    {Array.from(fileHistory.filter((element, index) => {if (index % 2 === 0) {return element} }), (x, i) => (
                         <tr>
                             <th scope="col"> {x.name} </th>
                             <th scope="col"> {x.month} </th>
