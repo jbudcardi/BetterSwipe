@@ -9,7 +9,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
-from .models import UserList, Expenses, CardList, SpendingSummary, CardRecommendations
+from .models import UserList, Expenses, CardList, SpendingSummary, CardRecommendations, TotalExpenses
 from django.contrib.auth import authenticate, login # type: ignore
 from rest_framework.views import APIView
 from .rewardscc import getCardDetails, getCardImage, getCardsInCategory, getCategoryList
@@ -144,15 +144,67 @@ def upload_transactions(request, userId):
         
         
         #monthSummary = int(expense.trasnaction_date.strftime("%m"))
-        amount_by_category = Expenses.objects.values('spending_category').annotate(total_cost=Sum("amount"))
-        #float variables to hold expense totals by category
-        
+        month_totals = Expenses.objects.filter(user=user, transaction_date__month = month)
+        amount_by_category = month_totals.values('spending_category').annotate(total_cost=Sum("amount"))
+
         sumGrocery, sumDining, sumTravel, sumGas, sumEntertainment, sumOther = (0.0,)*6
         
         for item in amount_by_category:
             name = item['spending_category']
             total_cost = item['total_cost']
+            if name == 'Grocery':
+                sumGrocery += total_cost
+            elif name == 'Dining':
+                sumDining += total_cost
+            elif name == 'Travel':
+                sumTravel += total_cost
+            elif name == 'Entertainment':
+                sumEntertainment += total_cost
+            elif name == 'Gas':
+                sumGas += total_cost
+            else:
+                sumOther += total_cost
+    
+        
+        #Assigning category sums to SpendingSummary model
+        summary = SpendingSummary.objects.filter(user=user, month = month)
+        if summary.exists():
+            summary.update(
+                user = user,
+                month = month,
+                travel_amount = sumTravel,
+                dining_amount = sumDining,
+                grocery_amount = sumGrocery,
+                gas_amount = sumGas,
+                entertainment_amount = sumEntertainment,
+                other_amount = sumOther
+            )
+        else:
+            summary = SpendingSummary(
+                user = user,
+                month = month,
+                travel_amount = sumTravel,
+                dining_amount = sumDining,
+                grocery_amount = sumGrocery,
+                gas_amount = sumGas,
+                entertainment_amount = sumEntertainment,
+                other_amount = sumOther
+                )
+            summary.save()
+        
 
+
+
+        # Quick copy-pasted code from above, but without the month filter
+        # Could be cleaned up but we're on a time crunch :/
+        month_totals = Expenses.objects.filter(user=user)
+        amount_by_category = month_totals.values('spending_category').annotate(total_cost=Sum("amount"))
+
+        sumGrocery, sumDining, sumTravel, sumGas, sumEntertainment, sumOther = (0.0,)*6
+        
+        for item in amount_by_category:
+            name = item['spending_category']
+            total_cost = item['total_cost']
             if name == 'Grocery':
                 sumGrocery += total_cost
             elif name == 'Dining':
@@ -167,18 +219,33 @@ def upload_transactions(request, userId):
                 sumOther += total_cost
         
         #Assigning category sums to SpendingSummary model
-        summary = SpendingSummary(
-               user = user,
-               month = month,
-               travel_amount = sumTravel,
-               dining_amount = sumDining,
-               grocery_amount = sumGrocery,
-               gas_amount = sumGas,
-               entertainment_amount = sumEntertainment,
-               other_amount = sumOther
-               )
-        summary.save()
+        summary = TotalExpenses.objects.filter(user = user)
+        if summary.exists():
+            summary.update(
+                user = user,
+                travel_amount = sumTravel,
+                dining_amount = sumDining,
+                grocery_amount = sumGrocery,
+                gas_amount = sumGas,
+                entertainment_amount = sumEntertainment,
+                other_amount = sumOther
+            )
+        else:
+            summary = TotalExpenses(
+                user = user,
+                travel_amount = sumTravel,
+                dining_amount = sumDining,
+                grocery_amount = sumGrocery,
+                gas_amount = sumGas,
+                entertainment_amount = sumEntertainment,
+                other_amount = sumOther
+                )
+            summary.save()
         
+
+
+
+
         return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
@@ -350,17 +417,24 @@ def add_rewards_cc_cards(request):
                 case 'Dining'        : dining_reward        += reward_amount
                 case 'Auto'          : gas_reward           += reward_amount
                 case 'Entertainment' : entertainment_reward += reward_amount
-                case 'Shopping'      : shopping_reward      += reward_amount
+                # case 'Shopping'      : shopping_reward      += reward_amount
+                case 'Shopping'      : grocery_reward       += reward_amount
                 case _               : other_reward         += reward_amount
-            
+            '''
             if category['spendBonusSubcategoryGroup'] == 'Grocery':
                 shopping_reward -= reward_amount
                 grocery_reward = reward_amount
-
+            '''
         card = CardList(card_name=card_id, issuer=issuer, annual_fee=annual_fee,
                         travel_reward=travel_reward, dining_reward=dining_reward,grocery_reward=grocery_reward,
                         shopping_reward=shopping_reward, gas_reward=gas_reward,
-                        entertainment_reward=entertainment_reward, other_reward=other_reward)
+                        entertainment_reward=entertainment_reward, other_reward=other_reward,
+                        image_url = getCardImage(card_id),
+                        long_name = card_details['cardName'],
+                        website = card_details['cardUrl'],
+                        creditscore = card_details['creditRange'],
+                        reward_type = card_details['baseSpendEarnCurrency'],
+                        )
         card.save()
     
     return Response({'message': 'Load complete'})
@@ -383,11 +457,12 @@ def findTopCards(request, userId):
     try:
         # user = UserList.objects.get(pk=1)
         # user = UserList.objects.get(username=user_id)
-        print("Month requested = " + str(request.data['month']))        
-        month = int(request.data['month'])
+        # print("Month requested = " + str(request.data['month']))        
+        # month = int(request.data['month'])
 
         # expenses = SpendingSummary.objects.filter(user=user).last() #order by latest date?
-        expenses = SpendingSummary.objects.filter(user=user, month=month).last()
+        # expenses = SpendingSummary.objects.filter(user=user, month=month).last()
+        expenses = TotalExpenses.objects.filter(user=user).last() 
         cards = CardList.objects.all()
 
         max_scores = [0,0,0]
@@ -402,7 +477,7 @@ def findTopCards(request, userId):
         }
 
         for card in cards:
-            score = card.travel_reward        * expenses_by_category['travel_amount'       ] \
+            score = card.travel_reward      * expenses_by_category['travel_amount'       ] \
                 + card.dining_reward        * expenses_by_category['dining_amount'       ] \
                 + card.grocery_reward       * expenses_by_category['grocery_amount'      ] \
                 + card.gas_reward           * expenses_by_category['gas_amount'          ] \
@@ -416,6 +491,7 @@ def findTopCards(request, userId):
                     if len(max_scores) > 3:
                         card_names.pop()
                         max_scores.pop()
+                    print(max_scores)
                     break
         
         recommendations = CardRecommendations(user=user,card_name_1=card_names[0],
@@ -443,28 +519,31 @@ def usersTopCards(request, userId):
         user_id = userId
         user = UserList.objects.get(pk=user_id)
         recommendations = CardRecommendations.objects.filter(user=user).last()
+        # spend_summary = SpendingSummary.objects.filter(user=user).last() # CHANGE THIS TO USE AGGREGATE TOTAL MODEL!!!!
+        spend_summary = TotalExpenses.objects.filter(user=user).last() 
         Card1 = recommendations.card_name_1
         Card2 = recommendations.card_name_2
         Card3 = recommendations.card_name_3
 
         cards = [Card1, Card2, Card3]
-        card_details = [getCardDetails(card.card_name)[0] for card in cards]
+
+        # card_details = [getCardDetails(card.card_name)[0] for card in cards]
         return Response({
             'Cards': [{
                 'ImageURL' : getCardImage(cards[i].card_name),
-                'Name' : card_details[i]['cardName'],
-                'Issuer' : card_details[i]['cardIssuer'],
-                'Website' : card_details[i]['cardUrl'],
-                'CreditScore' : card_details[i]['creditRange'],
-                'AnnualFee' : card_details[i]['annualFee'],
-                'RewardType' : card_details[i]['baseSpendEarnCurrency'],
-                'TravelReward' : cards[i].travel_reward,
-                'DiningReward' : cards[i].dining_reward,
-                'GroceryReward' : cards[i].grocery_reward,
-                'ShoppingReward' : cards[i].shopping_reward,
-                'GasReward' : cards[i].gas_reward,
-                'EntertainmentReward' : cards[i].entertainment_reward,
-                'OtherReward' : cards[i].other_reward,
+                'Name' : cards[i].long_name, #card_details[i]['cardName'],
+                'Issuer' : cards[i].issuer, #card_details[i]['cardIssuer'],
+                'Website' : cards[i].website, # card_details[i]['cardUrl'],
+                'CreditScore' : cards[i].creditscore, # card_details[i]['creditRange'],
+                'AnnualFee' : cards[i].annual_fee, # card_details[i]['annualFee'],
+                'RewardType' : cards[i].reward_type, #card_details[i]['baseSpendEarnCurrency'],
+                'TravelReward' : cards[i].travel_reward * spend_summary.travel_amount,
+                'DiningReward' : cards[i].dining_reward * spend_summary.dining_amount,
+                'GroceryReward' : cards[i].grocery_reward * spend_summary.grocery_amount,
+                # 'ShoppingReward' : cards[i].shopping_reward * spend_summary.shopping_amount,
+                'GasReward' : cards[i].gas_reward * spend_summary.gas_amount,
+                'EntertainmentReward' : cards[i].entertainment_reward * spend_summary.entertainment_amount
+                # 'OtherReward' : cards[i].other_reward,
                 }for i in range(len(cards))]
             })
     except Exception as e:

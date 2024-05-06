@@ -3,12 +3,12 @@ import axios from 'axios';
 
 
 
-const CardRecommendations = ({ userId, month }) => {
+const CardRecommendations = ({ userId }) => {
     const [cards, setCards] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchRecommendations = useCallback(async (mon) => {
+    const fetchRecommendations = useCallback(async () => {
         if (!userId) return; // If no userId, do not fetch
 
         setIsLoading(true);
@@ -16,7 +16,7 @@ const CardRecommendations = ({ userId, month }) => {
 
         // month = new Date().getMonth() + 1;
         try {
-            const response = await axios.post(`http://localhost:8000/algorithms/findtopcards/${userId}/`, {"month" : mon}); //may change based on the location of the API endpoint
+            const response = await axios.post(`http://localhost:8000/algorithms/findtopcards/${userId}/`); //may change based on the location of the API endpoint
             setCards(response.data); // Assuming the API returns an array of card objects
         } catch (err) {
             setError(`Failed to fetch recommendations: ${err.response?.data?.message || err.message}`);
@@ -27,8 +27,8 @@ const CardRecommendations = ({ userId, month }) => {
     }, [userId]);
 
     useEffect(() => {
-        fetchRecommendations(month);
-    }, [fetchRecommendations, month]);
+        fetchRecommendations();
+    }, [fetchRecommendations]);
 
     if (isLoading) {
         return <p>Loading recommendations...</p>;

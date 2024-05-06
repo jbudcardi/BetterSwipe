@@ -102,13 +102,13 @@ const CardCompare = ({ userId }) => {
                         <p>Credit Score: {card.CreditScore}</p>
                         <p>Annual Fee: {card.AnnualFee}</p>
                         <p>Reward Type: {card.RewardType}</p>
-                        <p>Travel: {card.TravelReward}</p>
-                        <p>Dining: {card.DiningReward}</p>
-                        <p>Grocery: {card.GroceryReward}</p>
-                        <p>Shopping: {card.ShoppingReward}</p>
-                        <p>Gas: {card.GasReward}</p>
-                        <p>Entertainment: {card.EntertainmentReward}</p>
-                        <p>Other: {card.OtherReward}</p>
+                        <p>Travel: ${card.TravelReward}</p>
+                        <p>Dining: ${card.DiningReward}</p>
+                        <p>Grocery: ${card.GroceryReward}</p>
+                        {/*<p>Shopping: {card.ShoppingReward}</p>*/}
+                        <p>Gas: ${card.GasReward}</p>
+                        <p>Entertainment: ${card.EntertainmentReward}</p>
+                        <p>Total: ${card.TravelReward + card.DiningReward + card.GroceryReward + card.GasReward + card.EntertainmentReward}</p>
                         {/* ...other card details... */}
                     </div>
                     <div className="card-footer">

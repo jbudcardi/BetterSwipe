@@ -15,7 +15,7 @@ const Dashboard = ({ userId }) => {
 
     const [spendingData, setSpendingData] = useState({
 	type: 'doughnut',
-	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
+	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment' /*, 'Other'*/],
         datasets: [{
             label: 'Monthly Spending',
             data: [],
@@ -56,7 +56,7 @@ const Dashboard = ({ userId }) => {
                             latestSummary.grocery_amount,
                             latestSummary.gas_amount,
                             latestSummary.entertainment_amount,
-                            latestSummary.other_amount
+                            // latestSummary.other_amount
                         ]
                     }]
                 }));
