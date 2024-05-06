@@ -94,7 +94,7 @@ const CardCompare = ({ userId }) => {
                 <div className={"Card"+String(index+1)} key={card.id} card_index={index}>
                     <div className="card-header">
                         <h3>{card.Name}</h3>
-                        <img src={card.ImageURL} alt={`${card.Name} Card`} />
+                        <img src={card.ImageURL} alt={`${card.Name} Card`}  width="350" />
                     </div>
                     <div className="card-body">
                         <p>Issuer: {card.Issuer}</p>

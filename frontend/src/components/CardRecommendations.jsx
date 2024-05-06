@@ -51,7 +51,7 @@ const CardRecommendations = ({ userId, month }) => {
                 <div className="card" key={card.id} card_index={index}>
                     <div className="card-header">
                         <h5>{card.Name}</h5>
-                        <img src={card.ImageURL} alt={`${card.Name} Card`} />
+                        <img src={card.ImageURL} alt={`${card.Name} Card`} width="200" />
                     </div>
                 </div>
             ))}
