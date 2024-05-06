@@ -6,16 +6,16 @@ function Validation(values){
 
 
 
-    if (values.firstName === ""){
-        error.firstName = "First Name should not be empty"
+    if (values.first_name === ""){
+        error.first_name= "First Name should not be empty"
     }else{
-        error.firstName = " "
+        error.first_name = " "
     }
 
-    if (values.lastName === ""){
-        error.lastName = "Last Name should not be empty"
+    if (values.last_name === ""){
+        error.last_name = "Last Name should not be empty"
     }else{
-        error.lastName = " "
+        error.last_name = " "
     }
 
         //Phone Number validation 
@@ -44,15 +44,15 @@ function Validation(values){
         error.password = " "
     }*/
 
-    if(values.confirmPassword === ""){
-        error.confirmPassword = "Password didn't match"
+    /*if(values.confirm_password === ""){
+        error.confirm_password = "Password didn't match"
     }
     else if(!password_pattern.test(values.password)){
-        error.confirmPassword = "Password didn't match"
+        error.confirm_password= "Password didn't match"
     } else {
-        error.confirmPassword = " "
+        error.confirm_password = " "
     }
-    return error;
+    return error;*/
 
 }
 export default Validation;

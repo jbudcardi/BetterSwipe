@@ -14,7 +14,6 @@ function SignUpPage(){
         username: '',
         first_name: '',
         last_name: '',
-        //phoneNumber: '',
         email: '',
         password: '',
         confirm_password: '',
@@ -29,7 +28,7 @@ function SignUpPage(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newErrors = Validation(userInput);
+        const newErrors = Validation(userInput) || {};
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
@@ -38,7 +37,8 @@ function SignUpPage(){
                     'Content-Type': 'application/json'
                 }
             }).then(response => {
-                navigate('/dashboard'); // Or '/login' if you prefer they log in manually first
+                console.log("Successful sign up");
+                navigate('/login'); // Or '/login' if you prefer they log in manually first
             }).catch(error => {
                 const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
                 setErrors(prevErrors => ({ ...prevErrors, form: errorMessage }));
@@ -61,11 +61,11 @@ function SignUpPage(){
                     <input
                     type="text"
                     placeholder="First Name"
-                    id="firstName"
-                    name="firstName"
-                    value={userInput.firstName}
+                    id="first_name"
+                    name="first_name"
+                    value={userInput.first_name}
                     onChange={handleInput} className='form-control round-0'/>
-                    {errors.firstName && <span className='text-danger'>{errors.firstName}</span>}
+                    {errors.first_name && <span className='text-danger'>{errors.first_name}</span>}
                     </Form.Group>
 
                 <Form.Group className="mb-3">
@@ -73,11 +73,11 @@ function SignUpPage(){
                     <input
                     type="lastName"
                     placeholder='Last Name'
-                    id="lastName"
-                    name="lastName"
-                    value={userInput.lastName}
+                    id="last_name"
+                    name="last_name"
+                    value={userInput.last_name}
                     onChange={handleInput} className='form-control round-0'/>
-                    {errors.lastName && <span className='text-danger'>{errors.lastName}</span>}
+                    {errors.last_name && <span className='text-danger'>{errors.last_name}</span>}
                   
                 </Form.Group>
                 {/*<Form.Group className="mb-3">
@@ -132,11 +132,11 @@ function SignUpPage(){
                     <input
                     type="password"
                     placeholder='********** '
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={userInput.confirmPassword}
+                    id="confirm_password"
+                    name="confirm_password"
+                    value={userInput.confirm_password}
                     onChange={handleInput} className='form-control round-0'/>
-                    {errors.password && <span className='text-danger'>{errors.password}</span>}
+                    {errors.confirm_password && <span className='text-danger'>{errors.confirm_password}</span>}
                     
                 </Form.Group>
                 <button onClick={handleSubmit} type="submit" className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'  >Sign Up</button>
