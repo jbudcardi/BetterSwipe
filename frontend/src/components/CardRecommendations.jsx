@@ -16,7 +16,7 @@ const CardRecommendations = ({ userId }) => {
 
         // month = new Date().getMonth() + 1;
         try {
-            const response = await axios.post(`http://localhost:8000/algorithms/findtopcards/${userId}/`); //may change based on the location of the API endpoint
+            const response = await axios.get(`http://localhost:8000/algorithms/userstopcards/${userId}/`); //may change based on the location of the API endpoint
             setCards(response.data); // Assuming the API returns an array of card objects
         } catch (err) {
             setError(`Failed to fetch recommendations: ${err.response?.data?.message || err.message}`);

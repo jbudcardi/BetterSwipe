@@ -245,7 +245,7 @@ def upload_transactions(request, userId):
 
 
 
-
+        findTopCards(userId) # calculate user's top cards when file uploaded
         return Response({'status': 'success', 'message': 'Transactions processed successfully'}, status=200)
     except Exception as e:
         return Response({'status': 'error', 'message': str(e)}, status=400)
@@ -441,8 +441,8 @@ def add_rewards_cc_cards(request):
 
 
 
-@api_view(["POST"])
-def findTopCards(request, userId):
+# @api_view(["POST"])
+def findTopCards(userId):
     # user_id = int(request.data['userId'])
     user_id = userId
     user = UserList.objects.get(pk=user_id)
