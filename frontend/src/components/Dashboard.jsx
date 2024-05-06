@@ -16,9 +16,14 @@ const Dashboard = ({ userId }) => {
     const [spendingData, setSpendingData] = useState({
 	type: 'doughnut',
 	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
-        datasets: [{
+	datasets: [{
             label: 'Monthly Spending',
             data: [],
+	    labels: {
+		    render: 'percentage',
+		    fontColor: ['black'],
+		    precision: 1
+	    },
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
