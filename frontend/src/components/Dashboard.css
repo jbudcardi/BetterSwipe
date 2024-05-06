@@ -14,20 +14,19 @@
 
 canvas,
 .UPbtn,
-.MSS{
+.MSS {
     position:fixed; left:350px; top:240px;
 }
 
 .UPbtn{
-    margin-top: 320px;
-    margin-left: 200px;
+    margin-top: 420px;
 }
 .UPbtn button:hover {
     background-color: #752188; /* light purple on hover */
   }
 
 .CCbtn{
-    position:fixed; right:450px; top:55%;
+    position:fixed; right:450px; top:680px;
 }
 .CCbtn button:hover {
     background-color: #9c24aa; /* Darker purple on hover */
@@ -35,7 +34,12 @@ canvas,
 
 .MSS {
     margin-top: -40px;
-    margin-left: 100px;
+}
+
+.MSS2 {
+    position:fixed;
+    top: 200px;
+    left: 900px;
 }
 
 .DB{
@@ -44,7 +48,7 @@ canvas,
 }
 .CR{
     word-wrap: normal;
-    position:fixed; right:50px; top:200px; 
+    position:fixed; right:50px; top:100px; 
 }
 
 .month-selector {
@@ -68,7 +72,7 @@ canvas,
     border-radius: 8px; /* Rounded corners */
     border: 2px solid rgba(255, 255, 255, 1.5); /* Slightly visible border */
     line-height: 1.5;
-    width: 100%; /* Full width of the container */
+    width: 10%; /* Full width of the container */
     outline: none; /* Remove focus outline */
     appearance: none; /* Remove default system appearance */
     cursor: pointer; /* Cursor to pointer to indicate it's selectable */
@@ -82,4 +86,15 @@ canvas,
 .month-selector select option {
     background: white; /* White background for options */
     color: black; /* Black text for readability */
+}
+
+
+.monthlygraph {
+    width: 10px;
+    /*border: 2px solid rgba(255, 0, 0, 1);*/
+}
+
+.totalgraph {
+    left: 900px;
+    /*border: 2px solid rgba(0, 0, 255, 1);*/
 }

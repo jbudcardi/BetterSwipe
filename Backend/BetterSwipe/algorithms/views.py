@@ -299,6 +299,41 @@ def get_expenditures(request):
 
 
 
+@api_view(["POST"])
+def get_total_expenditures(request):
+    try:
+        data = request.data
+        user_id = int(data['userId'])
+        user = UserList.objects.get(pk=user_id)
+        
+        expenses = TotalExpenses.objects.filter(user=user).last()
+
+        expenses_by_category = {
+            'travel_amount'        : expenses.travel_amount, 
+            'dining_amount'        : expenses.dining_amount, 
+            'grocery_amount'       : expenses.grocery_amount, 
+            'gas_amount'           : expenses.gas_amount, 
+            'entertainment_amount' : expenses.entertainment_amount,
+            'other_amount'         : expenses.other_amount,
+        }
+
+        return Response(expenses_by_category)
+    
+    except Exception as e:
+        expenses_by_category = {
+            'travel_amount'        : 0, 
+            'dining_amount'        : 0, 
+            'grocery_amount'       : 0, 
+            'gas_amount'           : 0, 
+            'entertainment_amount' : 0,
+            'other_amount'         : 0,
+        }
+
+        return Response(expenses_by_category)
+
+
+
+
 #this is where the registration will go
 
 def user_login(request):
@@ -447,12 +482,7 @@ def findTopCards(userId):
     user_id = userId
     user = UserList.objects.get(pk=user_id)
 
-    # temp hack to prevent database bloat
-    try:
-        first_recommendation = CardRecommendations.objects.filter(user=user).first()
-        first_recommendation.delete()
-    except Exception as e:
-        "Unassigned string to trick python into doing nothing :)"
+    
     
     try:
         # user = UserList.objects.get(pk=1)
@@ -552,3 +582,4 @@ def usersTopCards(request, userId):
         return Response({
             'Cards': []
             })
+

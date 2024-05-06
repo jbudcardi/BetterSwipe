@@ -40,11 +40,8 @@ const Dashboard = ({ userId }) => {
     });
 
     var APIcall = (month = selectedMonth) => {
-        // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
         axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, "month": month } )
             .then(response => {
-                // testing with the latest month for display
-                // const latestSummary = response.data[response.data.length - 1];
                 const latestSummary = response.data;
                 setSpendingData(prevData => ({
                     ...prevData,
@@ -56,7 +53,6 @@ const Dashboard = ({ userId }) => {
                             latestSummary.grocery_amount,
                             latestSummary.gas_amount,
                             latestSummary.entertainment_amount,
-                            // latestSummary.other_amount
                         ]
                     }]
                 }));
@@ -83,21 +79,70 @@ const Dashboard = ({ userId }) => {
 			    precision: 1
 		    }
 	    },
-
-        /*
-	    scales: {
-            y: { // Corrected scale configuration
-              beginAtZero: true,
-            },
-          },
-	*/
-
     }
+
+
+
+
+
+
+    const [totalspendingData, setTotalSpendingData] = useState({
+        type: 'doughnut',
+        labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment' /*, 'Other'*/],
+            datasets: [{
+                label: 'Monthly Spending',
+                data: [],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        });
+    
+        var total_expense_call = () => {
+            axios.post(`http://127.0.0.1:8000/algorithms/totalexpenditures/`, { "userId" : userId } )
+                .then(response => {
+                    const latestSummary = response.data;
+                    setTotalSpendingData(prevData => ({
+                        ...prevData,
+                        datasets: [{
+                            ...prevData.datasets[0],
+                            data: [
+                                latestSummary.travel_amount,
+                                latestSummary.dining_amount,
+                                latestSummary.grocery_amount,
+                                latestSummary.gas_amount,
+                                latestSummary.entertainment_amount,
+                            ]
+                        }]
+                    }));
+                })
+                .catch(error => console.error('Error fetching data: ', error));
+        };
+
+        useEffect(total_expense_call, [userId]);
+
+
+
+
     
     return (
-     
         <div style={{ width: '600px', height: '400px', margin: '100px auto' }}>
             <h2 className='MSS'>Monthly Spending Summary</h2>
+            <h2 className='MSS2'>Total Spending Summary</h2>
 
             <div className="month-selector">
                 <label htmlFor="month-select">Select a Month:</label>
@@ -115,9 +160,10 @@ const Dashboard = ({ userId }) => {
                 </select>
             </div>
          
-
-            <Doughnut data={spendingData} options={options} />
-
+            <Doughnut className='monthlygraph' data={spendingData} options={options} />
+            <Doughnut className='totalgraph' data={totalspendingData} options={options} />
+            
+            
             <h1 className='DB'> Main Dashboard</h1>
 
             <div className= 'UPbtn'>
@@ -135,7 +181,6 @@ const Dashboard = ({ userId }) => {
 
         </div>
         
-       
     );
 };
 export default Dashboard;
