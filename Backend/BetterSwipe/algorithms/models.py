@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 # Create your models here.
 class CardList(models.Model):
@@ -36,6 +37,7 @@ class UserList(models.Model):
 
     def __str__(self):
         return self.username
+
 
 class Expenses(models.Model):
     user = models.ForeignKey(UserList, on_delete=models.CASCADE)
