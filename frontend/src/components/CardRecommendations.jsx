@@ -14,6 +14,7 @@ const CardRecommendations = ({ userId }) => {
         setIsLoading(true);
         setError(null);
 
+        // month = new Date().getMonth() + 1;
         try {
             const response = await axios.get(`http://localhost:8000/algorithms/userstopcards/${userId}/`); //may change based on the location of the API endpoint
             setCards(response.data); // Assuming the API returns an array of card objects
@@ -46,30 +47,11 @@ const CardRecommendations = ({ userId }) => {
             <p>No recommendations available. Consider updating your spending data.</p>
         )}
         <div className="card-list">
-            {cards['Cards'].map((card) => (
-                <div className="card" key={card.id}>
+            {cards['Cards'].map((card, index) => (
+                <div className="card" key={card.id} card_index={index}>
                     <div className="card-header">
-                        <h3>{card.Name}</h3>
-                        <img src={card.ImageURL} alt={`${card.Name} Card`} />
-                    </div>
-                    <div className="card-body">
-                        <p>Issuer: {card.Issuer}</p>
-                        <p>Website: {card.Website}</p>
-                        <p>Credit Score: {card.CreditScore}</p>
-                        <p>Annual Fee: {card.AnnualFee}</p>
-                        <p>Reward Type: {card.RewardType}</p>
-                        <p>Travel: {card.TravelReward}</p>
-                        <p>Dining: {card.DiningReward}</p>
-                        <p>Grocery: {card.GroceryReward}</p>
-                        <p>Shopping: {card.ShoppingReward}</p>
-                        <p>Gas: {card.GasReward}</p>
-                        <p>Entertainment: {card.EntertainmentReward}</p>
-                        <p>Other: {card.OtherReward}</p>
-                        {/* ...other card details... */}
-                    </div>
-                    <div className="card-footer">
-                        <button className="apply-btn">Apply</button>
-                        <p>{card.terms}</p>
+                        <h5>{card.Name}</h5>
+                        <img src={card.ImageURL} alt={`${card.Name} Card`} width="200" />
                     </div>
                 </div>
             ))}

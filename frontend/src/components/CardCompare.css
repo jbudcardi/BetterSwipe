@@ -9,9 +9,9 @@
   display: table-cell;
   border-style: solid;
   float: left;
-  background: Red;
-  width: 450px;
-  height: 280px;
+  background: limegreen;
+  width: 500px;
+  height: 850px;
   margin-left: -150px;
 }
 
@@ -23,12 +23,10 @@
   display: table-cell;
   border-style: solid;
   float: left;
-  background: Green;
-  width: 450px;
-  height: 280px;
-  margin-left: 100px;
-
-  
+  background: greenyellow;
+  width: 500px;
+  height: 850px;
+  /*margin-left: 100px;*/
 }
 
 .Card2 h2{
@@ -39,10 +37,10 @@
   border-style: solid;
   display: table-cell;
   float: right;
-  background: rgba(0, 0, 255, 0.104);
-  width: 450px;
-  height: 280px;
-  margin-left: 100px;
+  background: yellow;
+  width: 500px;
+  height: 850px;
+  /* margin-left: 100px; */
 }
 
 .Card3 h2{
@@ -56,7 +54,7 @@
   border-spacing: 50px;
   display: flex;
   justify-content: space-between;
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 100px 0;
 }

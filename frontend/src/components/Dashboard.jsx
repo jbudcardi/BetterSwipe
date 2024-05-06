@@ -15,7 +15,7 @@ const Dashboard = ({ userId }) => {
 
     const [spendingData, setSpendingData] = useState({
 	type: 'doughnut',
-	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment', 'Other'],
+	labels: ['Travel', 'Dining', 'Grocery', 'Gas', 'Entertainment' /*, 'Other'*/],
         datasets: [{
             label: 'Monthly Spending',
             data: [],
@@ -39,9 +39,9 @@ const Dashboard = ({ userId }) => {
         }]
     });
 
-    var APIcall = () => {
+    var APIcall = (month = selectedMonth) => {
         // axios.get(`http://localhost:8000/algorithms/dashboard/${userId}/`)
-        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, month: selectedMonth } )
+        axios.post(`http://127.0.0.1:8000/algorithms/dashboard/`, { "userId" : userId, "month": month } )
             .then(response => {
                 // testing with the latest month for display
                 // const latestSummary = response.data[response.data.length - 1];
@@ -56,7 +56,7 @@ const Dashboard = ({ userId }) => {
                             latestSummary.grocery_amount,
                             latestSummary.gas_amount,
                             latestSummary.entertainment_amount,
-                            latestSummary.other_amount
+                            // latestSummary.other_amount
                         ]
                     }]
                 }));
@@ -69,7 +69,7 @@ const Dashboard = ({ userId }) => {
 
     const handleMonthChange = (event) =>{
         setSelectedMonth(event.target.value);
-        APIcall();
+        APIcall(event.target.value);
     }
     const options = {
 	    responsive: true,
@@ -125,7 +125,7 @@ const Dashboard = ({ userId }) => {
             </div>
 
             <div className='CR'>
-            <CardRecommendations userId={userId} />
+            <CardRecommendations userId={userId} month={selectedMonth} />
             </div>
 
             <div className='CCbtn'>

@@ -9,13 +9,15 @@ import axios from 'axios';
 function SignUpPage(){
 
     // State to store input values
+    // From django serializer: fields = ['id', 'username', 'email', 'password', 'confirm_password', 'first_name', 'last_name']
     const [userInput, setUserInput] = useState({
-        firstName: '',
-        lastName: '',
+        username: '',
+        first_name: '',
+        last_name: '',
         //phoneNumber: '',
         email: '',
         password: '',
-        confirmPassword: '',
+        confirm_password: '',
     });
     const[errors, setErrors] = useState({});
     const navigate = useNavigate();
@@ -89,6 +91,17 @@ function SignUpPage(){
                     onChange={handleInput} className='form-control round-0'/>
                     {errors.phoneNumber && <span className='text-danger'>{errors.phoneNumber}</span>}
     </Form.Group>*/}
+                <Form.Group className="mb-3">
+                    <label htmlFor="username">Username</label>
+                    <input
+                    type="username"
+                    placeholder='Username'
+                    id="username"
+                    name="username"
+                    value={userInput.username}
+                    onChange={handleInput} className='form-control round-0'/>
+                    {errors.username && <span className='text-danger'>{errors.username}</span>}
+                </Form.Group>
 
                 <Form.Group className="mb-3">
                     <label htmlFor="email">Email</label>
@@ -126,7 +139,7 @@ function SignUpPage(){
                     {errors.password && <span className='text-danger'>{errors.password}</span>}
                     
                 </Form.Group>
-                <button type="submit" className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'  >Sign Up</button>
+                <button onClick={handleSubmit} type="submit" className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'  >Sign Up</button>
                  <Link to ='/login' className='btn btn-default border w-100 bg-light rounded-0 text-deconration-none'>Already have an account? Sign in here </Link>
                 </Form>
                  </Card.Body>
