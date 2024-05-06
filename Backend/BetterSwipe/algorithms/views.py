@@ -499,12 +499,12 @@ def findTopCards(request, userId):
         recommendations.save()
 
         cards = card_names
-        card_details = [getCardDetails(card.card_name)[0] for card in cards]
+        # card_details = [getCardDetails(card.card_name)[0] for card in cards]
         print("cards: " + str(cards))
         return Response({
             'Cards': [{
-                'ImageURL' : getCardImage(cards[i].card_name),
-                'Name' : card_details[i]['cardName'],
+                'ImageURL' : cards[i].image_url, #getCardImage(cards[i].card_name),
+                'Name' : cards[i].long_name, #card_details[i]['cardName'],
                 }for i in range(len(cards))]
             })
         #return Response({'message': 'Found top cards' + str(card_names)})
@@ -530,7 +530,7 @@ def usersTopCards(request, userId):
         # card_details = [getCardDetails(card.card_name)[0] for card in cards]
         return Response({
             'Cards': [{
-                'ImageURL' : getCardImage(cards[i].card_name),
+                'ImageURL' : cards[i].image_url, # getCardImage(cards[i].card_name),
                 'Name' : cards[i].long_name, #card_details[i]['cardName'],
                 'Issuer' : cards[i].issuer, #card_details[i]['cardIssuer'],
                 'Website' : cards[i].website, # card_details[i]['cardUrl'],
@@ -548,6 +548,7 @@ def usersTopCards(request, userId):
             })
     except Exception as e:
         print("Exception: " + str(e))
+        print(e)
         return Response({
             'Cards': []
             })
